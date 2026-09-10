@@ -6,20 +6,17 @@ import { Download, Briefcase, CheckCircle2 } from 'lucide-react'
 export default function Hero() {
   return (
     <section className="relative w-full overflow-hidden bg-slate-50 dark:bg-slate-950 py-16 md:py-24 border-b border-slate-200 dark:border-slate-800/60 transition-colors duration-300">
-      {/* Background Grid ala Peta / Radar */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#cbd5e1_1px,transparent_1px),linear-gradient(to_bottom,#cbd5e1_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
           
-          {/* KOLOM KIRI: Fokus pada Kata Kunci Rekruter & Value Proposition */}
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
             className="flex flex-col items-start gap-6"
           >
-            {/* Badges Status Job Seeker */}
             <div className="flex flex-wrap items-center gap-3 mb-2">
               <span className="px-3 py-1.5 bg-emerald-100 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 text-xs font-bold tracking-widest border border-emerald-300 dark:border-emerald-500/30 rounded-full uppercase flex items-center gap-2 shadow-sm">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> 
@@ -32,19 +29,18 @@ export default function Hero() {
 
             <div className="space-y-4">
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-slate-900 dark:text-white leading-tight">
-                JIBAKUDIN <span className="text-emerald-600 dark:text-emerald-500">NUR</span>
+                JIBAKUDIN <span className="text-emerald-600 dark:text-emerald-500">NUR</span>[cite: 1, 2]
               </h1>
               
               <h2 className="text-lg sm:text-xl font-semibold text-amber-600 dark:text-amber-400 flex items-center gap-2 uppercase tracking-wide">
-                Environmental Health • GIS • HSE Compliance
+                Environmental Health • GIS • HSE Compliance[cite: 1, 2]
               </h2>
             </div>
 
             <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-xl leading-relaxed border-l-2 border-emerald-500 dark:border-emerald-500 pl-4 mt-2">
-              Transforming complex field data into actionable safety and environmental solutions. I specialize in spatial intelligence, occupational health and safety (HSE), and epidemiological research to ensure industrial compliance and community well-being.
+              Transforming complex field data into actionable safety and environmental solutions. I specialize in spatial intelligence, occupational health and safety (HSE), and epidemiological research to ensure industrial compliance and community well-being[cite: 1, 2, 3].
             </p>
 
-            {/* Tech Stack & Tools Ringkas Sesuai Permintaan */}
             <div className="flex flex-wrap gap-y-2 gap-x-4 text-[11px] sm:text-xs font-bold text-slate-500 dark:text-slate-400 uppercase">
               <span className="flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> ArcGIS</span>[cite: 1, 2]
               <span className="flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> SPSS</span>[cite: 1, 2]
@@ -52,7 +48,6 @@ export default function Hero() {
               <span className="flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> Figma</span>[cite: 1, 2]
             </div>
 
-            {/* Tombol Aksi (CTA) Utama */}
             <div className="flex flex-wrap gap-4 pt-4 w-full sm:w-auto">
               <a
                 href="/CV_ATS_Master_Jibakudin_Nur_Indonesia.pdf"
@@ -71,7 +66,6 @@ export default function Hero() {
             </div>
           </motion.div>
 
-          {/* KOLOM KANAN: Widescreen Illustration */}
           <motion.div 
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}

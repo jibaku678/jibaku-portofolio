@@ -2,8 +2,19 @@
 import { motion } from 'framer-motion'
 import { projectsData } from '@/data/projects'
 import { ArrowRight, Layers } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 
 export default function Projects() {
+  const router = useRouter()
+
+  const handleCardClick = (idx: number, slug: string) => {
+    if (idx === 0) {
+      window.open("http://eprints.poltekkesjogja.ac.id/id/eprint/23531", "_blank")
+    } else {
+      router.push(`/projects/${slug}`)
+    }
+  }
+
   return (
     <section id="projects" className="py-16 border-t border-slate-200/80 dark:border-slate-800/80">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -47,15 +58,12 @@ export default function Projects() {
                 </div>
               </div>
 
-              {/* Langsung paksa arahkan ke link eprints untuk kartu pertama, atau slug untuk lainnya */}
-              <a
-                href={idx === 0 ? "http://eprints.poltekkesjogja.ac.id/id/eprint/23531" : `/projects/${project.slug}`}
-                target={idx === 0 ? "_blank" : "_self"}
-                rel={idx === 0 ? "noopener noreferrer" : undefined}
-                className="inline-flex items-center gap-2 text-xs font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors"
+              <button
+                onClick={() => handleCardClick(idx, project.slug)}
+                className="inline-flex items-center gap-2 text-xs font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors text-left"
               >
                 View Case Study <ArrowRight className="w-3.5 h-3.5" />
-              </a>
+              </button>
             </motion.div>
           ))}
         </div>

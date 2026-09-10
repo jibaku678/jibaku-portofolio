@@ -2,7 +2,7 @@ import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
 import About from '@/components/About'
 import Skills from '@/components/Skills'
-import SerkomSection from '@/components/SerkomSection' // Import dengan nama baru
+import Certifications from '@/components/Certifications' // Pastikan ini aktif kembali
 import Experience from '@/components/Experience'
 import Projects from '@/components/Projects'
 import Contact from '@/components/Contact'
@@ -14,7 +14,7 @@ export default function Home() {
       <Hero />
       <About />
       <Skills />
-      <SerkomSection /> {/* Panggil komponennya di sini */}
+      <Certifications /> {/* Daftar pelatihan lama tampil di sini */}
       <Experience />
       <Projects />
       <Contact />

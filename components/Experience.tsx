@@ -5,56 +5,56 @@ import { Calendar, CheckCircle2 } from 'lucide-react'
 export default function Experience() {
   const experiences = [
     {
-      period: "Jan 2026 - Feb 2026",
+      period: "January – February 2026",
       role: "Community Field Practice | Community Empowerment",
-      location: "Padukuhan Ngentak, Argorejo, Sedayu, Bantul",
-      description: "Executed community-level environmental health interventions and local empowerment initiatives.",
+      location: "Ngentak Hamlet, Argorejo, Sedayu, Bantul, Yogyakarta",
+      description: "Conducted community-based field activities and applied environmental health approaches at the community level.",
       highlights: [
-        "Identified environmental health issues with residents and designed community empowerment programs based on local needs.",
-        "Conducted food hygiene and sanitation education for SME food handlers (TPP UMKM).",
-        "Organized Junior Vector Controller (Jumantik Cilik) training and environmental education games for children.",
-        "Supported simple water filtration solutions for hard water issues and promoted waste management via 5R principles."
+        "Identified environmental health problems with community members and developed empowerment activities based on local needs.",
+        "Delivered food hygiene and sanitation education for food handlers/UMKM and environmental health education activities.",
+        "Conducted Jumantik Cilik training and environmental behavior education for children through tutoring, sanitation snakes-and-ladders games, and educational film screenings.",
+        "Supported provision of simple water filters to address household hard-water issues and promoted youth involvement in waste management based on 5R principles."
       ]
     },
     {
-      period: "Aug 2025 - Oct 2025",
-      role: "Industrial Field Practice | Environmental Health & HSE",
+      period: "August – October 2025",
+      role: "Industrial Field Practice | Environmental Health & K3",
       location: "PT Dua Kelinci, Pati",
-      description: "Gained direct operational experience in industrial environmental management and OHS compliance protocols.",
+      description: "Gained field experience in an industrial setting and applied environmental sanitation, environmental health, and OHS principles.",
       highlights: [
-        "Supported HSE practices through hazard identification and risk assessment (HIRADC, JSA), work permits, safety patrols, and incident investigation.",
-        "Studied fire preparedness, evacuation routes, fire extinguisher/hydrant placement, and management of B3, liquid, and gas waste as well as WWTP operations.",
-        "Created an aerated grit chamber engineering design layout as part of wastewater treatment system studies."
+        "Supported K3/HSE activities through hazard identification and risk assessment using HIRADC and JSA, work permits, safety patrols, and safe work practices.",
+        "Studied fire emergency preparedness through evacuation route planning and placement of fire alarms, hydrants, and fire extinguishers, including hands-on APAR and hydrant practice.",
+        "Studied workplace accident investigation, safety signs, SOPs, MSDS, risk management, and exposure to B3 waste, wastewater, air emissions, WWTP, and RKL-RPL/AMDAL implementation."
       ]
     },
     {
-      period: "Apr 2025 - May 2025",
-      role: "Primary Healthcare Field Practice | Environmental Health",
-      location: "Godean II Public Health Center, Sleman, Yogyakarta",
-      description: "Executed field activities in primary healthcare settings in compliance with Ministry of Health regulations.",
+      period: "April – May 2025",
+      role: "Community Health Center Field Practice | Environmental Health",
+      location: "Godean II Community Health Center, Sleman, Yogyakarta",
+      description: "Conducted field activities in a primary healthcare setting with a focus on environmental sanitation observation and assessment.",
       highlights: [
-        "Conducted healthy housing inspections and epidemiological investigations of environment-based diseases.",
-        "Participated in vector control (Jumantik) campaigns, health counseling, and junior vector controller training.",
-        "Mapped community clean water sources and healthy house inspection results to identify environmental health issues."
+        "Conducted healthy-house inspections and assessed environmental sanitation conditions in the community.",
+        "Participated in epidemiological investigations of environmentally based diseases, larval surveys (including Anopheles), and health education/Jumantik activities.",
+        "Mapped community clean-water sources and healthy-house inspection results to support environmental health problem identification."
       ]
     },
     {
-      period: "Aug 2024 - Oct 2024",
+      period: "August – October 2024",
       role: "Hospital Field Practice | Environmental Health Installation",
       location: "Bethesda Hospital, Yogyakarta",
-      description: "Completed clinical rotations across hospital environmental management units.",
+      description: "Completed field practice focused on sanitation in healthcare facilities and hospital environmental management units.",
       highlights: [
-        "Gained practical exposure in medical solid waste management (B3 and non-B3), sanitation, pest control, and water supply systems.",
-        "Supported environmental laboratory operations and wastewater treatment plant (WWTP) monitoring."
+        "Participated in the Environmental Health Installation through rotation across several hospital environmental management units.",
+        "Gained exposure to medical B3 and non-B3 solid waste management, sanitation, pest control, clean/drinking water management, and environmental laboratory activities."
       ]
     },
     {
-      period: "Mar 2024 - Apr 2024",
+      period: "March – April 2024",
       role: "Institutional Field Practice | Environmental Health",
-      location: "Magelang District Health Office",
-      description: "Applied environmental sanitation principles within a public health institutional setting.",
+      location: "Magelang District Health Office, Magelang",
+      description: "Applied environmental sanitation principles in an institutional healthcare setting and government administration.",
       highlights: [
-        "Engaged in environmental health management, health risk assessment, coordination, and administrative program reporting."
+        "Gained exposure to environmental health management within a government institution supporting community health, risk management, coordination, and activity reporting."
       ]
     }
   ]

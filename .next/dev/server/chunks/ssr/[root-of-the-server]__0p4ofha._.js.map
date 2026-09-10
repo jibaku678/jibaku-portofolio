@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 10, "column": 0}, "map": {"version":3,"sources":["file:///D:/bismillah%20sukses%20cari%20kerja%20gaji%20layak/jibakudin-portofolio/app/page.tsx"],"sourcesContent":["import Hero from '@/components/Hero'\r\nimport About from '@/components/About'\r\nimport Projects from '@/components/Projects'\r\nimport Experience from '@/components/Experience'\r\nimport Skills from '@/components/Skills'\r\nimport Certifications from '@/components/Certifications'\r\nimport Contact from '@/components/Contact'\r\n\r\nexport default function Home() {\r\n  return (\r\n    <>\r\n      <Hero />\r\n      <About />\r\n      <Projects />\r\n      <Experience />\r\n      <Skills />\r\n      <Certifications />\r\n      <Contact />\r\n    </>\r\n  )\r\n}"],"names":["Home","Hero","About","Projects","Experience","Skills","Certifications","Contact"],"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAQe,SAASA;IACtB,qBACE;;0BACE,8OAACC;;;;;0BACD,8OAACC;;;;;0BACD,8OAACC;;;;;0BACD,8OAACC;;;;;0BACD,8OAACC;;;;;0BACD,8OAACC;;;;;0BACD,8OAACC;;;;;;;;;;;AAGP"}}]
+}

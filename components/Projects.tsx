@@ -49,12 +49,14 @@ export default function Projects() {
               </div>
 
               <Link
-                href={`/projects/${project.slug}`}
+                href={project.link || `/projects/${project.slug}`}
+                target={project.link ? '_blank' : undefined}
+                rel={project.link ? 'noopener noreferrer' : undefined}
                 className="inline-flex items-center gap-2 text-xs font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors"
               >
                 View Case Study <ArrowRight className="w-3.5 h-3.5" />
-             {project.link ? (
-               {project.link ? (
+              </Link>
+              {/* {project.link ? (
   <a
     href={project.link}
     target="_blank"
@@ -70,4 +72,12 @@ export default function Projects() {
   >
     View Case Study <ArrowRight className="w-3.5 h-3.5" />
   </Link>
-)}
+)} */}
+            </div>
+          </motion.div>
+        ))}
+        </div>
+      </div>
+    </section>
+  )
+}

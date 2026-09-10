@@ -43,10 +43,10 @@ export default function About() {
           >
             <div className="space-y-4">
               <p>
-                I am an <strong className="text-slate-900 dark:text-white font-semibold">Applied Environmental Sanitation graduate</strong> from Poltekkes Kemenkes Yogyakarta, completing my study with a <strong className="text-emerald-600 dark:text-emerald-400 font-semibold">Cum Laude predicate (GPA 3.71)</strong>[cite: 1, 2]. My background encompasses public health, environmental monitoring, occupational safety (HSE), and spatial data management.
+                I am an <strong className="text-slate-900 dark:text-white font-semibold">Applied Environmental Sanitation graduate</strong> from Poltekkes Kemenkes Yogyakarta, completing my study with a <strong className="text-emerald-600 dark:text-emerald-400 font-semibold">Cum Laude predicate (GPA 3.71)</strong>. My background encompasses public health, environmental monitoring, occupational safety (HSE), and spatial data management.
               </p>
               <p>
-                Through practical field experiences across industrial facilities, hospitals, public health centers, and community programs[cite: 1, 2], I have developed practical competencies in environmental health inspections, waste management systems, and safety compliance.
+                Through practical field experiences across industrial facilities, hospitals, public health centers, and community programs, I have developed practical competencies in environmental health inspections, waste management systems, and safety compliance.
               </p>
             </div>
 
@@ -57,7 +57,7 @@ export default function About() {
                 </div>
                 <div>
                   <div className="text-[10px] font-mono text-slate-400 uppercase tracking-wider">Academic Record</div>
-                  <div className="text-sm font-bold text-slate-900 dark:text-white">GPA 3.71 / Cum Laude[cite: 1, 2]</div>
+                  <div className="text-sm font-bold text-slate-900 dark:text-white">GPA 3.71 / Cum Laude</div>
                 </div>
               </div>
 

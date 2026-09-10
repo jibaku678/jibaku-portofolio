@@ -1,6 +1,6 @@
 'use client'
 import { motion } from 'framer-motion'
-import { ExternalLink } from 'lucide-react'
+import { ExternalLink, FileText } from 'lucide-react'
 
 export default function Projects() {
   const projectsList = [
@@ -9,21 +9,24 @@ export default function Projects() {
       title: "Spatial Risk Analysis of Leptospirosis Transmission",
       description: "Analyzed leptospirosis risk levels based on human cases, rodent population density, and spatial distribution mapping in Trirenggo and Bangunjiwo, Bantul.",
       tools: ["ArcGIS", "Spatial Mapping", "Epidemiology"],
-      metric: "Grade: A (Cum Laude)"
+      metric: "Grade: A (Cum Laude)",
+      link: "#" // Ubah '#' dengan link file PDF skripsi atau repositori jika ada
     },
     {
       tag: "RESEARCH ASSISTANT",
       title: "Personal Hygiene Education for Food Handlers",
       description: "Supported field data collection, participant coordination, and KAP evaluation for food hygiene education using video media in Prambanan.",
       tools: ["Field Observation", "KAP Assessment", "Coordination"],
-      metric: "Completed 2026"
+      metric: "Completed 2026",
+      link: "#"
     },
     {
       tag: "RESEARCH ENUMERATOR",
       title: "Leptospirosis Transmission Prediction Model",
       description: "Served as a research enumerator utilizing the Schnabel method for rodent population capture-recapture and systematic field documentation.",
       tools: ["Vector Surveillance", "Data Documentation"],
-      metric: "Active Research 2026"
+      metric: "Completed (2025–2026)",
+      link: "#"
     }
   ]
 
@@ -73,9 +76,14 @@ export default function Projects() {
 
               <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs font-mono font-bold text-slate-500">
                 <span>{project.metric}</span>
-                <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
-                  Details <ExternalLink className="w-3 h-3" />
-                </span>
+                <a 
+                  href={project.link} 
+                  className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 hover:underline"
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                >
+                  View Document <FileText className="w-3.5 h-3.5" />
+                </a>
               </div>
             </div>
           </motion.div>

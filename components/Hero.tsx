@@ -26,7 +26,7 @@ export default function Hero() {
                 Open to Work / Available
               </span>
               <span className="px-3 py-1.5 bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold tracking-widest border border-slate-300 dark:border-slate-700 rounded-full uppercase">
-                Cum Laude (GPA 3.71)
+                Cum Laude (GPA 3.71)[cite: 1, 2]
               </span>
             </div>
 
@@ -44,12 +44,12 @@ export default function Hero() {
               Transforming complex field data into actionable safety and environmental solutions. I specialize in spatial intelligence, occupational health and safety (HSE), and epidemiological research to ensure industrial compliance and community well-being.
             </p>
 
-            {/* Tech Stack & Tools Sesuai CV */}
+            {/* Tech Stack & Tools Ringkas Sesuai Permintaan */}
             <div className="flex flex-wrap gap-y-2 gap-x-4 text-[11px] sm:text-xs font-bold text-slate-500 dark:text-slate-400 uppercase">
-              <span className="flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> ArcGIS / Google Earth</span>[cite: 1, 2]
-              <span className="flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> SPSS & Epi Info</span>[cite: 1, 2]
-              <span className="flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> AutoCAD Dasar</span>[cite: 1, 2]
-              <span className="flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> Canva / Figma</span>[cite: 1, 2]
+              <span className="flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> ArcGIS</span>[cite: 1, 2]
+              <span className="flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> SPSS</span>[cite: 1, 2]
+              <span className="flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> MS Office</span>[cite: 1, 2]
+              <span className="flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> Figma</span>[cite: 1, 2]
             </div>
 
             {/* Tombol Aksi (CTA) Utama */}

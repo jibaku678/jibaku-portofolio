@@ -53,11 +53,20 @@ export default function Projects() {
                 className="inline-flex items-center gap-2 text-xs font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors"
               >
                 View Case Study <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
+             {project.link ? (
+                <a
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-xs font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors"
+                >
+                  View Case Study <ArrowRight className="w-3.5 h-3.5" />
+                </a>
+              ) : (
+                <Link
+                  href={`/projects/${project.slug}`}
+                  className="inline-flex items-center gap-2 text-xs font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors"
+                >
+                  View Case Study <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              )}

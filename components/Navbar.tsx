@@ -52,7 +52,7 @@ export default function Navbar() {
             </a>
           ))}
           <a
-            href="/cv/Jibakudin_Nur_CV.pdf"
+            href="/CV_ATS_Master_Jibakudin_Nur_Indonesia.pdf"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 text-xs font-semibold hover:border-brand-500 hover:text-brand-600 transition-all"
@@ -94,7 +94,7 @@ export default function Navbar() {
             </a>
           ))}
           <a
-            href="/cv/Jibakudin_Nur_CV.pdf"
+           href="/CV_ATS_Master_Jibakudin_Nur_Indonesia.pdf"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-brand-600 text-white font-medium text-xs"

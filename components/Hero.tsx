@@ -12,7 +12,7 @@ export default function Hero() {
         transition={{ duration: 0.5 }}
         className="flex flex-col items-center md:items-start text-center md:text-left gap-6"
       >
-        {/* Foto Profil dengan Border */}
+        {/* Foto Profil dengan Border Elegan */}
         <div className="relative w-36 h-36 md:w-44 md:h-44 rounded-full overflow-hidden shadow-2xl border-4 border-blue-500/80 dark:border-blue-400/80 ring-4 ring-slate-900/10 mx-auto md:mx-0">
           <Image
             src="/foto.profil.jpeg"

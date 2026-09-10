@@ -1,21 +1,23 @@
-import Image from 'next/image'
-
 export default function About() {
   return (
     <section id="about" className="py-16 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-slate-200 dark:border-slate-800">
       <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-8">About Me</h2>
       
-     <div className="flex justify-center md:justify-start">
-  <div className="rounded-xl overflow-hidden shadow-lg border-2 border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 p-2 inline-block">
-    <img
-      src="/foto.profil.jpeg"
-      alt="Jibakudin Nur"
-      className="w-48 sm:w-56 rounded-lg block"
-    />
-  </div>
-</div>
+      {/* Grid Utama: Kolom Kiri untuk Foto, Kolom Kanan untuk Teks */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+        
+        {/* Kotak Foto Profil */}
+        <div className="flex justify-center md:justify-start">
+          <div className="rounded-xl overflow-hidden shadow-lg border-2 border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 p-2 inline-block">
+            <img
+              src="/foto.profil.jpeg"
+              alt="Jibakudin Nur"
+              className="w-48 sm:w-56 rounded-lg block"
+            />
+          </div>
+        </div>
 
-        {/* Deskripsi */}
+        {/* Kolom Deskripsi (Makan 2 Kolom di Layar Besar) */}
         <div className="md:col-span-2 space-y-4 text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed">
           <p>
             I am an Applied Environmental Sanitation graduate from Poltekkes Kemenkes Yogyakarta with a Cum Laude predicate (GPA 3.71). My core expertise revolves around environmental health risk assessments, public health research methodologies, and spatial data mapping using GIS.
@@ -24,6 +26,7 @@ export default function About() {
             With hands-on field experience ranging from leptospirosis spatial modeling to industrial OHS and sanitation audits at major manufacturing sites, I am driven by a commitment to translate complex field data into practical, protective community interventions.
           </p>
         </div>
+
       </div>
     </section>
   )

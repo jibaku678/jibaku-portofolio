@@ -1,5 +1,4 @@
 'use client'
-import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { projectsData } from '@/data/projects'
 import { ArrowRight, Layers } from 'lucide-react'
@@ -48,24 +47,15 @@ export default function Projects() {
                 </div>
               </div>
 
-              {/* Logika tunggal yang aman untuk link luar atau internal */}
-              {project.link ? (
-                <a
-                  href={project.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-xs font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors"
-                >
-                  View Case Study <ArrowRight className="w-3.5 h-3.5" />
-                </a>
-              ) : (
-                <Link
-                  href={`/projects/${project.slug}`}
-                  className="inline-flex items-center gap-2 text-xs font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors"
-                >
-                  View Case Study <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
-              )}
+              {/* Langsung paksa arahkan ke link eprints untuk kartu pertama, atau slug untuk lainnya */}
+              <a
+                href={idx === 0 ? "http://eprints.poltekkesjogja.ac.id/id/eprint/23531" : `/projects/${project.slug}`}
+                target={idx === 0 ? "_blank" : "_self"}
+                rel={idx === 0 ? "noopener noreferrer" : undefined}
+                className="inline-flex items-center gap-2 text-xs font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors"
+              >
+                View Case Study <ArrowRight className="w-3.5 h-3.5" />
+              </a>
             </motion.div>
           ))}
         </div>

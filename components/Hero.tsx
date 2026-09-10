@@ -23,29 +23,29 @@ export default function Hero() {
                 Open to Work / Available
               </span>
               <span className="px-3 py-1.5 bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold tracking-widest border border-slate-300 dark:border-slate-700 rounded-full uppercase">
-                Cum Laude (GPA 3.71)[cite: 1, 2]
+                Cum Laude (GPA 3.71)
               </span>
             </div>
 
             <div className="space-y-4">
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-slate-900 dark:text-white leading-tight">
-                JIBAKUDIN <span className="text-emerald-600 dark:text-emerald-500">NUR</span>[cite: 1, 2]
+                JIBAKUDIN <span className="text-emerald-600 dark:text-emerald-500">NUR</span>
               </h1>
               
               <h2 className="text-lg sm:text-xl font-semibold text-amber-600 dark:text-amber-400 flex items-center gap-2 uppercase tracking-wide">
-                Environmental Health • GIS • HSE Compliance[cite: 1, 2]
+                Environmental Health • GIS • HSE Compliance
               </h2>
             </div>
 
             <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-xl leading-relaxed border-l-2 border-emerald-500 dark:border-emerald-500 pl-4 mt-2">
-              Transforming complex field data into actionable safety and environmental solutions. I specialize in spatial intelligence, occupational health and safety (HSE), and epidemiological research to ensure industrial compliance and community well-being[cite: 1, 2, 3].
+              Transforming complex field data into actionable safety and environmental solutions. I specialize in spatial intelligence, occupational health and safety (HSE), and epidemiological research to ensure industrial compliance and community well-being.
             </p>
 
             <div className="flex flex-wrap gap-y-2 gap-x-4 text-[11px] sm:text-xs font-bold text-slate-500 dark:text-slate-400 uppercase">
-              <span className="flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> ArcGIS</span>[cite: 1, 2]
-              <span className="flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> SPSS</span>[cite: 1, 2]
-              <span className="flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> MS Office</span>[cite: 1, 2]
-              <span className="flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> Figma</span>[cite: 1, 2]
+              <span className="flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> ArcGIS</span>
+              <span className="flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> SPSS</span>
+              <span className="flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> MS Office</span>
+              <span className="flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> Figma</span>
             </div>
 
             <div className="flex flex-wrap gap-4 pt-4 w-full sm:w-auto">

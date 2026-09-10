@@ -1,6 +1,6 @@
 'use client'
 import { motion } from 'framer-motion'
-import { Award, MapPin, CheckCircle2, ExternalLink } from 'lucide-react'
+import { Award, MapPin, ShieldCheck, ExternalLink } from 'lucide-react'
 
 export default function About() {
   return (
@@ -72,30 +72,44 @@ export default function About() {
               </div>
             </div>
 
-            {/* Highlight Sertifikat Uji Kompetensi Nasional Level 6 */}
-            <div className="p-4 rounded-xl bg-emerald-500/5 dark:bg-emerald-500/10 border border-emerald-500/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mt-4">
-              <div className="flex items-start gap-3">
-                <div className="p-2 rounded-lg bg-emerald-500 text-slate-950 shrink-0 mt-0.5">
-                  <CheckCircle2 className="w-4 h-4" />
-                </div>
-                <div>
-                  <div className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wide">
-                    Level 6 Environmental Health Practitioner Certification
+            {/* Hook / Point of Interest: Sertifikat Uji Kompetensi Nasional Level 6 (Diperbesar & Dibuat Menonjol) */}
+            <motion.div 
+              whileHover={{ scale: 1.01 }}
+              transition={{ duration: 0.2 }}
+              className="relative rounded-2xl bg-gradient-to-r from-emerald-600/15 via-emerald-500/10 to-slate-900/40 dark:from-emerald-500/20 dark:via-emerald-500/10 dark:to-slate-900 border-2 border-emerald-500/50 p-6 shadow-xl mt-4 overflow-hidden group"
+            >
+              <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none"></div>
+
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 relative z-10">
+                <div className="flex items-start gap-4">
+                  <div className="p-3 rounded-xl bg-emerald-600 text-white shrink-0 shadow-md group-hover:rotate-6 transition-transform">
+                    <ShieldCheck className="w-7 h-7" />
                   </div>
-                  <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
-                    Officially certified through national competency examination as a mandatory graduation requirement.
-                  </p>
+                  <div className="space-y-1.5">
+                    <span className="inline-block px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 font-mono text-[10px] font-bold tracking-widest uppercase border border-emerald-500/30">
+                      Verified National Credential
+                    </span>
+                    <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white uppercase tracking-tight leading-snug">
+                      Level 6 Environmental Health Practitioner Certification
+                    </h3>
+                    <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                      Officially certified through national competency examination as a mandatory graduation requirement, authorizing professional practice.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="shrink-0 w-full sm:w-auto">
+                  <a
+                    href="/Serkom_jibaku.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-lg hover:shadow-emerald-500/30 w-full sm:w-auto"
+                  >
+                    View Certificate <ExternalLink className="w-4 h-4" />
+                  </a>
                 </div>
               </div>
-              <a
-                href="/Serkom_jibaku.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-sm whitespace-nowrap"
-              >
-                View Certificate <ExternalLink className="w-3.5 h-3.5" />
-              </a>
-            </div>
+            </motion.div>
 
           </motion.div>
         </div>

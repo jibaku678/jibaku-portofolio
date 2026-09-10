@@ -1,6 +1,6 @@
 'use client'
 import { motion } from 'framer-motion'
-import { ExternalLink, FileText } from 'lucide-react'
+import { FileText } from 'lucide-react'
 
 export default function Projects() {
   const projectsList = [
@@ -10,7 +10,7 @@ export default function Projects() {
       description: "Analyzed leptospirosis risk levels based on human cases, rodent population density, and spatial distribution mapping in Trirenggo and Bangunjiwo, Bantul.",
       tools: ["ArcGIS", "Spatial Mapping", "Epidemiology"],
       metric: "Grade: A (Cum Laude)",
-      link: "#" // Ubah '#' dengan link file PDF skripsi atau repositori jika ada
+      link: "https://eprints.poltekkesjogja.ac.id/" // Diarahkan ke Eprints Poltekkes Yogyakarta
     },
     {
       tag: "RESEARCH ASSISTANT",

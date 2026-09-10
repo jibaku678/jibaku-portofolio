@@ -15,14 +15,13 @@ export interface Project {
 
 export const projectsData: Project[] = [
   {
-    slug: 'leptospirosis-spatial-risk-analysis',
+    slug: 'http://eprints.poltekkesjogja.ac.id/id/eprint/23531',
     title: 'Spatial Risk Analysis of Leptospirosis Transmission',
     category: 'GIS & Epidemiological Research',
     shortDescription: 'Undergraduate Thesis: Spatial risk mapping in Trirenggo & Bangunjiwo based on human cases, rodent density, and environmental factors.',
     tools: ['ArcGIS', 'Google Earth', 'SPSS', 'Epi Info'],
     role: 'Principal Researcher (Skripsi / Final Project)',
     period: '2025 – 2026',
-    link: 'http://eprints.poltekkesjogja.ac.id/id/eprint/23531',
     context: 'Leptospirosis remains a significant zoonotic threat in Bantul Regency. This research evaluated transmission risk by integrating epidemiological human case data with field rodent surveillance.',
     approach: [
       'Conducted rodent trapping and surveillance to evaluate Trap Success rates and species distribution.',

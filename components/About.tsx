@@ -10,7 +10,7 @@ export default function About() {
     <img
       src="/foto.profil.jpeg"
       alt="Jibakudin Nur"
-      className="w-56 h-auto block object-cover"
+      style={{ width: '220px', height: 'auto', display: 'block' }}
     />
   </div>
 </div>

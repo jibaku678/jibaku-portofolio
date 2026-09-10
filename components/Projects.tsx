@@ -7,21 +7,21 @@ export default function Projects() {
     {
       tag: "UNDERGRADUATE THESIS",
       title: "Spatial Risk Analysis of Leptospirosis Transmission",
-      description: "Analyzed leptospirosis risk based on human cases, rodent population density, and spatial distribution mapping in Trirenggo and Bangunjiwo, Bantul[cite: 1, 2].",
+      description: "Analyzed leptospirosis risk levels based on human cases, rodent population density, and spatial distribution mapping in Trirenggo and Bangunjiwo, Bantul.",
       tools: ["ArcGIS", "Spatial Mapping", "Epidemiology"],
-      metric: "Grade: A (Cum Laude)[cite: 2]"
+      metric: "Grade: A (Cum Laude)"
     },
     {
       tag: "RESEARCH ASSISTANT",
       title: "Personal Hygiene Education for Food Handlers",
-      description: "Supported field data collection, participant coordination, and KAP evaluation for food hygiene education in the Prambanan area[cite: 1, 2].",
+      description: "Supported field data collection, participant coordination, and KAP evaluation for food hygiene education using video media in Prambanan.",
       tools: ["Field Observation", "KAP Assessment", "Coordination"],
       metric: "Completed 2026"
     },
     {
       tag: "RESEARCH ENUMERATOR",
-      title: "Leptospirosis Prediction Model Study",
-      description: "Assisted in systematic data recording and field data collection using the Schnabel method under institutional appointment[cite: 1, 2].",
+      title: "Leptospirosis Transmission Prediction Model",
+      description: "Served as a research enumerator utilizing the Schnabel method for rodent population capture-recapture and systematic field documentation.",
       tools: ["Vector Surveillance", "Data Documentation"],
       metric: "Active Research 2026"
     }

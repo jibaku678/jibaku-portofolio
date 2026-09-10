@@ -1,44 +1,43 @@
 'use client'
 import { motion } from 'framer-motion'
-import { ShieldCheck, Cpu, Terminal, CheckCircle2 } from 'lucide-react'
+import { ShieldCheck, Cpu, Wrench, CheckCircle2 } from 'lucide-react'
 
 export default function Skills() {
   const skillCategories = [
     {
-      title: "Environmental Health & HSE",
+      title: "HSE & Environmental Management",
       icon: <ShieldCheck className="w-5 h-5 text-emerald-500" />,
       skills: [
-        "Water, air, and soil sanitation[cite: 1, 2]",
-        "Wastewater and solid waste management[cite: 1, 2]",
-        "Industrial and healthcare sanitation[cite: 1, 2]",
-        "Food hygiene, sanitation, and HACCP[cite: 1, 2]",
-        "Vector and rodent control[cite: 1, 2]",
-        "UKL-UPL / AMDAL documentation[cite: 1, 2]",
-        "OHS compliance and SMK3[cite: 1, 2]"
+        "HIRADC, JSA, work permit, safety patrol, & risk management",
+        "Accident investigation, safety signs, SOPs, & MSDS",
+        "Fire preparedness, APAR, and hydrant operations",
+        "Water, wastewater, solid waste management, and WWTP",
+        "Vector/rodent control & food hygiene sanitation / HACCP",
+        "RKL-RPL / AMDAL documentation, PROPER, & compliance"
       ]
     },
     {
-      title: "Analysis & Research",
+      title: "Analysis & Spatial Research",
       icon: <Cpu className="w-5 h-5 text-amber-500" />,
       skills: [
-        "Environmental health epidemiology[cite: 1, 2]",
-        "Environmental laboratory sampling[cite: 1, 2]",
-        "Spatial analysis & risk mapping[cite: 1, 2]",
-        "Remote sensing applications[cite: 1, 2]",
-        "Statistical processing (SPSS & Epi Info)[cite: 1, 2]",
-        "Scientific report writing[cite: 1, 2]"
+        "Environmental health epidemiology & laboratory",
+        "Data collection, observation, & field surveys",
+        "Statistical analysis, SPSS, & Epi Info",
+        "Research methodology & scientific reporting",
+        "Spatial analysis, risk mapping, & remote sensing",
+        "Knowledge, Attitude, and Practice (KAP) assessment"
       ]
     },
     {
-      title: "Technical Tools & Software",
-      icon: <Terminal className="w-5 h-5 text-blue-500" />,
+      title: "Organization & Technical Support",
+      icon: <Wrench className="w-5 h-5 text-blue-500" />,
       skills: [
-        "ArcGIS & Google Earth[cite: 1, 2]",
-        "SPSS & Epi Info[cite: 1, 2]",
-        "AutoCAD (basic facility design)[cite: 1, 2]",
-        "Microsoft Office & Google Workspace[cite: 1, 2]",
-        "Canva & Figma[cite: 1, 2]",
-        "Basic technical coordination"
+        "Team coordination & site stakeholder communication",
+        "Activity planning & social adaptability",
+        "Live streaming & sound system setup",
+        "Event technical support & hardware preparation",
+        "Basic technical troubleshooting",
+        "ArcGIS, Google Earth, basic AutoCAD, & Office"
       ]
     }
   ]
@@ -47,10 +46,10 @@ export default function Skills() {
     <section id="skills" className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-slate-200 dark:border-slate-800/60">
       <div className="flex flex-col items-start gap-2 mb-10">
         <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">
-          // Technical Competencies
+          // Core Competencies
         </span>
         <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white uppercase tracking-tight">
-          Core Skills & Tools
+          Professional Skills & Tools
         </h2>
       </div>
 

@@ -6,31 +6,55 @@ export default function Experience() {
   const experiences = [
     {
       period: "Jan 2026 - Feb 2026",
-      role: "Community Field Practice",
-      location: "Padukuhan Ngentak, Bantul[cite: 1, 2]",
-      description: "Executed community-level environmental health interventions and education.",
+      role: "Community Field Practice | Community Empowerment",
+      location: "Padukuhan Ngentak, Argorejo, Sedayu, Bantul",
+      description: "Executed community-level environmental health interventions and local empowerment initiatives.",
       highlights: [
-        "Conducted community health needs assessments and awareness programs[cite: 1, 2].",
-        "Assisted in clean water filtration initiatives and waste management campaigns[cite: 1, 2]."
+        "Identified environmental health issues with residents and designed community empowerment programs based on local needs.",
+        "Conducted food hygiene and sanitation education for SME food handlers (TPP UMKM).",
+        "Organized Junior Vector Controller (Jumantik Cilik) training and environmental education games for children.",
+        "Supported simple water filtration solutions for hard water issues and promoted waste management via 5R principles."
       ]
     },
     {
       period: "Aug 2025 - Oct 2025",
-      role: "Industrial Field Practice (HSE & Sanitation)",
-      location: "PT Dua Kelinci, Pati[cite: 1, 2]",
-      description: "Gained direct operational experience in industrial environmental management and OHS protocols.",
+      role: "Industrial Field Practice | Environmental Health & HSE",
+      location: "PT Dua Kelinci, Pati",
+      description: "Gained direct operational experience in industrial environmental management and OHS compliance protocols.",
       highlights: [
-        "Participated in hazard identification and risk assessment (HIRADC/JSA)[cite: 1, 2].",
-        "Observed wastewater treatment plant (WWTP) operations and industrial waste management[cite: 1, 2]."
+        "Supported HSE practices through hazard identification and risk assessment (HIRADC, JSA), work permits, safety patrols, and incident investigation.",
+        "Studied fire preparedness, evacuation routes, fire extinguisher/hydrant placement, and management of B3, liquid, and gas waste as well as WWTP operations.",
+        "Created an aerated grit chamber engineering design layout as part of wastewater treatment system studies."
+      ]
+    },
+    {
+      period: "Apr 2025 - May 2025",
+      role: "Primary Healthcare Field Practice | Environmental Health",
+      location: "Godean II Public Health Center, Sleman, Yogyakarta",
+      description: "Executed field activities in primary healthcare settings in compliance with Ministry of Health regulations.",
+      highlights: [
+        "Conducted healthy housing inspections and epidemiological investigations of environment-based diseases.",
+        "Participated in vector control (Jumantik) campaigns, health counseling, and junior vector controller training.",
+        "Mapped community clean water sources and healthy house inspection results to identify environmental health issues."
       ]
     },
     {
       period: "Aug 2024 - Oct 2024",
-      role: "Hospital Field Practice",
-      location: "Bethesda Hospital, Yogyakarta[cite: 1, 2]",
-      description: "Rotated through healthcare sanitation units focusing on clinical waste management.",
+      role: "Hospital Field Practice | Environmental Health Installation",
+      location: "Bethesda Hospital, Yogyakarta",
+      description: "Completed clinical rotations across hospital environmental management units.",
       highlights: [
-        "Monitored medical waste handling, vector control, and clean water standards[cite: 1, 2]."
+        "Gained practical exposure in medical solid waste management (B3 and non-B3), sanitation, pest control, and water supply systems.",
+        "Supported environmental laboratory operations and wastewater treatment plant (WWTP) monitoring."
+      ]
+    },
+    {
+      period: "Mar 2024 - Apr 2024",
+      role: "Institutional Field Practice | Environmental Health",
+      location: "Magelang District Health Office",
+      description: "Applied environmental sanitation principles within a public health institutional setting.",
+      highlights: [
+        "Engaged in environmental health management, health risk assessment, coordination, and administrative program reporting."
       ]
     }
   ]
@@ -61,7 +85,7 @@ export default function Experience() {
                 <span className="text-xs font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider">
                   {exp.role}
                 </span>
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white uppercase tracking-tight">
+                <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white uppercase tracking-tight">
                   {exp.location}
                 </h3>
               </div>

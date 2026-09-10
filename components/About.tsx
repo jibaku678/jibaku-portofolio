@@ -1,6 +1,6 @@
 'use client'
 import { motion } from 'framer-motion'
-import { Award, MapPin } from 'lucide-react'
+import { Award, MapPin, CheckCircle2, ExternalLink } from 'lucide-react'
 
 export default function About() {
   return (
@@ -71,6 +71,32 @@ export default function About() {
                 </div>
               </div>
             </div>
+
+            {/* Highlight Sertifikat Uji Kompetensi Nasional Level 6 */}
+            <div className="p-4 rounded-xl bg-emerald-500/5 dark:bg-emerald-500/10 border border-emerald-500/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mt-4">
+              <div className="flex items-start gap-3">
+                <div className="p-2 rounded-lg bg-emerald-500 text-slate-950 shrink-0 mt-0.5">
+                  <CheckCircle2 className="w-4 h-4" />
+                </div>
+                <div>
+                  <div className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wide">
+                    Level 6 Environmental Health Practitioner Certification
+                  </div>
+                  <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
+                    Officially certified through national competency examination as a mandatory graduation requirement.
+                  </p>
+                </div>
+              </div>
+              <a
+                href="/Serkom_jibaku.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-sm whitespace-nowrap"
+              >
+                View Certificate <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+            </div>
+
           </motion.div>
         </div>
       </div>

@@ -5,56 +5,69 @@ import { Calendar, CheckCircle2 } from 'lucide-react'
 export default function Experience() {
   const experiences = [
     {
-      period: "January – February 2026",
-      role: "Community Field Practice | Community Empowerment",
-      location: "Ngentak Hamlet, Argorejo, Sedayu, Bantul, Yogyakarta",
-      description: "Conducted community-based field activities and applied environmental health approaches at the community level.",
-      highlights: [
-        "Identified environmental health problems with community members and developed empowerment activities based on local needs.",
-        "Delivered food hygiene and sanitation education for food handlers/UMKM and environmental health education activities.",
-        "Conducted Jumantik Cilik training and environmental behavior education for children through tutoring, sanitation snakes-and-ladders games, and educational film screenings.",
-        "Supported provision of simple water filters to address household hard-water issues and promoted youth involvement in waste management based on 5R principles."
-      ]
-    },
-    {
       period: "August – October 2025",
       role: "Industrial Field Practice | Environmental Health & K3",
       location: "PT Dua Kelinci, Pati",
-      description: "Gained field experience in an industrial setting and applied environmental sanitation, environmental health, and OHS principles.",
+      description: "Supported industrial environmental health and OHS operational activities.",
       highlights: [
         "Supported K3/HSE activities through hazard identification and risk assessment using HIRADC and JSA, work permits, safety patrols, and safe work practices.",
         "Studied fire emergency preparedness through evacuation route planning and placement of fire alarms, hydrants, and fire extinguishers, including hands-on APAR and hydrant practice.",
-        "Studied workplace accident investigation, safety signs, SOPs, MSDS, risk management, and exposure to B3 waste, wastewater, air emissions, WWTP, and RKL-RPL/AMDAL implementation."
+        "Studied workplace accident investigation and incident report preparation, as well as safety signs, SOPs, MSDS, and risk management.",
+        "Gained exposure to B3 waste, wastewater, air emissions, WWTP, and clean and drinking water management.",
+        "Studied RKL-RPL/AMDAL and PROPER and their application in industrial environmental management.",
+        "Supported food hygiene and sanitation aspects within the industrial setting.",
+        "Prepared an aerated grit chamber drawing as part of wastewater treatment system practice."
       ]
     },
     {
       period: "April – May 2025",
       role: "Community Health Center Field Practice | Environmental Health",
       location: "Godean II Community Health Center, Sleman, Yogyakarta",
-      description: "Conducted field activities in a primary healthcare setting with a focus on environmental sanitation observation and assessment.",
+      description: "Conducted field activities in a primary healthcare setting focusing on sanitation and disease epidemiology.",
       highlights: [
         "Conducted healthy-house inspections and assessed environmental sanitation conditions in the community.",
-        "Participated in epidemiological investigations of environmentally based diseases, larval surveys (including Anopheles), and health education/Jumantik activities.",
-        "Mapped community clean-water sources and healthy-house inspection results to support environmental health problem identification."
+        "Participated in epidemiological investigations of environmentally based diseases and field data collection.",
+        "Participated in Jumantik activities, health education, and Jumantik Cilik training.",
+        "Conducted larval surveys, including Anopheles larval surveys as required by field activities.",
+        "Mapped community clean-water sources and healthy-house inspection results to support environmental health problem identification.",
+        "Supported community-based environmental health activities within the scope of environmental health services."
       ]
     },
     {
       period: "August – October 2024",
       role: "Hospital Field Practice | Environmental Health Installation",
       location: "Bethesda Hospital, Yogyakarta",
-      description: "Completed field practice focused on sanitation in healthcare facilities and hospital environmental management units.",
+      description: "Completed clinical rotations across hospital environmental management units.",
       highlights: [
         "Participated in the Environmental Health Installation through rotation across several hospital environmental management units.",
-        "Gained exposure to medical B3 and non-B3 solid waste management, sanitation, pest control, clean/drinking water management, and environmental laboratory activities."
+        "Gained exposure to medical B3 and non-B3 solid waste management, sanitation and pest control, and clean and drinking water management.",
+        "Participated in environmental laboratory and wastewater treatment plant activities.",
+        "Studied hospital environmental health management through operational activities, monitoring, and environmental factor control."
       ]
     },
     {
       period: "March – April 2024",
       role: "Institutional Field Practice | Environmental Health",
       location: "Magelang District Health Office, Magelang",
-      description: "Applied environmental sanitation principles in an institutional healthcare setting and government administration.",
+      description: "Applied environmental sanitation principles within a government institutional setting.",
       highlights: [
-        "Gained exposure to environmental health management within a government institution supporting community health, risk management, coordination, and activity reporting."
+        "Gained exposure to environmental health management within a government institution supporting community health.",
+        "Participated in activities related to environmental health management, health risk management, coordination, administration, and activity reporting.",
+        "Studied workflow and coordination of environmental health programs within a government institution."
+      ]
+    },
+    {
+      period: "January – February 2026",
+      role: "Community Field Practice | Community Empowerment",
+      location: "Ngentak Hamlet, Argorejo, Sedayu, Bantul, Yogyakarta",
+      description: "Executed community-level environmental health interventions and local empowerment initiatives.",
+      highlights: [
+        "Identified environmental health problems with community members and developed empowerment activities based on local needs.",
+        "Delivered food hygiene and sanitation education for food handlers/UMKM and environmental health education activities.",
+        "Conducted Jumantik Cilik training and environmental behavior education for children through tutoring, sanitation snakes-and-ladders games, and educational film screenings.",
+        "Supported provision of simple water filters to address household hard-water issues.",
+        "Supported waste donation activities and youth involvement in waste management based on the 5R principles.",
+        "Coordinated with community members in planning and implementing environmental empowerment activities."
       ]
     }
   ]

@@ -6,11 +6,11 @@ export default function About() {
       <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-8">About Me</h2>
       
      <div className="flex justify-center md:justify-start">
-  <div className="inline-block rounded-xl overflow-hidden shadow-lg border-2 border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800">
+  <div className="rounded-xl overflow-hidden shadow-lg border-2 border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 p-2 inline-block">
     <img
       src="/foto.profil.jpeg"
       alt="Jibakudin Nur"
-      style={{ width: '220px', height: 'auto', display: 'block' }}
+      className="w-48 sm:w-56 rounded-lg block"
     />
   </div>
 </div>

@@ -6,6 +6,7 @@ export interface Project {
   tools: string[];
   role: string;
   period: string;
+  link?: string;
   context: string;
   approach: string[];
   result: string[];

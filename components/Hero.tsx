@@ -44,12 +44,12 @@ export default function Hero() {
               Transforming complex field data into actionable safety and environmental solutions. I specialize in spatial intelligence, occupational health and safety (HSE), and epidemiological research to ensure industrial compliance and community well-being.
             </p>
 
-            {/* Tech Stack & Tools (Sangat dicari Rekruter) */}
+            {/* Tech Stack & Tools Sesuai CV */}
             <div className="flex flex-wrap gap-y-2 gap-x-4 text-[11px] sm:text-xs font-bold text-slate-500 dark:text-slate-400 uppercase">
-              <span className="flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> ArcGIS / ArcMap</span>
-              <span className="flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> AutoCAD</span>
-              <span className="flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> Looker Studio</span>
-              <span className="flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> SPSS & Mendeley</span>
+              <span className="flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> ArcGIS / Google Earth</span>[cite: 1, 2]
+              <span className="flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> SPSS & Epi Info</span>[cite: 1, 2]
+              <span className="flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> AutoCAD Dasar</span>[cite: 1, 2]
+              <span className="flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> Canva / Figma</span>[cite: 1, 2]
             </div>
 
             {/* Tombol Aksi (CTA) Utama */}
@@ -78,10 +78,8 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="w-full relative"
           >
-            {/* Box Gambar Widescreen (Rasio 16:9) */}
             <div className="relative aspect-video w-full rounded-xl overflow-hidden border-2 border-slate-300 dark:border-slate-700 bg-slate-200 dark:bg-slate-900 shadow-2xl group flex items-center justify-center">
               
-              {/* Overlay Tipis untuk menegaskan estetika */}
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent z-10 pointer-events-none"></div>
               
               <Image
@@ -92,7 +90,6 @@ export default function Hero() {
                 priority
               />
               
-              {/* Label Profesional di Sudut Kanan Bawah */}
               <div className="absolute bottom-3 right-3 z-20 px-2 py-1 bg-black/70 backdrop-blur-sm rounded text-[10px] text-slate-300 font-mono tracking-widest uppercase border border-slate-600/50">
                 Data-Driven Field Analytics
               </div>

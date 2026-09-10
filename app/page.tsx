@@ -2,9 +2,9 @@ import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
 import About from '@/components/About'
 import Skills from '@/components/Skills'
-import Certifications from '@/components/Certifications' // Pastikan ini aktif kembali
 import Experience from '@/components/Experience'
 import Projects from '@/components/Projects'
+import Certifications from '@/components/Certifications'
 import Contact from '@/components/Contact'
 
 export default function Home() {
@@ -14,9 +14,9 @@ export default function Home() {
       <Hero />
       <About />
       <Skills />
-      <Certifications /> {/* Daftar pelatihan lama tampil di sini */}
       <Experience />
       <Projects />
+      <Certifications />
       <Contact />
     </main>
   )

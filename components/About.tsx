@@ -22,7 +22,7 @@ export default function About() {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
-          {/* Kolom Kiri: Foto Profil (Ukuran diperkecil agar proporsional) & Teks Perkenalan */}
+          {/* Kolom Kiri: Foto Profil & Teks Perkenalan */}
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -30,7 +30,6 @@ export default function About() {
             transition={{ duration: 0.5 }}
             className="lg:col-span-5 space-y-6 flex flex-col items-center lg:items-start"
           >
-            {/* Lebar dan tinggi foto disesuaikan jadi max w-48 sm:w-52 agar tidak terlalu panjang */}
             <div className="rounded-2xl overflow-hidden shadow-xl border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-900 p-2 w-48 sm:w-52">
               <img
                 src="/foto.profil.jpeg"
@@ -39,7 +38,6 @@ export default function About() {
               />
             </div>
 
-            {/* Kotak Teks Perkenalan */}
             <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm text-slate-600 dark:text-slate-300 text-sm leading-relaxed space-y-4 w-full">
               <p>
                 I am an <strong className="text-slate-900 dark:text-white font-semibold">Applied Environmental Sanitation graduate</strong> from Poltekkes Kemenkes Yogyakarta, completing my study with a <strong className="text-emerald-600 dark:text-emerald-400 font-semibold">Cum Laude predicate (GPA 3.71)</strong>.
@@ -59,7 +57,7 @@ export default function About() {
             className="lg:col-span-7 space-y-6"
           >
             
-            {/* Card Pendidikan */}
+            {/* Card Pendidikan dengan Fokus Kursus yang Sudah Diterjemahkan */}
             <div className="flex flex-col gap-4 p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
               <div className="flex items-start sm:items-center gap-4">
                 <div className="w-14 h-14 rounded-xl bg-slate-50 dark:bg-slate-800 flex items-center justify-center shrink-0 border border-slate-200 dark:border-slate-700 overflow-hidden p-1 shadow-inner">
@@ -89,15 +87,21 @@ export default function About() {
                 </p>
                 <div className="flex flex-wrap gap-1.5">
                   {[
-                    "Kesehatan Masyarakat",
-                    "Pengabdian Masyarakat",
-                    "HSE, SMK3 & ISO 45001", 
-                    "AMDAL / EIA", 
-                    "GIS & Remote Sensing", 
-                    "Environmental Epidemiology", 
-                    "Industrial & Hospital Sanitation", 
-                    "Waste & Water Treatment", 
-                    "HACCP & Food Hygiene"
+                    "Public Health",
+                    "Community Service",
+                    "Occupational Health & Safety (OHS)",
+                    "Environmental Management",
+                    "Water, Air & Soil Sanitation",
+                    "Solid & Hazardous Waste Management",
+                    "Vector & Pest Control",
+                    "Industrial & Hospital Sanitation",
+                    "Food Hygiene & Sanitation",
+                    "HACCP",
+                    "SMK3 & ISO 45001",
+                    "AMDAL / EIA",
+                    "Environmental Epidemiology",
+                    "Data Analysis & Research Methodology",
+                    "GIS & Remote Sensing"
                   ].map((subject, i) => (
                     <span 
                       key={i} 

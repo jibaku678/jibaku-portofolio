@@ -6,18 +6,42 @@ import { Globe, FileText, X, ExternalLink, CheckCircle2 } from 'lucide-react'
 export default function Skills() {
   const [isCteflModalOpen, setIsCteflModalOpen] = useState(false)
 
+  // Data skills yang sudah di-improvisasi agar menjadi "Hook" bagi rekruter
   const technicalSkills = [
     { 
-      category: "Environmental Health & OHS", 
-      items: ["Environmental Sanitation", "HSE / K3 Fasyankes", "Wastewater Treatment (POPAL)", "Vector Control & Entomology", "UKL-UPL Document Drafting", "Public Health Research", "Environmental Laboratory"] 
+      category: "HSE & Environmental Management", 
+      items: [
+        "HSE Management (HIRADC, JSA, Work Permits)", 
+        "Environmental Compliance (AMDAL, UKL-UPL, PROPER)",
+        "Waste Management (B3 & Non-B3) / POPAL",
+        "Water & Food Hygiene Sanitation",
+        "Vector & Rodent Control",
+        "Safety Audits & Incident Investigation",
+        "Fire Preparedness & Emergency Response",
+        "Hospital & Industrial Sanitation"
+      ] 
     },
     { 
-      category: "Data & Spatial Analysis", 
-      items: ["SPSS (Statistical Analysis)", "ArcMap / GIS", "QGIS", "Google Earth", "Looker Studio (Dashboard)", "AutoCAD (Technical Drawing)", "Data Visualization"] 
+      category: "Spatial Mapping & Data Analytics", 
+      items: [
+        "ArcGIS, QGIS & Google Earth", 
+        "SPSS & Epi Info (Statistical Analysis)", 
+        "Epidemiology & Public Health Research", 
+        "Field Survey & Data Collection",
+        "Data Visualization (Looker Studio)",
+        "Research Methodology & Reporting"
+      ] 
     },
     { 
-      category: "Technical & Productivity Tools", 
-      items: ["Microsoft Office Suite", "Google Workspace", "Nitro PDF", "Google Forms & Barcode Systems"] 
+      category: "Engineering, Design & Productivity", 
+      items: [
+        "AutoCAD (Sanitation & Facility Drafting)", 
+        "Microsoft Office & Google Workspace", 
+        "Creative Design (Canva, Figma, CorelDRAW)",
+        "Video Editing (CapCut)", 
+        "Event Coordination & Tech Operations",
+        "Nitro PDF & Barcode Systems"
+      ] 
     }
   ]
 
@@ -48,11 +72,11 @@ export default function Skills() {
                 <h3 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-4 pb-2 border-b border-slate-100 dark:border-slate-800">
                   {group.category}
                 </h3>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2.5">
                   {group.items.map((skill, sIdx) => (
                     <span
                       key={sIdx}
-                      className="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium text-xs border border-slate-200/60 dark:border-slate-700/60"
+                      className="px-3 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-800/50 text-slate-700 dark:text-slate-300 font-medium text-xs border border-slate-200/80 dark:border-slate-700/80 shadow-sm hover:border-emerald-500/30 hover:bg-emerald-50/50 dark:hover:bg-emerald-900/10 transition-colors"
                     >
                       {skill}
                     </span>

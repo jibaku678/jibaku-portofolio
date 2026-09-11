@@ -6,18 +6,25 @@ import { Globe, FileText, X, ExternalLink, CheckCircle2 } from 'lucide-react'
 export default function Skills() {
   const [isCteflModalOpen, setIsCteflModalOpen] = useState(false)
 
-  // Data skills yang sudah di-improvisasi agar menjadi "Hook" bagi rekruter
+  // Data skills yang sudah dipisah antara HSE/K3 dan Environmental Health
   const technicalSkills = [
     { 
-      category: "HSE & Environmental Management", 
+      category: "Occupational Health & Safety (HSE)", 
       items: [
         "HSE Management (HIRADC, JSA, Work Permits)", 
-        "Environmental Compliance (AMDAL, UKL-UPL, PROPER)",
+        "Safety Audits & Incident Investigation",
+        "Fire Preparedness & Emergency Response",
+        "Safety Signs & Safe Work Practices",
+        "SMK3 & ISO 45001 Compliance"
+      ] 
+    },
+    { 
+      category: "Environmental Health & Sanitation", 
+      items: [
+        "Environmental Compliance (AMDAL, PROPER)",
         "Waste Management (B3 & Non-B3) / POPAL",
         "Water & Food Hygiene Sanitation",
         "Vector & Rodent Control",
-        "Safety Audits & Incident Investigation",
-        "Fire Preparedness & Emergency Response",
         "Hospital & Industrial Sanitation"
       ] 
     },
@@ -57,7 +64,7 @@ export default function Skills() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Technical Skills Column */}
+        {/* Technical Skills Column (Sekarang berisi 4 kotak, akan jadi grid 2x2 yang rapi) */}
         <div className="lg:col-span-2 space-y-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {technicalSkills.map((group, idx) => (
@@ -67,12 +74,12 @@ export default function Skills() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: idx * 0.1 }}
-                className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm"
+                className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm flex flex-col"
               >
                 <h3 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-4 pb-2 border-b border-slate-100 dark:border-slate-800">
                   {group.category}
                 </h3>
-                <div className="flex flex-wrap gap-2.5">
+                <div className="flex flex-wrap gap-2.5 mt-auto">
                   {group.items.map((skill, sIdx) => (
                     <span
                       key={sIdx}

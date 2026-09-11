@@ -20,90 +20,100 @@ export default function About() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 items-center">
+        {/* Layout diubah agar Foto Profil sejajar dengan Paragraf "I am..." di sebelah kiri */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+          
+          {/* Kolom Kiri: Foto Profil & Paragraf Perkenalan ("I am...") */}
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="flex justify-center"
+            className="lg:col-span-5 space-y-6 flex flex-col items-center lg:items-start"
           >
-            <div className="rounded-xl overflow-hidden shadow-lg border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-900 p-2">
+            <div className="rounded-2xl overflow-hidden shadow-xl border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-900 p-2.5">
               <img
                 src="/foto.profil.jpeg"
                 alt="Jibakudin Nur"
-                className="w-56 sm:w-64 rounded-lg block object-cover"
+                className="w-56 sm:w-64 rounded-xl block object-cover"
               />
+            </div>
+
+            {/* Paragraf Perkenalan Terpisah di Samping Foto agar Lega */}
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed space-y-4 w-full">
+              <p>
+                I am an <strong className="text-slate-900 dark:text-white font-semibold">Applied Environmental Sanitation graduate</strong> from Poltekkes Kemenkes Yogyakarta, completing my study with a <strong className="text-emerald-600 dark:text-emerald-400 font-semibold">Cum Laude predicate (GPA 3.71)</strong>.
+              </p>
+              <p>
+                Through practical field experiences across industrial facilities, hospitals, public health centers, and community programs, I have developed strong competencies in environmental health inspections, waste management systems, and safety compliance.
+              </p>
             </div>
           </motion.div>
 
+          {/* Kolom Kanan: Kartu Pendidikan, Statistik, & Sertifikasi */}
           <motion.div 
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="lg:col-span-2 space-y-6 text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed"
+            className="lg:col-span-7 space-y-6"
           >
-            <div className="space-y-4">
-              
-              {/* Card Institusi Pendidikan (Dipindah ke Paling Atas) dengan Perbaikan Proporsi Logo */}
-              <div className="flex flex-col gap-4 p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
-                <div className="flex items-start sm:items-center gap-4">
-                  <div className="w-14 h-14 rounded-xl bg-slate-50 dark:bg-slate-800 flex items-center justify-center shrink-0 border border-slate-200 dark:border-slate-700 overflow-hidden p-1 shadow-inner">
-                    <img 
-                      src="/logo.polkesyo.png" 
-                      alt="Poltekkes Kemenkes Yogyakarta Logo" 
-                      className="w-12 h-12 object-contain aspect-square"
-                    />
-                  </div>
-                  <div>
-                    <div className="flex flex-wrap items-center gap-2 mb-1">
-                      <span className="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 uppercase tracking-widest font-bold">Education Background</span>
-                      <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">2022 – 2026</span>
-                    </div>
-                    <h4 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white leading-tight mb-1">
-                      Applied Bachelor (D4) in Environmental Sanitation
-                    </h4>
-                    <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium">
-                      Poltekkes Kemenkes Yogyakarta <span className="text-emerald-600 dark:text-emerald-400 font-bold mx-1">•</span> Cum Laude (GPA 3.71 / 4.00)
-                    </p>
-                  </div>
+            
+            {/* Card Pendidikan dengan Penambahan Pengabdian & Kesmas */}
+            <div className="flex flex-col gap-4 p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+              <div className="flex items-start sm:items-center gap-4">
+                <div className="w-14 h-14 rounded-xl bg-slate-50 dark:bg-slate-800 flex items-center justify-center shrink-0 border border-slate-200 dark:border-slate-700 overflow-hidden p-1 shadow-inner">
+                  <img 
+                    src="/logo.polkesyo.png" 
+                    alt="Poltekkes Kemenkes Yogyakarta Logo" 
+                    className="w-12 h-12 object-contain aspect-square"
+                  />
                 </div>
-                
-                {/* Coursework Badges */}
-                <div className="pt-3 border-t border-slate-100 dark:border-slate-800">
-                  <p className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">
-                    Core Competencies & Coursework
-                  </p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {[
-                      "HSE, SMK3 & ISO 45001", 
-                      "AMDAL / EIA", 
-                      "GIS & Remote Sensing", 
-                      "Environmental Epidemiology", 
-                      "Industrial & Hospital Sanitation", 
-                      "Waste & Water Treatment", 
-                      "HACCP & Food Hygiene"
-                    ].map((subject, i) => (
-                      <span 
-                        key={i} 
-                        className="text-[10px] font-semibold px-2.5 py-1 rounded-md bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-emerald-500/40 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
-                      >
-                        {subject}
-                      </span>
-                    ))}
+                <div>
+                  <div className="flex flex-wrap items-center gap-2 mb-1">
+                    <span className="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 uppercase tracking-widest font-bold">Education Background</span>
+                    <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">2022 – 2026</span>
                   </div>
+                  <h4 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white leading-tight mb-1">
+                    Applied Bachelor (D4) in Environmental Sanitation
+                  </h4>
+                  <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium">
+                    Poltekkes Kemenkes Yogyakarta <span className="text-emerald-600 dark:text-emerald-400 font-bold mx-1">•</span> Cum Laude (GPA 3.71 / 4.00)
+                  </p>
                 </div>
               </div>
-
-              {/* Paragraf Perkenalan I am... di bawah Card Pendidikan */}
-              <p className="pt-2">
-                I am an <strong className="text-slate-900 dark:text-white font-semibold">Applied Environmental Sanitation graduate</strong> from Poltekkes Kemenkes Yogyakarta, completing my study with a <strong className="text-emerald-600 dark:text-emerald-400 font-semibold">Cum Laude predicate (GPA 3.71)</strong>. Through practical field experiences across industrial facilities, hospitals, public health centers, and community programs, I have developed strong competencies in environmental health inspections, waste management systems, and safety compliance.
-              </p>
+              
+              {/* Coursework Badges Diperbarui Lengkap dengan Pengabdian & Kesehatan Masyarakat */}
+              <div className="pt-4 border-t border-slate-100 dark:border-slate-800">
+                <p className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">
+                  Core Coursework & Focus Areas
+                </p>
+                <div className="flex flex-wrap gap-1.5">
+                  {[
+                    "Kesehatan Masyarakat",
+                    "Pengabdian Masyarakat",
+                    "HSE, SMK3 & ISO 45001", 
+                    "AMDAL / EIA", 
+                    "GIS & Remote Sensing", 
+                    "Environmental Epidemiology", 
+                    "Industrial & Hospital Sanitation", 
+                    "Waste & Water Treatment", 
+                    "HACCP & Food Hygiene"
+                  ].map((subject, i) => (
+                    <span 
+                      key={i} 
+                      className="text-[10px] font-semibold px-2.5 py-1 rounded-md bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-emerald-500/40 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+                    >
+                      {subject}
+                    </span>
+                  ))}
+                </div>
+              </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-              <div className="p-4 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-3 shadow-sm">
+            {/* Grid Informasi Akademik & Base */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-3 shadow-sm">
                 <div className="p-2.5 rounded-lg bg-emerald-500/10 text-emerald-500">
                   <Award className="w-5 h-5" />
                 </div>
@@ -113,22 +123,22 @@ export default function About() {
                 </div>
               </div>
 
-              <div className="p-4 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-3 shadow-sm">
+              <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-3 shadow-sm">
                 <div className="p-2.5 rounded-lg bg-amber-500/10 text-amber-500">
                   <MapPin className="w-5 h-5" />
                 </div>
                 <div>
                   <div className="text-[10px] font-mono text-slate-400 uppercase tracking-wider">Base / Mobility</div>
-                  <div className="text-sm font-bold text-slate-900 dark:text-white">Magelang & Yogyakarta (Open to Relocation)</div>
+                  <div className="text-sm font-bold text-slate-900 dark:text-white">Magelang & Yogyakarta (Relocation Ready)</div>
                 </div>
               </div>
             </div>
 
-            {/* Hook / Point of Interest: Sertifikat Uji Kompetensi Nasional Level 6 */}
+            {/* Sertifikat Uji Kompetensi Nasional Level 6 */}
             <motion.div 
               whileHover={{ scale: 1.01 }}
               transition={{ duration: 0.2 }}
-              className="relative rounded-2xl bg-gradient-to-r from-emerald-600/15 via-emerald-500/10 to-slate-900/40 dark:from-emerald-500/20 dark:via-emerald-500/10 dark:to-slate-900 border-2 border-emerald-500/50 p-6 shadow-xl mt-4 overflow-hidden group"
+              className="relative rounded-2xl bg-gradient-to-r from-emerald-600/15 via-emerald-500/10 to-slate-900/40 dark:from-emerald-500/20 dark:via-emerald-500/10 dark:to-slate-900 border-2 border-emerald-500/50 p-6 shadow-xl overflow-hidden group"
             >
               <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none"></div>
 

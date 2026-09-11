@@ -22,30 +22,25 @@ export default function About() {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
-          {/* Kolom Kiri: Foto Profil & Teks Perkenalan */}
+          {/* Kolom Kiri: Foto & Teks Perkenalan Digabung dalam Satu Kotak Rapi */}
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="lg:col-span-5 space-y-6 flex flex-col items-center lg:items-start"
+            className="lg:col-span-5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm flex flex-col items-center text-center space-y-6"
           >
-            <div className="rounded-2xl overflow-hidden shadow-xl border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-900 p-2 w-48 sm:w-52">
+            <div className="rounded-xl overflow-hidden shadow-md border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-950 p-1.5 w-44 sm:w-48">
               <img
                 src="/foto.profil.jpeg"
                 alt="Jibakudin Nur"
-                className="w-full rounded-xl block object-cover aspect-[4/5]"
+                className="w-full rounded-lg block object-cover aspect-[4/5]"
               />
             </div>
 
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm text-slate-600 dark:text-slate-300 text-sm leading-relaxed space-y-4 w-full">
-              <p>
-                I am an <strong className="text-slate-900 dark:text-white font-semibold">Applied Environmental Sanitation graduate</strong> from Poltekkes Kemenkes Yogyakarta, completing my study with a <strong className="text-emerald-600 dark:text-emerald-400 font-semibold">Cum Laude predicate (GPA 3.71)</strong>.
-              </p>
-              <p>
-                Through practical field experiences across industrial facilities, hospitals, public health centers, and community programs, I have developed strong competencies in environmental health inspections, waste management systems, and safety compliance.
-              </p>
-            </div>
+            <p className="text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed text-justify">
+              I am an <strong className="text-slate-900 dark:text-white font-semibold">Applied Environmental Sanitation graduate</strong> from Poltekkes Kemenkes Yogyakarta, completing my study with a <strong className="text-emerald-600 dark:text-emerald-400 font-semibold">Cum Laude predicate (GPA 3.71)</strong>. Through practical field experiences across industrial facilities, hospitals, public health centers, and community programs, I have developed strong competencies in environmental health inspections, waste management systems, and safety compliance.
+            </p>
           </motion.div>
 
           {/* Kolom Kanan: Kartu Pendidikan, Statistik, & Sertifikasi */}
@@ -57,7 +52,7 @@ export default function About() {
             className="lg:col-span-7 space-y-6"
           >
             
-            {/* Card Pendidikan dengan Fokus Kursus yang Sudah Diterjemahkan */}
+            {/* Card Pendidikan */}
             <div className="flex flex-col gap-4 p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
               <div className="flex items-start sm:items-center gap-4">
                 <div className="w-14 h-14 rounded-xl bg-slate-50 dark:bg-slate-800 flex items-center justify-center shrink-0 border border-slate-200 dark:border-slate-700 overflow-hidden p-1 shadow-inner">

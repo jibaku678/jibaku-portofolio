@@ -7,9 +7,18 @@ export default function Skills() {
   const [isCteflModalOpen, setIsCteflModalOpen] = useState(false)
 
   const technicalSkills = [
-    { category: "Environmental Health & OHS", items: ["Environmental Sanitation", "HSE / K3 Fasyankes", "Wastewater Treatment (POPAL)", "Vector Control & Entomology", "UKL-UPL Document Drafting"] },
-    { category: "Data & Spatial Analysis", items: ["SPSS (Statistical Analysis)", "ArcMap / GIS", "Looker Studio (Dashboard)", "AutoCAD (Technical Drawing)", "Data Visualization"] },
-    { category: "Tools & Frameworks", items: ["Next.js", "Tailwind CSS", "Framer Motion", "Google Forms & Barcode Systems", "Microsoft Office Suite"] }
+    { 
+      category: "Environmental Health & OHS", 
+      items: ["Environmental Sanitation", "HSE / K3 Fasyankes", "Wastewater Treatment (POPAL)", "Vector Control & Entomology", "UKL-UPL Document Drafting", "Public Health Research", "Environmental Laboratory"] 
+    },
+    { 
+      category: "Data & Spatial Analysis", 
+      items: ["SPSS (Statistical Analysis)", "ArcMap / GIS", "QGIS", "Google Earth", "Looker Studio (Dashboard)", "AutoCAD (Technical Drawing)", "Data Visualization"] 
+    },
+    { 
+      category: "Technical & Productivity Tools", 
+      items: ["Microsoft Office Suite", "Google Workspace", "Nitro PDF", "Google Forms & Barcode Systems"] 
+    }
   ]
 
   return (

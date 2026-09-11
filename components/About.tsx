@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Award, MapPin, ShieldCheck, ExternalLink, X, FileText, GraduationCap } from 'lucide-react'
+import { Award, MapPin, ShieldCheck, ExternalLink, X, FileText } from 'lucide-react'
 
 export default function About() {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -49,7 +49,7 @@ export default function About() {
                 I am an <strong className="text-slate-900 dark:text-white font-semibold">Applied Environmental Sanitation graduate</strong> from Poltekkes Kemenkes Yogyakarta, completing my study with a <strong className="text-emerald-600 dark:text-emerald-400 font-semibold">Cum Laude predicate (GPA 3.71)</strong>.
               </p>
               
-              {िरा "Card Institusi Pendidikan dengan Logo Kampus" */}
+              {/* Card Institusi Pendidikan dengan Logo Kampus */}
               <div className="flex items-center gap-4 p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
                 <div className="w-12 h-12 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center p-1.5 shrink-0 border border-slate-200 dark:border-slate-700">
                   <img 

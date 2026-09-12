@@ -46,7 +46,7 @@ export default function Hero() {
               </h1>
               
               <h2 className="text-sm sm:text-base font-semibold text-amber-600 dark:text-amber-400 flex items-center gap-2 uppercase tracking-wide">
-                Environmental Health • GIS • HSE • One Health & Public Health Research
+                Environmental Health • HSE • One Health & Public Health Research
               </h2>
             </div>
 
@@ -133,12 +133,12 @@ export default function Hero() {
                 <span className="bg-emerald-500/20 px-2 py-0.5 rounded text-[10px] font-bold">VERIFIED</span>
               </div>
 
-              {/* Bagian Teks Ringkasan */}
+              {/* Bagian Teks Ringkasan (Diperkuat Public Health Research) */}
               <div className="space-y-4 text-sm text-slate-300 leading-relaxed">
                 <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
                   <h4 className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-widest">// Profile Overview</h4>
                   <p>
-                    Bachelor Applied in Environmental Sanitation berpredikat <strong className="text-white">Cum Laude (GPA 3.71)</strong>[cite: 3] dengan spesialisasi mendalam pada bidang <strong className="text-white">Environmental Health, Industrial HSE, GIS Spatial Risk Analysis, serta One Health & Public Health Research</strong>. Siap mendukung operasional perusahaan dalam pemenuhan standar keselamatan kerja dan mitigasi risiko lingkungan secara presisi.
+                    Bachelor Applied in Environmental Sanitation berpredikat <strong className="text-white">Cum Laude (GPA 3.71)</strong>[cite: 3] dengan spesialisasi komprehensif pada bidang <strong className="text-white">Environmental Health, Industrial HSE, GIS Spatial Risk Analysis, serta Public Health Research & One Health</strong>. Berpengalaman dalam merancang investigasi epidemiologi, surveilans vektor penyakit, serta analisis data kesehatan masyarakat berbasis bukti ilmiah untuk mendukung intervensi lintas sektor yang efektif.
                   </p>
                 </div>
 

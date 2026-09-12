@@ -4,12 +4,10 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { FileText, ChevronLeft, ChevronRight, X, Maximize2, Minimize2, Map, Camera, ExternalLink } from 'lucide-react'
 
 export default function Projects() {
-  // State untuk modal Research Assistant (RA1 - RA5)
   const [isRaModalOpen, setIsRaModalOpen] = useState(false)
   const [isRaFullScreen, setIsRaFullScreen] = useState(false)
   const [raDocIdx, setRaDocIdx] = useState(0)
 
-  // State untuk modal Research Enumerator (Foto Lapangan & Peta Spasial)
   const [isEnumModalOpen, setIsEnumModalOpen] = useState(false)
   const [isEnumFullScreen, setIsEnumFullScreen] = useState(false)
   const [enumTab, setEnumTab] = useState<'photos' | 'maps'>('photos')
@@ -43,7 +41,6 @@ export default function Projects() {
     "/PROJEK_DOC/peta7.jpeg"
   ]
 
-  // Handler Navigasi
   const nextRaSlide = () => setRaDocIdx((prev) => (prev === raImages.length - 1 ? 0 : prev + 1))
   const prevRaSlide = () => setRaDocIdx((prev) => (prev === 0 ? raImages.length - 1 : prev - 1))
 
@@ -163,7 +160,7 @@ export default function Projects() {
                   ) : (
                     <a 
                       href={project.link} 
-                      onClick={(e) => e.stopPropagation()} // Mencegah trigger card click
+                      onClick={(e) => e.stopPropagation()} 
                       className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 hover:underline font-bold text-xs"
                       target="_blank" 
                       rel="noopener noreferrer"
@@ -193,7 +190,7 @@ export default function Projects() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               className={`relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-2xl transition-all duration-300 flex flex-col ${
-                isRaFullScreen ? 'w-screen h-screen max-w-none max-h-none rounded-none p-4' : 'max-w-3xl w-full'
+                isRaFullScreen ? 'w-screen h-screen max-w-none max-h-none rounded-none p-4' : 'max-w-4xl w-full'
               }`}
               onClick={(e) => e.stopPropagation()}
             >
@@ -216,8 +213,9 @@ export default function Projects() {
                 </div>
               </div>
 
+              {/* Menggunakan object-contain agar foto tampil utuh tanpa terpotong */}
               <div className="my-4 relative flex flex-col items-center justify-center bg-slate-100 dark:bg-slate-950 rounded-xl p-3 border border-slate-200 dark:border-slate-800 flex-1">
-                <div className="relative w-full aspect-video rounded-lg overflow-hidden bg-slate-900 flex items-center justify-center shadow-md group">
+                <div className="relative w-full h-[60vh] flex items-center justify-center bg-slate-950/40 rounded-lg overflow-hidden shadow-md group">
                   <AnimatePresence mode="wait">
                     <motion.img
                       key={raDocIdx}
@@ -227,7 +225,7 @@ export default function Projects() {
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
                       transition={{ duration: 0.3 }}
-                      className="w-full h-full object-cover"
+                      className="max-h-full max-w-full object-contain select-none"
                     />
                   </AnimatePresence>
 
@@ -270,7 +268,7 @@ export default function Projects() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               className={`relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-2xl transition-all duration-300 flex flex-col ${
-                isEnumFullScreen ? 'w-screen h-screen max-w-none max-h-none rounded-none p-4' : 'max-w-3xl w-full'
+                isEnumFullScreen ? 'w-screen h-screen max-w-none max-h-none rounded-none p-4' : 'max-w-4xl w-full'
               }`}
               onClick={(e) => e.stopPropagation()}
             >
@@ -312,8 +310,9 @@ export default function Projects() {
                 </button>
               </div>
 
+              {/* Menggunakan object-contain agar foto & peta tampil utuh tanpa terpotong */}
               <div className="my-4 relative flex flex-col items-center justify-center bg-slate-100 dark:bg-slate-950 rounded-xl p-3 border border-slate-200 dark:border-slate-800 flex-1">
-                <div className="relative w-full aspect-video rounded-lg overflow-hidden bg-slate-900 flex items-center justify-center shadow-md group">
+                <div className="relative w-full h-[60vh] flex items-center justify-center bg-slate-950/40 rounded-lg overflow-hidden shadow-md group">
                   <AnimatePresence mode="wait">
                     {enumTab === 'photos' ? (
                       <motion.img
@@ -324,7 +323,7 @@ export default function Projects() {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.3 }}
-                        className="w-full h-full object-cover"
+                        className="max-h-full max-w-full object-contain select-none"
                       />
                     ) : (
                       <motion.img
@@ -335,7 +334,7 @@ export default function Projects() {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.3 }}
-                        className="w-full h-full object-cover"
+                        className="max-h-full max-w-full object-contain select-none"
                       />
                     )}
                   </AnimatePresence>

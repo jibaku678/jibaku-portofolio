@@ -42,8 +42,14 @@ export default function Contact() {
               rel="noopener noreferrer"
               className="flex items-center justify-between p-3.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider transition-all"
             >
-              <span className="flex items-center gap-2">
-                <Download className="w-4 h-4" /> Download Official CV
+             <a
+  href="/CV_Jibakudin_Nur_Indonesia.pdf"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="..."
+>
+  Download Official CV
+</a>
               </span>
               <span>PDF</span>
             </a>

@@ -1,125 +1,171 @@
 'use client'
-import { motion } from 'framer-motion'
-import { Calendar, CheckCircle2 } from 'lucide-react'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Briefcase, Calendar, MapPin, ChevronLeft, ChevronRight, CheckCircle2 } from 'lucide-react'
 
 export default function Experience() {
+  // Daftar foto untuk slider Research Assistant
+  const raImages = [
+    "/PROJEK_DOC/RA1.jpeg",
+    "/PROJEK_DOC/RA2.jpeg",
+    "/PROJEK_DOC/RA3.jpeg",
+    "/PROJEK_DOC/RA4.jpeg",
+    "/PROJEK_DOC/RA5.jpeg"
+  ]
+
+  const [currentIdx, setCurrentIdx] = useState(0)
+
+  const nextSlide = () => {
+    setCurrentIdx((prev) => (prev === raImages.length - 1 ? 0 : prev + 1))
+  }
+
+  const prevSlide = () => {
+    setCurrentIdx((prev) => (prev === 0 ? raImages.length - 1 : prev - 1))
+  }
+
   const experiences = [
     {
-      period: "August – October 2025",
-      role: "Industrial Field Practice | Environmental Health & K3",
-      location: "PT Dua Kelinci, Pati",
-      description: "Supported industrial environmental health and OHS operational activities.",
+      role: "Research Assistant & Field Investigator",
+      company: "Academic & Environmental Health Field Projects",
+      period: "2024 – 2026",
+      location: "Yogyakarta & Central Java",
+      description: "Led and assisted rigorous field data collection, environmental sampling, and spatial risk assessments. Managed technical documentations, sanitation facility inspections, and data analytics to support evidence-based public health research.",
       highlights: [
-        "Supported K3/HSE activities through hazard identification and risk assessment using HIRADC and JSA, work permits, safety patrols, and safe work practices.",
-        "Studied fire emergency preparedness through evacuation route planning and placement of fire alarms, hydrants, and fire extinguishers, including hands-on APAR and hydrant practice.",
-        "Studied workplace accident investigation and incident report preparation, as well as safety signs, SOPs, MSDS, and risk management.",
-        "Gained exposure to B3 waste, wastewater, air emissions, WWTP, and clean and drinking water management.",
-        "Studied RKL-RPL/AMDAL and PROPER and their application in industrial environmental management.",
-        "Supported food hygiene and sanitation aspects within the industrial setting.",
-        "Prepared an aerated grit chamber drawing as part of wastewater treatment system practice."
-      ]
+        "Conducted comprehensive field inspections and environmental health sampling across industrial & public facilities.",
+        "Utilized ArcGIS and statistical tools (SPSS) to analyze spatial distribution and environmental risk factors.",
+        "Collaborated with cross-functional academic teams to formulate structured research reports and safety compliance logs."
+      ],
+      hasSlider: true // Menandakan pengalaman ini memiliki galeri slider foto
     },
     {
-      period: "April – May 2025",
-      role: "Community Health Center Field Practice | Environmental Health",
-      location: "Godean II Community Health Center, Sleman, Yogyakarta",
-      description: "Conducted field activities in a primary healthcare setting focusing on sanitation and disease epidemiology.",
-      highlights: [
-        "Conducted healthy-house inspections and assessed environmental sanitation conditions in the community.",
-        "Participated in epidemiological investigations of environmentally based diseases and field data collection.",
-        "Participated in Jumantik activities, health education, and Jumantik Cilik training.",
-        "Conducted larval surveys, including Anopheles larval surveys as required by field activities.",
-        "Mapped community clean-water sources and healthy-house inspection results to support environmental health problem identification.",
-        "Supported community-based environmental health activities within the scope of environmental health services."
-      ]
-    },
-    {
-      period: "August – October 2024",
-      role: "Hospital Field Practice | Environmental Health Installation",
-      location: "Bethesda Hospital, Yogyakarta",
-      description: "Completed clinical rotations across hospital environmental management units.",
-      highlights: [
-        "Participated in the Environmental Health Installation through rotation across several hospital environmental management units.",
-        "Gained exposure to medical B3 and non-B3 solid waste management, sanitation and pest control, and clean and drinking water management.",
-        "Participated in environmental laboratory and wastewater treatment plant activities.",
-        "Studied hospital environmental health management through operational activities, monitoring, and environmental factor control."
-      ]
-    },
-    {
-      period: "March – April 2024",
-      role: "Institutional Field Practice | Environmental Health",
-      location: "Magelang District Health Office, Magelang",
-      description: "Applied environmental sanitation principles within a government institutional setting.",
-      highlights: [
-        "Gained exposure to environmental health management within a government institution supporting community health.",
-        "Participated in activities related to environmental health management, health risk management, coordination, administration, and activity reporting.",
-        "Studied workflow and coordination of environmental health programs within a government institution."
-      ]
-    },
-    {
+      role: "Community Health Intern (PKL Komunitas)",
+      company: "Padukuhan Ngantak, Argorejo, Sedayu",
       period: "January – February 2026",
-      role: "Community Field Practice | Community Empowerment",
-      location: "Ngentak Hamlet, Argorejo, Sedayu, Bantul, Yogyakarta",
-      description: "Executed community-level environmental health interventions and local empowerment initiatives.",
+      location: "Bantul, Yogyakarta",
+      description: "Spearheaded community empowerment programs, environmental health education, and appropriate technology implementation for rural sanitation improvement.",
       highlights: [
-        "Identified environmental health problems with community members and developed empowerment activities based on local needs.",
-        "Delivered food hygiene and sanitation education for food handlers/UMKM and environmental health education activities.",
-        "Conducted Jumantik Cilik training and environmental behavior education for children through tutoring, sanitation snakes-and-ladders games, and educational film screenings.",
-        "Supported provision of simple water filters to address household hard-water issues.",
-        "Supported waste donation activities and youth involvement in waste management based on the 5R principles.",
-        "Coordinated with community members in planning and implementing environmental empowerment activities."
-      ]
+        "Identified community health problems alongside local residents to formulate targeted empowerment programs.",
+        "Introduced simple water filtration systems and conducted CTPS (Handwashing) campaigns.",
+        "Developed solid waste management initiatives (sedekah sampah) and promoted 5R principles."
+      ],
+      hasSlider: false
     }
   ]
 
   return (
-    <section id="experience" className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-slate-200 dark:border-slate-800/60">
-      <div className="flex flex-col items-start gap-2 mb-10">
+    <section id="experience" className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-slate-200 dark:border-slate-800/60">
+      <div className="flex flex-col items-start gap-2 mb-12">
         <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">
           // Professional Journey
         </span>
         <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white uppercase tracking-tight">
-          Practical & Field Experience
+          Experience & Fieldwork
         </h2>
       </div>
 
-      <div className="space-y-6">
+      <div className="space-y-12">
         {experiences.map((exp, idx) => (
           <motion.div
             key={idx}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: idx * 0.1 }}
-            className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 sm:p-8 shadow-sm"
+            transition={{ duration: 0.5, delay: idx * 0.2 }}
+            className="grid grid-cols-1 lg:grid-cols-12 gap-8 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 sm:p-8 shadow-sm items-center"
           >
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4 pb-4 border-b border-slate-100 dark:border-slate-800">
-              <div>
-                <span className="text-xs font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider">
-                  {exp.role}
+            {/* Kolom Keterangan / Teks Pengalaman */}
+            <div className={`space-y-4 ${exp.hasSlider ? 'lg:col-span-7' : 'lg:col-span-12'}`}>
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-bold tracking-wider uppercase border border-emerald-500/20 flex items-center gap-1.5">
+                  <Briefcase className="w-3.5 h-3.5" /> {exp.role}
                 </span>
-                <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white uppercase tracking-tight">
-                  {exp.location}
-                </h3>
+                <span className="text-xs font-mono text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                  <Calendar className="w-3.5 h-3.5 text-amber-500" /> {exp.period}
+                </span>
               </div>
 
-              <div className="flex items-center gap-2 text-xs font-medium text-slate-500">
-                <Calendar className="w-4 h-4 text-emerald-500" /> {exp.period}
+              <div>
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white">
+                  {exp.company}
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 flex items-center gap-1 mt-1">
+                  <MapPin className="w-3.5 h-3.5 text-blue-500" /> {exp.location}
+                </p>
+              </div>
+
+              <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                {exp.description}
+              </p>
+
+              <div className="space-y-2 pt-2">
+                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Key Contributions:</p>
+                {exp.highlights.map((item, hIdx) => (
+                  <div key={hIdx} className="flex items-start gap-2 text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                    <span>{item}</span>
+                  </div>
+                ))}
               </div>
             </div>
 
-            <p className="text-sm text-slate-600 dark:text-slate-300 mb-4">
-              {exp.description}
-            </p>
+            {/* Kolom Slider Foto (Hanya muncul jika hasSlider bernilai true) */}
+            {exp.hasSlider && (
+              <div className="lg:col-span-5 flex flex-col items-center">
+                <div className="relative w-full aspect-video rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-md group">
+                  
+                  {/* Animasi Transisi Slider Foto */}
+                  <AnimatePresence mode="wait">
+                    <motion.img
+                      key={currentIdx}
+                      src={raImages[currentIdx]}
+                      alt={`Research Assistant Documentation ${currentIdx + 1}`}
+                      initial={{ opacity: 0, scale: 1.05 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      transition={{ duration: 0.4 }}
+                      className="w-full h-full object-cover"
+                    />
+                  </AnimatePresence>
 
-            <ul className="space-y-2">
-              {exp.highlights.map((item, hIdx) => (
-                <li key={hIdx} className="flex items-start gap-2 text-xs sm:text-sm text-slate-600 dark:text-slate-400">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
+                  {/* Tombol Navigasi Kiri */}
+                  <button
+                    onClick={prevSlide}
+                    className="absolute left-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-slate-900/60 hover:bg-slate-900 text-white backdrop-blur-sm opacity-80 hover:opacity-100 transition-all cursor-pointer"
+                    aria-label="Previous Slide"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+
+                  {/* Tombol Navigasi Kanan */}
+                  <button
+                    onClick={nextSlide}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-slate-900/60 hover:bg-slate-900 text-white backdrop-blur-sm opacity-80 hover:opacity-100 transition-all cursor-pointer"
+                    aria-label="Next Slide"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+
+                  {/* Indikator Angka Slide di Pojok */}
+                  <div className="absolute top-2 right-2 px-2.5 py-1 rounded-md bg-slate-950/70 backdrop-blur-md text-[10px] font-mono text-white font-bold">
+                    {currentIdx + 1} / {raImages.length}
+                  </div>
+                </div>
+
+                {/* Titik Indikator (Dots) di Bawah Slider */}
+                <div className="flex items-center gap-1.5 mt-3">
+                  {raImages.map((_, dotIdx) => (
+                    <button
+                      key={dotIdx}
+                      onClick={() => setCurrentIdx(dotIdx)}
+                      className={`h-1.5 rounded-full transition-all cursor-pointer ${
+                        currentIdx === dotIdx ? 'w-6 bg-emerald-500' : 'w-1.5 bg-slate-300 dark:bg-slate-700'
+                      }`}
+                      aria-label={`Go to slide ${dotIdx + 1}`}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
           </motion.div>
         ))}
       </div>

@@ -2,12 +2,11 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
-import { Download, Briefcase, CheckCircle2, Sparkles, X, Calendar, Printer, Award, FileText } from 'lucide-react'
+import { Briefcase, Sparkles, X, Printer } from 'lucide-react'
 
 export default function Hero() {
   const [isSummaryModalOpen, setIsSummaryModalOpen] = useState(false)
 
-  // Tanggal real-time otomatis berdasarkan sistem browser
   const currentDate = new Date().toLocaleDateString('id-ID', {
     day: 'numeric',
     month: 'long',
@@ -55,34 +54,17 @@ export default function Hero() {
               Applied Environmental Sanitation graduate focused on field risk assessment, spatial data analysis, and environmental health compliance to support industrial safety and public health initiatives.
             </p>
 
-            <div className="flex flex-wrap gap-y-2 gap-x-4 text-[11px] sm:text-xs font-bold text-slate-500 dark:text-slate-400 uppercase">
-              <span className="flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> ArcGIS</span>
-              <span className="flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> SPSS</span>
-              <span className="flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> MS Office</span>
-              <span className="flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> Figma</span>
-            </div>
-
-            {/* Tombol Aksi Lengkap: Download ATS & Generate Summary */}
-            <div className="flex flex-wrap gap-4 pt-4 w-full">
-              <a
-                href="/CV_JIBAKUDIN_NUR_fix_1.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-lg shadow-emerald-600/20 cursor-pointer"
-              >
-                <Download className="w-4 h-4" /> Download ATS Resume
-              </a>
-
+            <div className="flex flex-wrap gap-4 pt-4 w-full sm:w-auto">
               <button
                 onClick={() => setIsSummaryModalOpen(true)}
-                className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-xs uppercase tracking-wider transition-all shadow-lg shadow-amber-500/20 cursor-pointer"
+                className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-8 py-3.5 rounded-lg bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-lg shadow-emerald-500/20 cursor-pointer"
               >
                 <Sparkles className="w-4 h-4" /> Generate Summary
               </button>
 
               <a
                 href="#projects"
-                className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg bg-white dark:bg-slate-900 border-2 border-slate-300 dark:border-slate-700 hover:border-amber-500 text-slate-700 dark:text-slate-300 font-bold text-xs uppercase tracking-wider transition-all"
+                className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-8 py-3.5 rounded-lg bg-white dark:bg-slate-900 border-2 border-slate-300 dark:border-slate-700 hover:border-amber-500 text-slate-700 dark:text-slate-300 font-bold text-xs uppercase tracking-wider transition-all"
               >
                 <Briefcase className="w-4 h-4" /> View Portfolio
               </a>
@@ -109,7 +91,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Modal Comprehensive Real-Time Summary (Merangkum Seluruh Info Web) */}
+      {/* Modal Summary Tanpa Ikon (Bersih & Relevan) */}
       <AnimatePresence>
         {isSummaryModalOpen && (
           <motion.div
@@ -127,12 +109,9 @@ export default function Hero() {
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between pb-4 border-b border-slate-800 sticky top-0 bg-slate-900 z-10">
-                <div className="flex items-center gap-2">
-                  <Sparkles className="w-5 h-5 text-emerald-400" />
-                  <h3 className="text-base sm:text-lg font-bold text-white uppercase tracking-wider">
-                    Comprehensive Professional Portfolio Summary
-                  </h3>
-                </div>
+                <h3 className="text-base sm:text-lg font-bold text-white uppercase tracking-wider">
+                  Executive Professional Summary
+                </h3>
                 <button
                   onClick={() => setIsSummaryModalOpen(false)}
                   className="p-2 rounded-lg bg-slate-800 text-slate-400 hover:text-white transition-colors cursor-pointer"
@@ -141,94 +120,45 @@ export default function Hero() {
                 </button>
               </div>
 
-              {/* Real-time Date Badge */}
-              <div className="p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center gap-2 text-xs font-mono text-emerald-400">
-                <Calendar className="w-4 h-4 shrink-0" />
-                <span>Generated real-time on: <strong>{currentDate}</strong></span>
+              {/* Tanggal Real-Time */}
+              <div className="p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-xs font-mono text-emerald-400 flex justify-between items-center">
+                <span>Generated real-time on: <strong>{currentDate}</strong></span>[cite: 3]
+                <span className="bg-emerald-500/20 px-2 py-0.5 rounded text-[10px] font-bold">VERIFIED</span>
               </div>
 
-              {/* Bagian 1: Identitas & Ringkasan Utama */}
-              <div className="space-y-3">
-                <h4 className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-widest">// 1. Profile Overview</h4>
-                <p className="text-sm text-slate-300 leading-relaxed">
-                  <strong className="text-white">Jibakudin Nur</strong> merupakan lulusan Sarjana Terapan Sanitasi Lingkungan dengan predikat <span className="text-emerald-400 font-bold">Cum Laude (GPA 3.71)</span>. Memiliki keahlian mendalam di bidang <strong className="text-white">Environmental Health, Industrial HSE Compliance, GIS Spatial Analysis, dan Public Health Research</strong>.
-                </p>
-              </div>
+              {/* Bagian Teks Ringkasan */}
+              <div className="space-y-4 text-sm text-slate-300 leading-relaxed">
+                <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+                  <h4 className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-widest">// Profile Overview</h4>
+                  <p>
+                    Lulusan Sarjana Terapan Sanitasi Lingkungan berpredikat <strong className="text-white">Cum Laude (GPA 3.71)</strong>[cite: 3] dengan kompetensi utama pada bidang <strong className="text-white">Environmental Health, Industrial HSE Compliance, dan GIS Spatial Risk Analysis</strong>. Siap mendukung operasional industri dalam pemenuhan standar K3 serta mitigasi risiko lingkungan secara presisi.
+                  </p>
+                </div>
 
-              {/* Bagian 2: Kompetensi Teknis */}
-              <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
-                <h4 className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-widest">// 2. Core Technical Competencies</h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-300">
-                  <div className="flex items-center gap-2"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" /> Industrial HSE & Waste Management (WWTP, POPAL)</div>
-                  <div className="flex items-center gap-2"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" /> Spatial Mapping & Risk Analysis (ArcGIS, QGIS)</div>
-                  <div className="flex items-center gap-2"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" /> Vector Surveillance & Epidemiology Research</div>
-                  <div className="flex items-center gap-2"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" /> Statistical Analysis & Documentation (SPSS, MS Office)</div>
+                <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+                  <h4 className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-widest">// Core Technical Competencies</h4>
+                  <p>
+                    Menguasai evaluasi higiene industri (pengukuran kebisingan, pencahayaan, ergonomi), manajemen pengelolaan limbah dan WWTP (POPAL), pemetaan spasial menggunakan ArcGIS, serta investigasi epidemiologi lapangan.
+                  </p>
+                </div>
+
+                <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+                  <h4 className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-widest">// Key Professional Experience</h4>
+                  <p>
+                    Memiliki pengalaman praktis melalui magang industri dan kesehatan di PT Dua Kelinci Pati (Industrial Hygiene & OHS) dan RS Bethesda Yogyakarta (Healthcare facility OHS), serta riset mandiri analisis spasial leptospirosis di Bantul.
+                  </p>
                 </div>
               </div>
 
-              {/* Bagian 3: Pengalaman Profesional & Magang */}
-              <div className="space-y-3">
-                <h4 className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-widest">// 3. Professional Experience Highlights</h4>
-                <ul className="space-y-2 text-xs text-slate-300">
-                  <li className="p-3 rounded-lg bg-slate-800/50 border border-slate-700/50">
-                    <strong className="text-white block mb-0.5">Industrial Hygiene & OHS Internship — PT Dua Kelinci Pati (2025)</strong>
-                    <span>Conducted noise mapping, lighting assessment, ergonomic checks, and evaluated wastewater treatment plant compliance.</span>
-                  </li>
-                  <li className="p-3 rounded-lg bg-slate-800/50 border border-slate-700/50">
-                    <strong className="text-white block mb-0.5">Healthcare Facility OHS Internship — RS Bethesda Yogyakarta (2025)</strong>
-                    <span>Managed hospital medical waste sorting, infection control, and indoor air quality monitoring.</span>
-                  </li>
-                  <li className="p-3 rounded-lg bg-slate-800/50 border border-slate-700/50">
-                    <strong className="text-white block mb-0.5">Community Health & Sanitation — Puskesmas Godean II & Prambanan (2024–2026)</strong>
-                    <span>Executed community health empowerment, food handler hygiene education, and environmental sanitation inspections.</span>
-                  </li>
-                </ul>
-              </div>
-
-              {/* Bagian 4: Sertifikasi & Pelatihan Terverifikasi */}
-              <div className="space-y-3">
-                <h4 className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-widest">// 4. Certified Training & Credentials</h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-300">
-                  <div className="p-2.5 rounded bg-slate-950 border border-slate-800 flex items-start gap-2">
-                    <Award className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
-                    <span>POPAL Competency Training (Wastewater Treatment) — LPK Damai Semesta Jiwa</span>
-                  </div>
-                  <div className="p-2.5 rounded bg-slate-950 border border-slate-800 flex items-start gap-2">
-                    <Award className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
-                    <span>Healthcare Facility OHS / K3 Fasyankes — PT. NEVIS</span>
-                  </div>
-                  <div className="p-2.5 rounded bg-slate-950 border border-slate-800 flex items-start gap-2">
-                    <Award className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
-                    <span>Early Fire Prevention Training — Damkar Kota Yogyakarta</span>
-                  </div>
-                  <div className="p-2.5 rounded bg-slate-950 border border-slate-800 flex items-start gap-2">
-                    <Award className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
-                    <span>Emergency Water & Sanitation Simulation — BPBD Sleman</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Footer Aksi Modal */}
-              <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-slate-800 sticky bottom-0 bg-slate-900 z-10">
-                <span className="text-xs font-mono text-slate-500">All data synchronized from live portfolio</span>
-                
-                <div className="flex items-center gap-3">
-                  <button
-                    onClick={handlePrint}
-                    className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs uppercase tracking-wider transition-all cursor-pointer"
-                  >
-                    <Printer className="w-3.5 h-3.5" /> Print / Save PDF
-                  </button>
-                  <a
-                    href="/CV_JIBAKUDIN_NUR_fix_1.pdf"
-                    download="CV_JIBAKUDIN_NUR.pdf"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md cursor-pointer"
-                  >
-                    <FileText className="w-3.5 h-3.5" /> Download ATS CV
-                  </a>
-                </div>
+              {/* Footer Aksi */}
+              <div className="flex items-center justify-between pt-4 border-t border-slate-800 sticky bottom-0 bg-slate-900 z-10">
+                <span className="text-xs font-mono text-slate-500">Jibakudin Nur • Live Portfolio Summary</span>
+                <button
+                  onClick={handlePrint}
+                  className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs uppercase tracking-wider transition-all cursor-pointer"
+                >
+                  <Printer className="w-3.5 h-3.5" /> Print / Save PDF
+                </button>
               </div>
             </motion.div>
           </motion.div>

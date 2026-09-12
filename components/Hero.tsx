@@ -4,7 +4,8 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import { 
   Briefcase, Sparkles, X, Printer, CheckCircle2, 
-  ShieldCheck, Leaf, HeartPulse, MapPin, Droplets, Activity 
+  ShieldCheck, Leaf, HeartPulse, MapPin, Droplets, Activity,
+  Microscope, Satellite, HardHat, Bug, FlaskConical, Radar, Globe2, Wind
 } from 'lucide-react'
 
 export default function Hero() {
@@ -40,16 +41,16 @@ export default function Hero() {
 
     window.addEventListener('resize', handleResize)
 
-    // Jaringan partikel (GIS Nodes)
-    const particlesCount = 45
+    // Jaringan partikel (GIS Nodes) diperbanyak menjadi 70 agar lebih padat
+    const particlesCount = 70
     const particles: { x: number; y: number; vx: number; vy: number; radius: number }[] = []
 
     for (let i = 0; i < particlesCount; i++) {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.6,
-        vy: (Math.random() - 0.5) * 0.6,
+        vx: (Math.random() - 0.5) * 0.7,
+        vy: (Math.random() - 0.5) * 0.7,
         radius: Math.random() * 1.5 + 0.5,
       })
     }
@@ -70,7 +71,6 @@ export default function Hero() {
       const rect = canvas.getBoundingClientRect()
       const cx = e.clientX - rect.left
       const cy = e.clientY - rect.top
-      // Menambahkan gelombang baru saat diklik
       clickRipples.push({ x: cx, y: cy, radius: 0, alpha: 1 })
     }
 
@@ -101,11 +101,11 @@ export default function Hero() {
           const dy = p.y - p2.y
           const dist = Math.sqrt(dx * dx + dy * dy)
 
-          if (dist < 100) {
+          if (dist < 110) {
             ctx.beginPath()
             ctx.moveTo(p.x, p.y)
             ctx.lineTo(p2.x, p2.y)
-            ctx.strokeStyle = `rgba(16, 185, 129, ${0.15 * (1 - dist / 100)})`
+            ctx.strokeStyle = `rgba(16, 185, 129, ${0.15 * (1 - dist / 110)})`
             ctx.lineWidth = 1
             ctx.stroke()
           }
@@ -128,8 +128,8 @@ export default function Hero() {
       // 2. Render Efek Gelombang Klik (Sonar / Radar Ring)
       for (let i = clickRipples.length - 1; i >= 0; i--) {
         const ripple = clickRipples[i]
-        ripple.radius += 2.5 // Kecepatan meluas
-        ripple.alpha -= 0.015 // Kecepatan memudar
+        ripple.radius += 3 // Kecepatan meluas
+        ripple.alpha -= 0.012 // Kecepatan memudar
 
         if (ripple.alpha <= 0) {
           clickRipples.splice(i, 1)
@@ -142,7 +142,6 @@ export default function Hero() {
         ctx.lineWidth = 2
         ctx.stroke()
 
-        // Ring kedua di dalam agar lebih estetis
         ctx.beginPath()
         ctx.arc(ripple.x, ripple.y, ripple.radius * 0.7, 0, Math.PI * 2)
         ctx.strokeStyle = `rgba(16, 185, 129, ${ripple.alpha * 0.5})`
@@ -163,14 +162,28 @@ export default function Hero() {
     }
   }, [])
 
-  // --- EFEK 2: FLOATING ICONS (K3, Lingkungan, Kesehatan, Spasial) ---
+  // --- EFEK 2: FLOATING ICONS DIPERBANYAK & DISEBAR (14 Ikon) ---
   const floatingIcons = [
-    { Icon: ShieldCheck, color: "text-amber-500/10 dark:text-amber-500/20", size: 56, startX: "8%", startY: "25%", duration: 25 },
-    { Icon: Leaf, color: "text-emerald-500/10 dark:text-emerald-500/20", size: 72, startX: "88%", startY: "15%", duration: 30 },
-    { Icon: HeartPulse, color: "text-emerald-400/10 dark:text-emerald-400/20", size: 48, startX: "80%", startY: "75%", duration: 22 },
-    { Icon: MapPin, color: "text-emerald-600/10 dark:text-emerald-600/20", size: 80, startX: "12%", startY: "75%", duration: 28 },
-    { Icon: Droplets, color: "text-amber-400/10 dark:text-amber-400/20", size: 40, startX: "45%", startY: "8%", duration: 18 },
-    { Icon: Activity, color: "text-emerald-300/10 dark:text-emerald-300/20", size: 64, startX: "50%", startY: "85%", duration: 26 },
+    // K3 / HSE
+    { Icon: ShieldCheck, color: "text-amber-500/15 dark:text-amber-500/20", size: 56, startX: "5%", startY: "15%", duration: 25 },
+    { Icon: HardHat, color: "text-amber-600/15 dark:text-amber-500/20", size: 48, startX: "85%", startY: "80%", duration: 22 },
+    // Environmental
+    { Icon: Leaf, color: "text-emerald-500/15 dark:text-emerald-500/20", size: 72, startX: "88%", startY: "15%", duration: 30 },
+    { Icon: Wind, color: "text-teal-400/15 dark:text-teal-400/20", size: 40, startX: "15%", startY: "45%", duration: 24 },
+    // Public Health / Lab
+    { Icon: HeartPulse, color: "text-emerald-400/15 dark:text-emerald-400/20", size: 48, startX: "80%", startY: "60%", duration: 22 },
+    { Icon: Microscope, color: "text-emerald-300/15 dark:text-emerald-300/20", size: 54, startX: "25%", startY: "85%", duration: 26 },
+    { Icon: FlaskConical, color: "text-emerald-500/15 dark:text-emerald-500/20", size: 42, startX: "65%", startY: "25%", duration: 19 },
+    // GIS / Spatial
+    { Icon: MapPin, color: "text-emerald-600/15 dark:text-emerald-600/20", size: 80, startX: "12%", startY: "75%", duration: 28 },
+    { Icon: Globe2, color: "text-teal-500/15 dark:text-teal-500/20", size: 60, startX: "55%", startY: "70%", duration: 27 },
+    { Icon: Satellite, color: "text-emerald-400/15 dark:text-emerald-400/20", size: 50, startX: "40%", startY: "10%", duration: 21 },
+    // Data / Research
+    { Icon: Activity, color: "text-emerald-300/15 dark:text-emerald-300/20", size: 64, startX: "50%", startY: "85%", duration: 29 },
+    { Icon: Radar, color: "text-teal-300/15 dark:text-teal-300/20", size: 55, startX: "75%", startY: "40%", duration: 23 },
+    // Sanitasi / Vector
+    { Icon: Droplets, color: "text-amber-400/15 dark:text-amber-400/20", size: 40, startX: "35%", startY: "50%", duration: 18 },
+    { Icon: Bug, color: "text-amber-500/15 dark:text-amber-500/20", size: 36, startX: "90%", startY: "45%", duration: 20 },
   ]
 
   return (
@@ -200,12 +213,12 @@ export default function Hero() {
               ease: "linear",
             }}
           >
-            <item.Icon size={item.size} strokeWidth={1.5} />
+            <item.Icon size={item.size} strokeWidth={1.2} />
           </motion.div>
         ))}
         {/* Glow Pendaran Sudut */}
-        <div className="absolute -top-32 -left-32 w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[100px]"></div>
-        <div className="absolute top-1/2 -right-32 w-[500px] h-[500px] bg-amber-500/5 rounded-full blur-[100px]"></div>
+        <div className="absolute -top-32 -left-32 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[100px]"></div>
+        <div className="absolute top-1/2 -right-32 w-[500px] h-[500px] bg-amber-500/10 rounded-full blur-[100px]"></div>
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 pointer-events-none">
@@ -273,7 +286,6 @@ export default function Hero() {
                 <Sparkles className="w-4 h-4" /> Generate Summary
               </motion.button>
 
-              {/* REVISI: Tombol View Portfolio Diperbaiki untuk Light Mode & Dark Mode */}
               <motion.a
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}

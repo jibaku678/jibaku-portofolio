@@ -4,11 +4,11 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Award, ExternalLink, X, CheckCircle2, Maximize2, Minimize2, ChevronLeft, ChevronRight } from 'lucide-react'
 
 export default function Certifications() {
-  // State untuk Modal Sertifikat & Slider Dokumentasi Kebakaran
   const [isFireModalOpen, setIsFireModalOpen] = useState(false)
   const [isFireFullScreen, setIsFireFullScreen] = useState(false)
   const [fireDocIdx, setFireDocIdx] = useState(0)
 
+  // Disesuaikan dengan ekstensi .jpeg yang benar
   const fireImages = [
     "/SERTIF_DOC/kebakaran1.jpg",
     "/SERTIF_DOC/kebakaran2.jpg"
@@ -75,7 +75,7 @@ export default function Certifications() {
       title: "Early Fire Prevention Training",
       issuer: "Dinas Pemadam Kebakaran dan Penyelamatan Kota Yogyakarta (2023)",
       description: "Basic fire safety, prevention, and response protocols.",
-      isInteractive: true, // Menandakan item ini bisa diklik untuk melihat sertifikat & dokumentasi
+      isInteractive: true,
       actionText: "View Credential & Field Documentation"
     },
     {
@@ -186,15 +186,15 @@ export default function Certifications() {
                 </div>
               </div>
 
-              {/* Layout: Sertifikat Utama + Slider Dokumentasi Praktik */}
+              {/* Layout: Sertifikat Utama (.jpeg) + Slider Dokumentasi Praktik */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-4 flex-1 overflow-y-auto">
                 
-                {/* Sisi Kiri: Gambar Sertifikat Utama dengan Watermark Aman */}
+                {/* Sisi Kiri: Gambar Sertifikat Utama (.jpeg) dengan Watermark Aman */}
                 <div className="relative flex flex-col items-center justify-center bg-slate-100 dark:bg-slate-950 rounded-xl p-3 border border-slate-200 dark:border-slate-800">
                   <span className="text-[10px] font-mono font-bold text-amber-500 uppercase mb-2">Official Certificate</span>
                   <div className="relative w-full flex justify-center overflow-hidden rounded-lg">
                     <img
-                      src="/SERTIF_DOC/sertif_kebakaran.jpg" 
+                      src="/SERTIF_DOC/sertif_kebakaran.jpeg" 
                       alt="Fire Safety Certificate"
                       className="max-h-[45vh] object-contain rounded-md shadow-md select-none pointer-events-none"
                     />

@@ -1,11 +1,12 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import { Briefcase, Sparkles, X, Printer, CheckCircle2 } from 'lucide-react'
 
 export default function Hero() {
   const [isSummaryModalOpen, setIsSummaryModalOpen] = useState(false)
+  const canvasRef = useRef<HTMLCanvasElement | null>(null)
 
   const currentDate = new Date().toLocaleDateString('id-ID', {
     day: 'numeric',
@@ -17,67 +18,142 @@ export default function Hero() {
     window.print()
   }
 
+  // Efek Canvas Ornamen Interaktif (Spatial & Environmental Particle Network)
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+
+    let animationFrameId: number
+    let width = (canvas.width = canvas.offsetWidth)
+    let height = (canvas.height = canvas.offsetHeight)
+
+    const handleResize = () => {
+      if (!canvas) return
+      width = canvas.width = canvas.offsetWidth
+      height = canvas.height = canvas.offsetHeight
+    }
+
+    window.addEventListener('resize', handleResize)
+
+    // Inisialisasi partikel
+    const particlesCount = 45
+    const particles: { x: number; y: number; vx: number; vy: number; radius: number }[] = []
+
+    for (let i = 0; i < particlesCount; i++) {
+      particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.8,
+        vy: (Math.random() - 0.5) * 0.8,
+        radius: Math.random() * 2 + 1,
+      })
+    }
+
+    let mouseX = -1000
+    let mouseY = -1000
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect()
+      mouseX = e.clientX - rect.left
+      mouseY = e.clientY - rect.top
+    }
+
+    window.addEventListener('mousemove', handleMouseMove)
+
+    const render = () => {
+      ctx.clearRect(0, 0, width, height)
+
+      // Gambar dan update partikel
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i]
+        p.x += p.vx
+        p.y += p.vy
+
+        if (p.x < 0 || p.x > width) p.vx *= -1
+        if (p.y < 0 || p.y > height) p.vy *= -1
+
+        ctx.beginPath()
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2)
+        ctx.fillStyle = 'rgba(16, 185, 129, 0.4)' // Warna Emerald khas HSE
+        ctx.fill()
+
+        // Hubungkan garis antar partikel jika berdekatan
+        for (let j = i + 1; j < particles.length; j++) {
+          const p2 = particles[j]
+          const dx = p.x - p2.x
+          const dy = p.y - p2.y
+          const dist = Math.sqrt(dx * dx + dy * dy)
+
+          if (dist < 120) {
+            ctx.beginPath()
+            ctx.moveTo(p.x, p.y)
+            ctx.lineTo(p2.x, p2.y)
+            ctx.strokeStyle = `rgba(16, 185, 129, ${0.15 * (1 - dist / 120)})`
+            ctx.lineWidth = 1
+            ctx.stroke()
+          }
+        }
+
+        // Interaksi dengan kursor mouse
+        const mdx = p.x - mouseX
+        const mdy = p.y - mouseY
+        const mdist = Math.sqrt(mdx * mdx + mdy * mdy)
+        if (mdist < 150) {
+          ctx.beginPath()
+          ctx.moveTo(p.x, p.y)
+          ctx.lineTo(mouseX, mouseY)
+          ctx.strokeStyle = `rgba(52, 211, 153, ${0.3 * (1 - mdist / 150)})`
+          ctx.lineWidth = 1
+          ctx.stroke()
+        }
+      }
+
+      animationFrameId = requestAnimationFrame(render)
+    }
+
+    render()
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+      window.removeEventListener('mousemove', handleMouseMove)
+      cancelAnimationFrame(animationFrameId)
+    }
+  }, [])
+
   return (
     <section className="relative w-full overflow-hidden bg-slate-50 dark:bg-slate-950 py-16 md:py-24 border-b border-slate-200 dark:border-slate-800/60 transition-colors duration-300">
       
-      {/* 1. Floating Tech Orbs (Partikel Cahaya Melayang di Background) */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          animate={{
-            x: [0, 60, -40, 0],
-            y: [0, -50, 40, 0],
-            scale: [1, 1.25, 0.9, 1],
-          }}
-          transition={{
-            duration: 14,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute -top-20 -left-20 w-96 h-96 bg-emerald-500/10 dark:bg-emerald-500/10 rounded-full blur-3xl"
-        ></motion.div>
+      {/* --- HTML5 CANVAS INTERACTIVE ORNAMENT BACKGROUND --- */}
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 w-full h-full pointer-events-auto z-0 opacity-70"
+      ></canvas>
 
+      {/* Background Floating Tech Orbs Tambahan */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
         <motion.div
-          animate={{
-            x: [0, -70, 50, 0],
-            y: [0, 60, -50, 0],
-            scale: [1, 1.15, 0.85, 1],
-          }}
-          transition={{
-            duration: 16,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute top-1/3 -right-20 w-96 h-96 bg-amber-500/10 dark:bg-amber-500/10 rounded-full blur-3xl"
+          animate={{ x: [0, 50, -30, 0], y: [0, -40, 30, 0] }}
+          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute -top-10 -left-10 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl"
         ></motion.div>
       </div>
 
-      {/* Grid Pattern Background */}
-      <motion.div 
-        initial={{ opacity: 0.3 }}
-        animate={{ opacity: [0.3, 0.6, 0.3] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute inset-0 bg-[linear-gradient(to_right,#cbd5e1_1px,transparent_1px),linear-gradient(to_bottom,#cbd5e1_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"
-      ></motion.div>
-
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
           
-          {/* 2. Staggered Text Reveal: Kolom Kiri Muncul Berurutan */}
+          {/* Kolom Kiri: Staggered Text Reveal */}
           <motion.div 
             initial="hidden"
             animate="visible"
             variants={{
               hidden: { opacity: 0 },
-              visible: {
-                opacity: 1,
-                transition: {
-                  staggerChildren: 0.15
-                }
-              }
+              visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
             }}
-            className="flex flex-col items-start gap-6 z-10"
+            className="flex flex-col items-start gap-6"
           >
-            {/* 3. Pulsing Badge & Live Counter */}
+            {/* Pulsing Badges */}
             <motion.div 
               variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
               className="flex flex-wrap items-center gap-3 mb-2"
@@ -91,11 +167,11 @@ export default function Hero() {
                 Open to Opportunities
               </motion.span>
               <span className="px-3 py-1.5 bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold tracking-widest border border-slate-300 dark:border-slate-700 rounded-full uppercase">
-                GPA 3.71 (Cum Laude)
+                GPA 3.71 (Cum Laude)[cite: 3]
               </span>
             </motion.div>
 
-            {/* 4. Text Character Stagger / Entry Glow: Judul dengan pendaran cahaya */}
+            {/* Judul dengan Entry Glow */}
             <motion.div 
               variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
               className="space-y-4"
@@ -114,9 +190,7 @@ export default function Hero() {
             </motion.div>
 
             {/* Deskripsi */}
-            <motion.div 
-              variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
-            >
+            <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
               <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-xl leading-relaxed border-l-2 border-emerald-500 dark:border-emerald-500 pl-4 mt-2 font-medium">
                 Bachelor Applied (D4) in Environmental Sanitation specialized in systematic field risk assessment, spatial epidemiological analysis, and industrial HSE systems—dedicated to executing high-impact workplace safety and public health initiatives.
               </p>
@@ -158,38 +232,17 @@ export default function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* 5 & 6. Interactive Glow & Floating Banner + Tilt/Zoom Hover Effect */}
+          {/* Kolom Kanan: Interactive Glow & Floating Banner + Tilt/Zoom */}
           <motion.div 
             initial={{ opacity: 0, scale: 0.9, rotate: -1 }}
-            animate={{ 
-              opacity: 1, 
-              scale: 1,
-              rotate: 0,
-              y: [0, -12, 0] 
-            }}
-            transition={{ 
-              opacity: { duration: 0.8 },
-              scale: { duration: 0.8 },
-              y: { 
-                repeat: Infinity, 
-                duration: 4.5, 
-                ease: "easeInOut" 
-              }
-            }}
+            animate={{ opacity: 1, scale: 1, rotate: 0, y: [0, -12, 0] }}
+            transition={{ opacity: { duration: 0.8 }, scale: { duration: 0.8 }, y: { repeat: Infinity, duration: 4.5, ease: "easeInOut" } }}
             whileHover={{ scale: 1.03, rotate: 0 }}
-            className="w-full relative group z-10 cursor-pointer"
+            className="w-full relative group cursor-pointer"
           >
-            {/* Pendaran Cahaya (Glow Effect) Warna Emerald yang Bernapas (Pulse) */}
             <motion.div 
-              animate={{ 
-                opacity: [0.4, 0.8, 0.4],
-                scale: [0.98, 1.04, 0.98]
-              }}
-              transition={{ 
-                repeat: Infinity, 
-                duration: 3.5, 
-                ease: "easeInOut" 
-              }}
+              animate={{ opacity: [0.4, 0.8, 0.4], scale: [0.98, 1.04, 0.98] }}
+              transition={{ repeat: Infinity, duration: 3.5, ease: "easeInOut" }}
               className="absolute -inset-2 bg-gradient-to-r from-emerald-500/40 via-teal-500/30 to-amber-500/40 rounded-2xl blur-xl"
             ></motion.div>
 
@@ -221,7 +274,7 @@ export default function Hero() {
               initial={{ scale: 0.9, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: 20 }}
-              className="relative bg-slate-900 border border-slate-700 rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 shadow-2xl space-y-6 text-slate-200"
+              className="relative bg-slate-900 border border-slate-700 rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 shadow-2xl space-y-6 text-slate-200 z-50"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between pb-4 border-b border-slate-800 sticky top-0 bg-slate-900 z-10">

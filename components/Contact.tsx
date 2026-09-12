@@ -37,28 +37,22 @@ export default function Contact() {
             </h3>
 
             <a
-              href="/CV_ATS_Master_Jibakudin_Nur_Indonesia.pdf"
+              href="/CV_Jibakudin_Nur_Indonesia.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-between p-3.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider transition-all"
+              className="flex items-center justify-between p-3.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md"
             >
-             <a
-  href="/CV_Jibakudin_Nur_Indonesia.pdf"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="..."
->
-  Download Official CV
-</a>
+              <span className="flex items-center gap-2">
+                <Download className="w-4 h-4" /> Download Official CV
               </span>
-              <span>PDF</span>
+              <span className="text-[10px] font-mono bg-emerald-700/60 px-2 py-0.5 rounded">PDF</span>
             </a>
 
             <a
               href="https://linkedin.com/in/jibakudin-nur"
               target="_blank"
               rel="noreferrer"
-              className="flex items-center justify-between p-3.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 hover:border-emerald-500 text-slate-700 dark:text-slate-300 font-bold text-xs uppercase tracking-wider transition-all"
+              className="flex items-center justify-between p-3.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 hover:border-emerald-500 text-slate-700 dark:text-slate-300 font-bold text-xs uppercase tracking-wider transition-all shadow-sm"
             >
               <span className="flex items-center gap-2">
                 <Linkedin className="w-4 h-4 text-blue-500" /> Connect on LinkedIn

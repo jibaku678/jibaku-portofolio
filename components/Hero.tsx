@@ -46,12 +46,12 @@ export default function Hero() {
               </h1>
               
               <h2 className="text-sm sm:text-base font-semibold text-amber-600 dark:text-amber-400 flex items-center gap-2 uppercase tracking-wide">
-                Environmental Health • GIS • HSE Compliance - One Health / Public Health Research
+                Environmental Health • GIS • HSE • One Health & Public Health Research
               </h2>
             </div>
 
             <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-xl leading-relaxed border-l-2 border-emerald-500 dark:border-emerald-500 pl-4 mt-2 font-medium">
-              Applied Environmental Sanitation graduate specialized in rigorous field risk assessment, advanced spatial data analysis, and industrial HSE compliance—dedicated to driving high-impact industrial safety and public health initiatives.
+              Bachelor Applied in Environmental Sanitation specialized in systematic field risk assessment, spatial epidemiological analysis, and industrial HSE systems—dedicated to executing high-impact workplace safety and public health initiatives.
             </p>
 
             <div className="flex flex-wrap gap-y-2 gap-x-4 text-[11px] sm:text-xs font-bold text-slate-500 dark:text-slate-400 uppercase">
@@ -138,7 +138,7 @@ export default function Hero() {
                 <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
                   <h4 className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-widest">// Profile Overview</h4>
                   <p>
-                    Lulusan Sarjana Terapan Sanitasi Lingkungan berpredikat <strong className="text-white">Cum Laude (GPA 3.71)</strong>[cite: 3] dengan spesialisasi mendalam pada bidang <strong className="text-white">Environmental Health, Industrial HSE Compliance, GIS Spatial Risk Analysis, serta One Health / Public Health Research</strong>. Siap mendukung operasional perusahaan dalam pemenuhan standar keselamatan kerja dan mitigasi risiko lingkungan secara presisi.
+                    Bachelor Applied in Environmental Sanitation berpredikat <strong className="text-white">Cum Laude (GPA 3.71)</strong>[cite: 3] dengan spesialisasi mendalam pada bidang <strong className="text-white">Environmental Health, Industrial HSE, GIS Spatial Risk Analysis, serta One Health & Public Health Research</strong>. Siap mendukung operasional perusahaan dalam pemenuhan standar keselamatan kerja dan mitigasi risiko lingkungan secara presisi.
                   </p>
                 </div>
 

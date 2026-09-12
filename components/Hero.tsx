@@ -51,7 +51,7 @@ export default function Hero() {
             </div>
 
             <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-xl leading-relaxed border-l-2 border-emerald-500 dark:border-emerald-500 pl-4 mt-2 font-medium">
-              Bachelor Applied in Environmental Sanitation specialized in systematic field risk assessment, spatial epidemiological analysis, and industrial HSE systems—dedicated to executing high-impact workplace safety and public health initiatives.
+              Bachelor Applied (D4) in Environmental Sanitation specialized in systematic field risk assessment, spatial epidemiological analysis, and industrial HSE systems—dedicated to executing high-impact workplace safety and public health initiatives.
             </p>
 
             <div className="flex flex-wrap gap-y-2 gap-x-4 text-[11px] sm:text-xs font-bold text-slate-500 dark:text-slate-400 uppercase">
@@ -98,7 +98,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Modal Summary */}
+      {/* Modal Summary Lengkap dengan Sertifikasi */}
       <AnimatePresence>
         {isSummaryModalOpen && (
           <motion.div
@@ -133,12 +133,12 @@ export default function Hero() {
                 <span className="bg-emerald-500/20 px-2 py-0.5 rounded text-[10px] font-bold">VERIFIED</span>
               </div>
 
-              {/* Bagian Teks Ringkasan (Diperkuat Public Health Research) */}
+              {/* Bagian Teks Ringkasan */}
               <div className="space-y-4 text-sm text-slate-300 leading-relaxed">
                 <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
                   <h4 className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-widest">// Profile Overview</h4>
                   <p>
-                    Bachelor Applied in Environmental Sanitation berpredikat <strong className="text-white">Cum Laude (GPA 3.71)</strong>[cite: 3] dengan spesialisasi komprehensif pada bidang <strong className="text-white">Environmental Health, Industrial HSE, GIS Spatial Risk Analysis, serta Public Health Research & One Health</strong>. Berpengalaman dalam merancang investigasi epidemiologi, surveilans vektor penyakit, serta analisis data kesehatan masyarakat berbasis bukti ilmiah untuk mendukung intervensi lintas sektor yang efektif.
+                    Bachelor Applied (D4) in Environmental Sanitation berpredikat <strong className="text-white">Cum Laude (GPA 3.71)</strong>[cite: 3] dengan spesialisasi komprehensif pada bidang <strong className="text-white">Environmental Health, Industrial HSE, GIS Spatial Risk Analysis, serta Public Health Research & One Health</strong>. Berpengalaman dalam merancang investigasi epidemiologi, surveilans vektor penyakit, serta analisis data kesehatan masyarakat berbasis bukti ilmiah untuk mendukung intervensi lintas sektor yang efektif.
                   </p>
                 </div>
 
@@ -154,6 +154,17 @@ export default function Hero() {
                   <p>
                     Memiliki pengalaman praktis melalui magang industri dan kesehatan di PT Dua Kelinci Pati (Industrial Hygiene & OHS) dan RS Bethesda Yogyakarta (Healthcare Facility OHS), serta riset mandiri analisis spasial leptospirosis di Bantul.
                   </p>
+                </div>
+
+                {/* Bagian Sertifikasi & Pelatihan Terverifikasi */}
+                <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+                  <h4 className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-widest">// Verified Certifications & Training</h4>
+                  <ul className="list-disc list-inside space-y-1 text-xs text-slate-300">
+                    <li>Sertifikasi Kompetensi Operator Instalasi Pengolahan Air Limbah (POPAL) — LPK Damai Semesta Jiwa</li>
+                    <li>Pelatihan K3 Fasilitas Pelayanan Kesehatan (Fasyankes) — PT. NEVIS</li>
+                    <li>Pelatihan Pencegahan Dini Kebakaran & Tanggap Darurat — Damkar Kota Yogyakarta</li>
+                    <li>Simulasi Penanganan Air Darurat & Sanitasi Bencana — BPBD Sleman</li>
+                  </ul>
                 </div>
               </div>
 

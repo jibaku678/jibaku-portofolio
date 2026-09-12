@@ -37,7 +37,7 @@ export default function Contact() {
             </h3>
 
             <a
-              href="/CV_Jibakudin_Nur_Indonesia.pdf"
+              href="/CV_Jibakudin_Nur_fix_1.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-between p-3.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md"

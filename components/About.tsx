@@ -1,10 +1,11 @@
 'use client'
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Award, MapPin, ShieldCheck, ExternalLink, X, CheckCircle2 } from 'lucide-react'
+import { Award, MapPin, ShieldCheck, ExternalLink, X, CheckCircle2, Maximize2, Minimize2 } from 'lucide-react'
 
 export default function About() {
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isFullScreen, setIsFullScreen] = useState(false)
 
   return (
     <section id="about" className="relative py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-slate-200 dark:border-slate-800/60 overflow-hidden">
@@ -22,7 +23,6 @@ export default function About() {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
-          {/* Kolom Kiri: Foto & Teks Perkenalan */}
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -43,7 +43,6 @@ export default function About() {
             </p>
           </motion.div>
 
-          {/* Kolom Kanan: Kartu Pendidikan, Statistik, & Sertifikasi */}
           <motion.div 
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -52,7 +51,6 @@ export default function About() {
             className="lg:col-span-7 space-y-6"
           >
             
-            {/* Card Pendidikan */}
             <div className="flex flex-col gap-4 p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
               <div className="flex items-start sm:items-center gap-4">
                 <div className="w-14 h-14 rounded-xl bg-slate-50 dark:bg-slate-800 flex items-center justify-center shrink-0 border border-slate-200 dark:border-slate-700 overflow-hidden p-1 shadow-inner">
@@ -82,26 +80,13 @@ export default function About() {
                 </p>
                 <div className="flex flex-wrap gap-1.5">
                   {[
-                    "Public Health",
-                    "Community Service",
-                    "Occupational Health & Safety (OHS)",
-                    "Environmental Management",
-                    "Water, Air & Soil Sanitation",
-                    "Solid & Hazardous Waste Management",
-                    "Vector & Pest Control",
-                    "Industrial & Hospital Sanitation",
-                    "Food Hygiene & Sanitation",
-                    "HACCP",
-                    "SMK3 & ISO 45001",
-                    "AMDAL / EIA",
-                    "Environmental Epidemiology",
-                    "Data Analysis & Research Methodology",
-                    "GIS & Remote Sensing"
+                    "Public Health", "Community Service", "Occupational Health & Safety (OHS)",
+                    "Environmental Management", "Water, Air & Soil Sanitation", "Solid & Hazardous Waste Management",
+                    "Vector & Pest Control", "Industrial & Hospital Sanitation", "Food Hygiene & Sanitation",
+                    "HACCP", "SMK3 & ISO 45001", "AMDAL / EIA", "Environmental Epidemiology",
+                    "Data Analysis & Research Methodology", "GIS & Remote Sensing"
                   ].map((subject, i) => (
-                    <span 
-                      key={i} 
-                      className="text-[10px] font-semibold px-2.5 py-1 rounded-md bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-emerald-500/40 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
-                    >
+                    <span key={i} className="text-[10px] font-semibold px-2.5 py-1 rounded-md bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
                       {subject}
                     </span>
                   ))}
@@ -109,12 +94,9 @@ export default function About() {
               </div>
             </div>
 
-            {/* Grid Informasi Akademik & Base */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-3 shadow-sm">
-                <div className="p-2.5 rounded-lg bg-emerald-500/10 text-emerald-500">
-                  <Award className="w-5 h-5" />
-                </div>
+                <div className="p-2.5 rounded-lg bg-emerald-500/10 text-emerald-500"><Award className="w-5 h-5" /></div>
                 <div>
                   <div className="text-[10px] font-mono text-slate-400 uppercase tracking-wider">Academic Record</div>
                   <div className="text-sm font-bold text-slate-900 dark:text-white">GPA 3.71 / Cum Laude</div>
@@ -122,9 +104,7 @@ export default function About() {
               </div>
 
               <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-3 shadow-sm">
-                <div className="p-2.5 rounded-lg bg-amber-500/10 text-amber-500">
-                  <MapPin className="w-5 h-5" />
-                </div>
+                <div className="p-2.5 rounded-lg bg-amber-500/10 text-amber-500"><MapPin className="w-5 h-5" /></div>
                 <div>
                   <div className="text-[10px] font-mono text-slate-400 uppercase tracking-wider">Base / Mobility</div>
                   <div className="text-sm font-bold text-slate-900 dark:text-white">Magelang & Yogyakarta (Relocation Ready)</div>
@@ -132,7 +112,6 @@ export default function About() {
               </div>
             </div>
 
-            {/* Sertifikat Uji Kompetensi Nasional Level 6 */}
             <motion.div 
               whileHover={{ scale: 1.01 }}
               transition={{ duration: 0.2 }}
@@ -173,57 +152,82 @@ export default function About() {
         </div>
       </div>
 
-      {/* Lightbox Modal Popup (Preview Only dengan Watermark Keamanan) */}
+      {/* Lightbox Modal Popup dengan Fullscreen & Watermark Halus */}
       <AnimatePresence>
         {isModalOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md"
             onClick={() => setIsModalOpen(false)}
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-3xl w-full p-6 shadow-2xl overflow-hidden"
+              className={`relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-2xl transition-all duration-300 flex flex-col ${
+                isFullScreen ? 'w-screen h-screen max-w-none max-h-none rounded-none p-4' : 'max-w-4xl w-full'
+              }`}
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
+              <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800 shrink-0">
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-                  <h4 className="font-bold text-slate-900 dark:text-white text-sm uppercase tracking-wider">
+                  <h4 className="font-bold text-slate-900 dark:text-white text-xs sm:text-sm uppercase tracking-wider">
                     Level 6 Environmental Health Practitioner Certificate (Verified)
                   </h4>
                 </div>
-                <button
-                  onClick={() => setIsModalOpen(false)}
-                  className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
-                >
-                  <X className="w-5 h-5" />
-                </button>
+                
+                <div className="flex items-center gap-2">
+                  {/* Tombol Fullscreen */}
+                  <button
+                    onClick={() => setIsFullScreen(!isFullScreen)}
+                    className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-emerald-500 transition-colors cursor-pointer flex items-center gap-1.5 text-xs font-bold"
+                    title={isFullScreen ? "Exit Fullscreen" : "Full Screen"}
+                  >
+                    {isFullScreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
+                    <span className="hidden sm:inline">{isFullScreen ? "Normal" : "Fullscreen"}</span>
+                  </button>
+
+                  <button
+                    onClick={() => { setIsModalOpen(false); setIsFullScreen(false); }}
+                    className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
               </div>
 
-              {/* Kontainer Gambar dengan Watermark Proteksi */}
-              <div className="my-6 relative flex justify-center bg-slate-100 dark:bg-slate-950 rounded-xl p-2 border border-slate-200 dark:border-slate-800 overflow-hidden">
+              {/* Kontainer Gambar dengan Watermark Teks Halus (Tidak Menutupi Teks Utama) */}
+              <div className={`my-4 relative flex items-center justify-center bg-slate-100 dark:bg-slate-950 rounded-xl p-2 border border-slate-200 dark:border-slate-800 overflow-hidden flex-1 ${isFullScreen ? 'h-full' : ''}`}>
                 <img
                   src="/preview_serkom.png" 
                   alt="Serkom Jibaku Preview"
-                  className="max-h-[60vh] object-contain rounded-lg shadow-md select-none pointer-events-none"
+                  className={`object-contain rounded-lg shadow-md select-none pointer-events-none transition-all ${
+                    isFullScreen ? 'max-h-[85vh] w-auto' : 'max-h-[65vh]'
+                  }`}
                 />
                 
-                {/* Watermark Melintang */}
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
-                  <div className="transform -rotate-12 bg-slate-950/50 backdrop-blur-[1px] border border-white/10 px-6 py-2 rounded-lg shadow-lg">
-                    <p className="text-xs sm:text-sm font-black tracking-widest text-white/40 uppercase">
-                      FOR RECRUITMENT ONLY — JIBAKUDIN NUR
-                    </p>
+                {/* Watermark Tipis Elegan di Sudut & Tengah Tanpa Kotak Menutupi */}
+                <div className="absolute inset-0 flex flex-col justify-between p-6 pointer-events-none select-none opacity-25">
+                  <div className="flex justify-between w-full text-[10px] font-mono tracking-widest uppercase text-slate-900 dark:text-white font-bold">
+                    <span>JIBAKUDIN NUR</span>
+                    <span>FOR RECRUITMENT ONLY</span>
+                  </div>
+                  <div className="text-center transform -rotate-6">
+                    <span className="text-sm sm:text-lg font-black tracking-widest text-slate-900 dark:text-white uppercase">
+                      VERIFIED CREDENTIAL • JIBAKUDIN NUR
+                    </span>
+                  </div>
+                  <div className="flex justify-between w-full text-[10px] font-mono tracking-widest uppercase text-slate-900 dark:text-white font-bold">
+                    <span>FOR RECRUITMENT ONLY</span>
+                    <span>POLTEKKES YOGYAKARTA</span>
                   </div>
                 </div>
               </div>
 
-              <div className="flex items-center justify-between pt-2 text-[11px] text-slate-500 font-mono">
+              <div className="flex items-center justify-between pt-2 text-[11px] text-slate-500 font-mono shrink-0">
                 <span>Status: Official Credential Preview</span>
                 <span>Secure Document Viewer</span>
               </div>

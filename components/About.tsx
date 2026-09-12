@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Award, MapPin, ShieldCheck, ExternalLink, X, FileText } from 'lucide-react'
+import { Award, MapPin, ShieldCheck, ExternalLink, X, CheckCircle2 } from 'lucide-react'
 
 export default function About() {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -22,7 +22,7 @@ export default function About() {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
-          {/* Kolom Kiri: Foto & Teks Perkenalan Digabung dalam Satu Kotak Rapi */}
+          {/* Kolom Kiri: Foto & Teks Perkenalan */}
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -173,7 +173,7 @@ export default function About() {
         </div>
       </div>
 
-      {/* Lightbox Modal Popup */}
+      {/* Lightbox Modal Popup (Preview Only dengan Watermark Keamanan) */}
       <AnimatePresence>
         {isModalOpen && (
           <motion.div
@@ -191,9 +191,12 @@ export default function About() {
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
-                <h4 className="font-bold text-slate-900 dark:text-white text-sm uppercase tracking-wider">
-                  Level 6 Environmental Health Practitioner Certificate
-                </h4>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                  <h4 className="font-bold text-slate-900 dark:text-white text-sm uppercase tracking-wider">
+                    Level 6 Environmental Health Practitioner Certificate (Verified)
+                  </h4>
+                </div>
                 <button
                   onClick={() => setIsModalOpen(false)}
                   className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
@@ -202,23 +205,27 @@ export default function About() {
                 </button>
               </div>
 
-              <div className="my-6 flex justify-center bg-slate-100 dark:bg-slate-950 rounded-xl p-2 border border-slate-200 dark:border-slate-800">
+              {/* Kontainer Gambar dengan Watermark Proteksi */}
+              <div className="my-6 relative flex justify-center bg-slate-100 dark:bg-slate-950 rounded-xl p-2 border border-slate-200 dark:border-slate-800 overflow-hidden">
                 <img
                   src="/preview_serkom.png" 
                   alt="Serkom Jibaku Preview"
-                  className="max-h-[60vh] object-contain rounded-lg shadow-md"
+                  className="max-h-[60vh] object-contain rounded-lg shadow-md select-none pointer-events-none"
                 />
+                
+                {/* Watermark Melintang */}
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
+                  <div className="transform -rotate-12 bg-slate-950/50 backdrop-blur-[1px] border border-white/10 px-6 py-2 rounded-lg shadow-lg">
+                    <p className="text-xs sm:text-sm font-black tracking-widest text-white/40 uppercase">
+                      FOR RECRUITMENT ONLY — JIBAKUDIN NUR
+                    </p>
+                  </div>
+                </div>
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-2">
-                <a
-                  href="/Serkom_jibaku.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-sm"
-                >
-                  Open Full PDF <FileText className="w-4 h-4" />
-                </a>
+              <div className="flex items-center justify-between pt-2 text-[11px] text-slate-500 font-mono">
+                <span>Status: Official Credential Preview</span>
+                <span>Secure Document Viewer</span>
               </div>
             </motion.div>
           </motion.div>

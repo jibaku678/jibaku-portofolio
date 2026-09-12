@@ -4,14 +4,13 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import { 
   Briefcase, Sparkles, X, Printer, CheckCircle2, 
-  Satellite, Microscope, HardHat, Bug, FlaskConical, Radar 
+  ShieldCheck, Leaf, HeartPulse, MapPin, Droplets, Activity 
 } from 'lucide-react'
 
 export default function Hero() {
   const [isSummaryModalOpen, setIsSummaryModalOpen] = useState(false)
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
 
-  // Tanggal Real-time
   const currentDate = new Date().toLocaleDateString('id-ID', {
     day: 'numeric',
     month: 'long',
@@ -22,7 +21,7 @@ export default function Hero() {
     window.print()
   }
 
-  // --- EFEK 1: HTML5 CANVAS INTERACTIVE SPATIAL NETWORK (GIS NODES) ---
+  // --- EFEK 1: HTML5 CANVAS INTERACTIVE (GIS NODES & CLICK RIPPLES) ---
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
@@ -30,28 +29,33 @@ export default function Hero() {
     if (!ctx) return
 
     let animationFrameId: number
-    let width = (canvas.width = window.innerWidth)
+    let width = (canvas.width = canvas.offsetWidth)
     let height = (canvas.height = canvas.offsetHeight)
 
     const handleResize = () => {
-      width = canvas.width = window.innerWidth
+      if (!canvas) return
+      width = canvas.width = canvas.offsetWidth
       height = canvas.height = canvas.offsetHeight
     }
 
     window.addEventListener('resize', handleResize)
 
-    const particlesCount = 50 // Jumlah node jaringan
+    // Jaringan partikel (GIS Nodes)
+    const particlesCount = 45
     const particles: { x: number; y: number; vx: number; vy: number; radius: number }[] = []
 
     for (let i = 0; i < particlesCount; i++) {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.6, // Gerakan pelan futuristik
+        vx: (Math.random() - 0.5) * 0.6,
         vy: (Math.random() - 0.5) * 0.6,
         radius: Math.random() * 1.5 + 0.5,
       })
     }
+
+    // Efek Gelombang Klik (Click Ripples)
+    const clickRipples: { x: number; y: number; radius: number; alpha: number }[] = []
 
     let mouseX = -1000
     let mouseY = -1000
@@ -61,11 +65,22 @@ export default function Hero() {
       mouseX = e.clientX - rect.left
       mouseY = e.clientY - rect.top
     }
+
+    const handleMouseClick = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect()
+      const cx = e.clientX - rect.left
+      const cy = e.clientY - rect.top
+      // Menambahkan gelombang baru saat diklik
+      clickRipples.push({ x: cx, y: cy, radius: 0, alpha: 1 })
+    }
+
     window.addEventListener('mousemove', handleMouseMove)
+    window.addEventListener('click', handleMouseClick)
 
     const render = () => {
       ctx.clearRect(0, 0, width, height)
 
+      // 1. Render Jaringan Partikel
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i]
         p.x += p.vx
@@ -79,7 +94,7 @@ export default function Hero() {
         ctx.fillStyle = 'rgba(16, 185, 129, 0.5)' 
         ctx.fill()
 
-        // Garis koneksi antar node (Mirip rute spasial GIS)
+        // Garis koneksi
         for (let j = i + 1; j < particles.length; j++) {
           const p2 = particles[j]
           const dx = p.x - p2.x
@@ -96,7 +111,7 @@ export default function Hero() {
           }
         }
 
-        // Garis koneksi interaktif ke arah kursor mouse (Analitik Mode)
+        // Interaksi kursor
         const mdx = p.x - mouseX
         const mdy = p.y - mouseY
         const mdist = Math.sqrt(mdx * mdx + mdy * mdy)
@@ -109,6 +124,32 @@ export default function Hero() {
           ctx.stroke()
         }
       }
+
+      // 2. Render Efek Gelombang Klik (Sonar / Radar Ring)
+      for (let i = clickRipples.length - 1; i >= 0; i--) {
+        const ripple = clickRipples[i]
+        ripple.radius += 2.5 // Kecepatan meluas
+        ripple.alpha -= 0.015 // Kecepatan memudar
+
+        if (ripple.alpha <= 0) {
+          clickRipples.splice(i, 1)
+          continue
+        }
+
+        ctx.beginPath()
+        ctx.arc(ripple.x, ripple.y, ripple.radius, 0, Math.PI * 2)
+        ctx.strokeStyle = `rgba(52, 211, 153, ${ripple.alpha})`
+        ctx.lineWidth = 2
+        ctx.stroke()
+
+        // Ring kedua di dalam agar lebih estetis
+        ctx.beginPath()
+        ctx.arc(ripple.x, ripple.y, ripple.radius * 0.7, 0, Math.PI * 2)
+        ctx.strokeStyle = `rgba(16, 185, 129, ${ripple.alpha * 0.5})`
+        ctx.lineWidth = 1
+        ctx.stroke()
+      }
+
       animationFrameId = requestAnimationFrame(render)
     }
 
@@ -117,30 +158,31 @@ export default function Hero() {
     return () => {
       window.removeEventListener('resize', handleResize)
       window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('click', handleMouseClick)
       cancelAnimationFrame(animationFrameId)
     }
   }, [])
 
-  // --- EFEK 2: FLOATING MODERN BACKGROUND ICONS ---
+  // --- EFEK 2: FLOATING ICONS (K3, Lingkungan, Kesehatan, Spasial) ---
   const floatingIcons = [
-    { Icon: HardHat, color: "text-amber-500/10 dark:text-amber-500/20", size: 56, startX: "8%", startY: "25%", duration: 25 },
-    { Icon: FlaskConical, color: "text-emerald-500/10 dark:text-emerald-500/20", size: 72, startX: "88%", startY: "15%", duration: 30 },
-    { Icon: Microscope, color: "text-emerald-400/10 dark:text-emerald-400/20", size: 48, startX: "80%", startY: "75%", duration: 22 },
-    { Icon: Satellite, color: "text-emerald-600/10 dark:text-emerald-600/20", size: 80, startX: "12%", startY: "75%", duration: 28 },
-    { Icon: Bug, color: "text-amber-400/10 dark:text-amber-400/20", size: 40, startX: "45%", startY: "8%", duration: 18 },
-    { Icon: Radar, color: "text-emerald-300/10 dark:text-emerald-300/20", size: 64, startX: "50%", startY: "85%", duration: 26 },
+    { Icon: ShieldCheck, color: "text-amber-500/10 dark:text-amber-500/20", size: 56, startX: "8%", startY: "25%", duration: 25 },
+    { Icon: Leaf, color: "text-emerald-500/10 dark:text-emerald-500/20", size: 72, startX: "88%", startY: "15%", duration: 30 },
+    { Icon: HeartPulse, color: "text-emerald-400/10 dark:text-emerald-400/20", size: 48, startX: "80%", startY: "75%", duration: 22 },
+    { Icon: MapPin, color: "text-emerald-600/10 dark:text-emerald-600/20", size: 80, startX: "12%", startY: "75%", duration: 28 },
+    { Icon: Droplets, color: "text-amber-400/10 dark:text-amber-400/20", size: 40, startX: "45%", startY: "8%", duration: 18 },
+    { Icon: Activity, color: "text-emerald-300/10 dark:text-emerald-300/20", size: 64, startX: "50%", startY: "85%", duration: 26 },
   ]
 
   return (
     <section className="relative w-full overflow-hidden bg-slate-50 dark:bg-slate-950 py-16 md:py-24 border-b border-slate-200 dark:border-slate-800/60 transition-colors duration-300">
       
-      {/* Layer Latar Belakang Terbawah: Jaringan Interaktif Canvas */}
+      {/* Layer Canvas Jaringan Spasial Interaktif */}
       <canvas
         ref={canvasRef}
         className="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-60 dark:opacity-80"
       ></canvas>
 
-      {/* Layer Kedua: Ikon Melayang Spesifik Bidang */}
+      {/* Layer Ikon Melayang Spesifik Bidang */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
         {floatingIcons.map((item, index) => (
           <motion.div
@@ -158,19 +200,18 @@ export default function Hero() {
               ease: "linear",
             }}
           >
-            <item.Icon size={item.size} strokeWidth={1} />
+            <item.Icon size={item.size} strokeWidth={1.5} />
           </motion.div>
         ))}
-
-        {/* Cinematic Ambient Glow (Pendaran Sudut) */}
+        {/* Glow Pendaran Sudut */}
         <div className="absolute -top-32 -left-32 w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[100px]"></div>
         <div className="absolute top-1/2 -right-32 w-[500px] h-[500px] bg-amber-500/5 rounded-full blur-[100px]"></div>
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 pointer-events-none">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center pointer-events-auto">
           
-          {/* --- EFEK 3: STAGGERED TEXT REVEAL UI --- */}
+          {/* Kolom Kiri: Teks & Action */}
           <motion.div 
             initial="hidden"
             animate="visible"
@@ -180,7 +221,6 @@ export default function Hero() {
             }}
             className="flex flex-col items-start gap-6"
           >
-            {/* Pulsing Badges */}
             <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="flex flex-wrap items-center gap-3 mb-2">
               <motion.span 
                 animate={{ scale: [1, 1.03, 1] }}
@@ -195,7 +235,6 @@ export default function Hero() {
               </span>
             </motion.div>
 
-            {/* Glowing Hero Title */}
             <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="space-y-4">
               <motion.h1 
                 animate={{ textShadow: ["0px 0px 0px rgba(16,185,129,0)", "0px 0px 25px rgba(16,185,129,0.4)", "0px 0px 0px rgba(16,185,129,0)"] }}
@@ -223,7 +262,7 @@ export default function Hero() {
               <span className="flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> Figma</span>
             </motion.div>
 
-            {/* Action Buttons dengan Holographic Hover Glow */}
+            {/* Action Buttons */}
             <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="flex flex-wrap gap-4 pt-4 w-full sm:w-auto relative z-20">
               <motion.button
                 whileHover={{ scale: 1.05, boxShadow: "0px 0px 30px rgba(16, 185, 129, 0.5)" }}
@@ -234,18 +273,19 @@ export default function Hero() {
                 <Sparkles className="w-4 h-4" /> Generate Summary
               </motion.button>
 
+              {/* REVISI: Tombol View Portfolio Diperbaiki untuk Light Mode & Dark Mode */}
               <motion.a
-                whileHover={{ scale: 1.05, backgroundColor: "rgba(30, 41, 59, 0.8)" }}
+                whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 href="#projects"
-                className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-8 py-3.5 rounded-lg bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-2 border-slate-300 dark:border-slate-700 hover:border-amber-500 text-slate-700 dark:text-slate-300 font-bold text-xs uppercase tracking-wider transition-all"
+                className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-8 py-3.5 rounded-lg bg-white dark:bg-slate-900/80 backdrop-blur-md border-2 border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 hover:border-amber-500 dark:hover:border-amber-500 text-slate-900 dark:text-slate-100 font-bold text-xs uppercase tracking-wider transition-all"
               >
                 <Briefcase className="w-4 h-4" /> View Portfolio
               </motion.a>
             </motion.div>
           </motion.div>
 
-          {/* --- EFEK 4: INTERACTIVE BANNER TILT & BREATHING GLOW --- */}
+          {/* Kolom Kanan: Interactive Banner */}
           <motion.div 
             initial={{ opacity: 0, scale: 0.9, rotate: -1 }}
             animate={{ opacity: 1, scale: 1, rotate: 0, y: [0, -12, 0] }}
@@ -253,7 +293,6 @@ export default function Hero() {
             whileHover={{ scale: 1.03, rotate: 0 }}
             className="w-full relative group cursor-pointer z-10"
           >
-            {/* Ambient Breathing Shadow */}
             <motion.div 
               animate={{ opacity: [0.3, 0.7, 0.3], scale: [0.98, 1.05, 0.98] }}
               transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
@@ -274,14 +313,14 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* --- MODAL SUMMARY (REAL-TIME ATS DATA) --- */}
+      {/* Modal Summary Tetap Ada */}
       <AnimatePresence>
         {isSummaryModalOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md pointer-events-auto"
             onClick={() => setIsSummaryModalOpen(false)}
           >
             <motion.div

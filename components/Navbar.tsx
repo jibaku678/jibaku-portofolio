@@ -8,7 +8,6 @@ export default function Navbar() {
   const [isDarkMode, setIsDarkMode] = useState(true)
 
   useEffect(() => {
-    // Default to dark mode
     document.documentElement.classList.add('dark')
   }, [])
 
@@ -29,12 +28,10 @@ export default function Navbar() {
     <header className="fixed top-0 left-0 right-0 z-40 bg-slate-950/80 backdrop-blur-md border-b border-slate-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         
-        {/* Brand / Name */}
         <a href="#" className="text-base sm:text-lg font-black text-white tracking-tight uppercase">
           Jibakudin Nur
         </a>
 
-        {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-8">
           {navLinks.map((link, idx) => (
             <a
@@ -47,10 +44,9 @@ export default function Navbar() {
           ))}
         </nav>
 
-        {/* Action Buttons (CV Link & Dark Mode Toggle) */}
         <div className="hidden md:flex items-center gap-4">
           <a
-            href="/CV_Jibakudin_Nur_Indonesia.pdf"
+            href="/CV_JIBAKUDIN_NUR_fix_1.pdf"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md shadow-emerald-600/20 cursor-pointer"
@@ -67,7 +63,6 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* Mobile Menu Button */}
         <div className="flex items-center gap-3 md:hidden">
           <button
             onClick={toggleDarkMode}
@@ -86,7 +81,6 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Dropdown Menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -110,7 +104,7 @@ export default function Navbar() {
 
             <div className="pt-4 border-t border-slate-800">
               <a
-                href="/CV_Jibakudin_Nur_Indonesia.pdf"
+                href="/CV_JIBAKUDIN_NUR_fix_1.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl bg-emerald-600 text-white font-bold text-xs uppercase tracking-wider shadow-md"

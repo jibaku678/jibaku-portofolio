@@ -50,7 +50,7 @@ export default function Hero() {
 
             <div className="flex flex-wrap gap-4 pt-4 w-full sm:w-auto">
               <a
-                href="/CV_Jibakudin_Nur_Indonesia.pdf"
+                href="/CV_JIBAKUDIN_NUR_fix_1.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-8 py-3.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm uppercase tracking-wider transition-all shadow-lg shadow-emerald-600/20"

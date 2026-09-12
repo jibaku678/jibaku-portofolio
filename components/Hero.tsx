@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
-import { Briefcase, Sparkles, X, Printer } from 'lucide-react'
+import { Briefcase, Sparkles, X, Printer, CheckCircle2 } from 'lucide-react'
 
 export default function Hero() {
   const [isSummaryModalOpen, setIsSummaryModalOpen] = useState(false)
@@ -45,14 +45,21 @@ export default function Hero() {
                 JIBAKUDIN NUR
               </h1>
               
-              <h2 className="text-lg sm:text-xl font-semibold text-amber-600 dark:text-amber-400 flex items-center gap-2 uppercase tracking-wide">
-                Environmental Health • GIS • HSE Compliance
+              <h2 className="text-sm sm:text-base font-semibold text-amber-600 dark:text-amber-400 flex items-center gap-2 uppercase tracking-wide">
+                Environmental Health • GIS • HSE Compliance - One Health / Public Health Research
               </h2>
             </div>
 
-            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-xl leading-relaxed border-l-2 border-emerald-500 dark:border-emerald-500 pl-4 mt-2">
-              Applied Environmental Sanitation graduate focused on field risk assessment, spatial data analysis, and environmental health compliance to support industrial safety and public health initiatives.
+            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-xl leading-relaxed border-l-2 border-emerald-500 dark:border-emerald-500 pl-4 mt-2 font-medium">
+              Applied Environmental Sanitation graduate specialized in rigorous field risk assessment, advanced spatial data analysis, and industrial HSE compliance—dedicated to driving high-impact industrial safety and public health initiatives.
             </p>
+
+            <div className="flex flex-wrap gap-y-2 gap-x-4 text-[11px] sm:text-xs font-bold text-slate-500 dark:text-slate-400 uppercase">
+              <span className="flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> ArcGIS</span>
+              <span className="flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> SPSS</span>
+              <span className="flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> MS Office</span>
+              <span className="flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> Figma</span>
+            </div>
 
             <div className="flex flex-wrap gap-4 pt-4 w-full sm:w-auto">
               <button
@@ -91,7 +98,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Modal Summary Tanpa Ikon (Bersih & Relevan) */}
+      {/* Modal Summary */}
       <AnimatePresence>
         {isSummaryModalOpen && (
           <motion.div
@@ -131,21 +138,21 @@ export default function Hero() {
                 <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
                   <h4 className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-widest">// Profile Overview</h4>
                   <p>
-                    Lulusan Sarjana Terapan Sanitasi Lingkungan berpredikat <strong className="text-white">Cum Laude (GPA 3.71)</strong>[cite: 3] dengan kompetensi utama pada bidang <strong className="text-white">Environmental Health, Industrial HSE Compliance, dan GIS Spatial Risk Analysis</strong>. Siap mendukung operasional industri dalam pemenuhan standar K3 serta mitigasi risiko lingkungan secara presisi.
+                    Lulusan Sarjana Terapan Sanitasi Lingkungan berpredikat <strong className="text-white">Cum Laude (GPA 3.71)</strong>[cite: 3] dengan spesialisasi mendalam pada bidang <strong className="text-white">Environmental Health, Industrial HSE Compliance, GIS Spatial Risk Analysis, serta One Health / Public Health Research</strong>. Siap mendukung operasional perusahaan dalam pemenuhan standar keselamatan kerja dan mitigasi risiko lingkungan secara presisi.
                   </p>
                 </div>
 
                 <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
-                  <h4 className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-widest">// Core Technical Competencies</h4>
+                  <h4 className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-widest">// Core Technical Competencies & Tools</h4>
                   <p>
-                    Menguasai evaluasi higiene industri (pengukuran kebisingan, pencahayaan, ergonomi), manajemen pengelolaan limbah dan WWTP (POPAL), pemetaan spasial menggunakan ArcGIS, serta investigasi epidemiologi lapangan.
+                    Menguasai evaluasi higiene industri (pengukuran kebisingan, pencahayaan, ergonomi), manajemen limbah dan WWTP (POPAL), pemetaan spasial dan pemodelan risiko menggunakan <strong className="text-white">ArcGIS</strong>, pengolahan data statistik dengan <strong className="text-white">SPSS</strong>, serta investigasi epidemiologi lapangan lintas sektor.
                   </p>
                 </div>
 
                 <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
                   <h4 className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-widest">// Key Professional Experience</h4>
                   <p>
-                    Memiliki pengalaman praktis melalui magang industri dan kesehatan di PT Dua Kelinci Pati (Industrial Hygiene & OHS) dan RS Bethesda Yogyakarta (Healthcare facility OHS), serta riset mandiri analisis spasial leptospirosis di Bantul.
+                    Memiliki pengalaman praktis melalui magang industri dan kesehatan di PT Dua Kelinci Pati (Industrial Hygiene & OHS) dan RS Bethesda Yogyakarta (Healthcare Facility OHS), serta riset mandiri analisis spasial leptospirosis di Bantul.
                   </p>
                 </div>
               </div>

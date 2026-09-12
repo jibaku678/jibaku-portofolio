@@ -32,7 +32,7 @@ export default function Projects() {
       description: "Analyzed leptospirosis risk levels based on human cases, rodent population density, and spatial distribution mapping in Trirenggo and Bangunjiwo, Bantul.",
       tools: ["ArcGIS", "Spatial Mapping", "Epidemiology"],
       metric: "Grade: A (Cum Laude)",
-      link: "https://eprints.poltekkesjogja.ac.id/",
+      link: "http://eprints.poltekkesjogja.ac.id/id/eprint/23531", // URL Eprints yang diperbarui
       hasDocumentation: false
     },
     {
@@ -42,7 +42,7 @@ export default function Projects() {
       tools: ["Field Observation", "KAP Assessment", "Coordination"],
       metric: "Completed 2026",
       link: "#",
-      hasDocumentation: true // Menandakan proyek ini punya galeri foto slider PROJEK_DOC
+      hasDocumentation: true // Membuka slider galeri foto PROJEK_DOC
     },
     {
       tag: "RESEARCH ENUMERATOR",

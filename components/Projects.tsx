@@ -1,8 +1,30 @@
 'use client'
-import { motion } from 'framer-motion'
-import { FileText } from 'lucide-react'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { FileText, ChevronLeft, ChevronRight, X, Maximize2, Minimize2 } from 'lucide-react'
 
 export default function Projects() {
+  // State untuk modal slider foto dokumentasi Research Assistant
+  const [isRaModalOpen, setIsRaModalOpen] = useState(false)
+  const [isRaFullScreen, setIsRaFullScreen] = useState(false)
+  const [raDocIdx, setRaDocIdx] = useState(0)
+
+  const raImages = [
+    "/PROJEK_DOC/RA1.jpeg",
+    "/PROJEK_DOC/RA2.jpeg",
+    "/PROJEK_DOC/RA3.jpeg",
+    "/PROJEK_DOC/RA4.jpeg",
+    "/PROJEK_DOC/RA5.jpeg"
+  ]
+
+  const nextRaSlide = () => {
+    setRaDocIdx((prev) => (prev === raImages.length - 1 ? 0 : prev + 1))
+  }
+
+  const prevRaSlide = () => {
+    setRaDocIdx((prev) => (prev === 0 ? raImages.length - 1 : prev - 1))
+  }
+
   const projectsList = [
     {
       tag: "UNDERGRADUATE THESIS",
@@ -10,7 +32,8 @@ export default function Projects() {
       description: "Analyzed leptospirosis risk levels based on human cases, rodent population density, and spatial distribution mapping in Trirenggo and Bangunjiwo, Bantul.",
       tools: ["ArcGIS", "Spatial Mapping", "Epidemiology"],
       metric: "Grade: A (Cum Laude)",
-      link: "https://eprints.poltekkesjogja.ac.id/" // Diarahkan ke Eprints Poltekkes Yogyakarta
+      link: "https://eprints.poltekkesjogja.ac.id/",
+      hasDocumentation: false
     },
     {
       tag: "RESEARCH ASSISTANT",
@@ -18,7 +41,8 @@ export default function Projects() {
       description: "Supported field data collection, participant coordination, and KAP evaluation for food hygiene education using video media in Prambanan.",
       tools: ["Field Observation", "KAP Assessment", "Coordination"],
       metric: "Completed 2026",
-      link: "#"
+      link: "#",
+      hasDocumentation: true // Menandakan proyek ini punya galeri foto slider PROJEK_DOC
     },
     {
       tag: "RESEARCH ENUMERATOR",
@@ -26,7 +50,8 @@ export default function Projects() {
       description: "Served as a research enumerator utilizing the Schnabel method for rodent population capture-recapture and systematic field documentation.",
       tools: ["Vector Surveillance", "Data Documentation"],
       metric: "Completed (2025–2026)",
-      link: "#"
+      link: "#",
+      hasDocumentation: false
     }
   ]
 
@@ -76,19 +101,128 @@ export default function Projects() {
 
               <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs font-mono font-bold text-slate-500">
                 <span>{project.metric}</span>
-                <a 
-                  href={project.link} 
-                  className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 hover:underline"
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                >
-                  View Document <FileText className="w-3.5 h-3.5" />
-                </a>
+                
+                {project.hasDocumentation ? (
+                  <button
+                    onClick={() => setIsRaModalOpen(true)}
+                    className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 hover:underline cursor-pointer font-bold"
+                  >
+                    View Documentation <FileText className="w-3.5 h-3.5" />
+                  </button>
+                ) : (
+                  <a 
+                    href={project.link} 
+                    className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 hover:underline"
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                  >
+                    View Document <FileText className="w-3.5 h-3.5" />
+                  </a>
+                )}
               </div>
             </div>
           </motion.div>
         ))}
       </div>
+
+      {/* Lightbox Modal: Slider Foto Dokumentasi Research Assistant (RA1 - RA5) */}
+      <AnimatePresence>
+        {isRaModalOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md"
+            onClick={() => setIsRaModalOpen(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className={`relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-2xl transition-all duration-300 flex flex-col ${
+                isRaFullScreen ? 'w-screen h-screen max-w-none max-h-none rounded-none p-4' : 'max-w-3xl w-full'
+              }`}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800 shrink-0">
+                <div className="flex items-center gap-2">
+                  <FileText className="w-4 h-4 text-emerald-500" />
+                  <h4 className="font-bold text-slate-900 dark:text-white text-xs sm:text-sm uppercase tracking-wider">
+                    Research Assistant Field Documentation ({raDocIdx + 1} / {raImages.length})
+                  </h4>
+                </div>
+                
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setIsRaFullScreen(!isRaFullScreen)}
+                    className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-emerald-500 transition-colors cursor-pointer flex items-center gap-1.5 text-xs font-bold"
+                  >
+                    {isRaFullScreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
+                    <span className="hidden sm:inline">{isRaFullScreen ? "Normal" : "Fullscreen"}</span>
+                  </button>
+
+                  <button
+                    onClick={() => { setIsRaModalOpen(false); setIsRaFullScreen(false); }}
+                    className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Area Slider Foto */}
+              <div className="my-4 relative flex flex-col items-center justify-center bg-slate-100 dark:bg-slate-950 rounded-xl p-3 border border-slate-200 dark:border-slate-800 flex-1">
+                <div className="relative w-full aspect-video rounded-lg overflow-hidden bg-slate-900 flex items-center justify-center shadow-md group">
+                  <AnimatePresence mode="wait">
+                    <motion.img
+                      key={raDocIdx}
+                      src={raImages[raDocIdx]}
+                      alt={`Research Assistant Documentation ${raDocIdx + 1}`}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="w-full h-full object-cover"
+                    />
+                  </AnimatePresence>
+
+                  <button
+                    onClick={prevRaSlide}
+                    className="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-slate-950/70 text-white hover:bg-slate-950 transition-all cursor-pointer"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+
+                  <button
+                    onClick={nextRaSlide}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-slate-950/70 text-white hover:bg-slate-950 transition-all cursor-pointer"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+
+                {/* Dots Indicator */}
+                <div className="flex items-center gap-1.5 mt-3">
+                  {raImages.map((_, dIdx) => (
+                    <button
+                      key={dIdx}
+                      onClick={() => setRaDocIdx(dIdx)}
+                      className={`h-1.5 rounded-full transition-all cursor-pointer ${
+                        raDocIdx === dIdx ? 'w-6 bg-emerald-500' : 'w-1.5 bg-slate-300 dark:bg-slate-700'
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between pt-2 text-[11px] text-slate-500 font-mono shrink-0">
+                <span>Personal Hygiene Education for Food Handlers (Prambanan)</span>
+                <span>Secure Document Viewer</span>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   )
 }

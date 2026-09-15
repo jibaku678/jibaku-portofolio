@@ -32,7 +32,7 @@ export default function FreelanceSection() {
       <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 sm:p-8 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div className="flex-1 space-y-4">
           <div className="inline-block px-3 py-1 rounded bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-bold uppercase tracking-wider">
-            Independent Peer Support & Technical Consulting
+            Independent Peer Tutor & Technical Consultant for Final-Year Students
           </div>
           
           <ul className="space-y-2 text-xs sm:text-sm text-slate-600 dark:text-slate-300">
@@ -53,7 +53,7 @@ export default function FreelanceSection() {
           <div className="flex flex-wrap gap-2 pt-2">
             <span className="px-2.5 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-[11px] font-mono rounded">SPSS</span>
             <span className="px-2.5 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-[11px] font-mono rounded">ArcGIS</span>
-            <span className="px-2.5 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-[11px] font-mono rounded">MS Office</span>
+            <span className="px-2.5 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-[11px] font-mono rounded">Peer Tutoring</span>
             <span className="px-2.5 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-[11px] font-mono rounded">Data Cleaning</span>
           </div>
         </div>

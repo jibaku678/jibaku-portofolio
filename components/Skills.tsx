@@ -6,7 +6,7 @@ import { Globe, FileText, X, ExternalLink, CheckCircle2 } from 'lucide-react'
 export default function Skills() {
   const [isCteflModalOpen, setIsCteflModalOpen] = useState(false)
 
-  // Data skills yang sudah dipisah antara HSE/K3 dan Environmental Health
+  // Data skills yang sudah diperbarui sesuai permintaan
   const technicalSkills = [
     { 
       category: "Occupational Health & Safety (HSE)", 
@@ -25,7 +25,9 @@ export default function Skills() {
         "Waste Management (B3 & Non-B3) / POPAL",
         "Water & Food Hygiene Sanitation",
         "Vector & Rodent Control",
-        "Hospital & Industrial Sanitation"
+        "Hospital & Industrial Sanitation",
+        "Sanitarian Kit",
+        "Pengambilan Sampel Uji Lingkungan"
       ] 
     },
     { 
@@ -35,19 +37,27 @@ export default function Skills() {
         "SPSS & Epi Info (Statistical Analysis)", 
         "Epidemiology & Public Health Research", 
         "Field Survey & Data Collection",
-        "Data Visualization (Looker Studio)",
         "Research Methodology & Reporting"
       ] 
     },
     { 
       category: "Engineering, Design & Productivity", 
       items: [
-        "AutoCAD (Sanitation & Facility Drafting)", 
+        "AutoCAD (Basic - Sanitation & Facility Drafting)", 
         "Microsoft Office & Google Workspace", 
-        "Creative Design (Canva, Figma, CorelDRAW)",
-        "Video Editing (CapCut)", 
+        "Creative Design (Canva, Figma, CorelDRAW, Adobe Express)",
+        "OBS Studio (Media & Broadcasting)",
         "Event Coordination & Tech Operations",
         "Nitro PDF & Barcode Systems"
+      ] 
+    },
+    { 
+      category: "Vibe Coding & Web Deployment", 
+      items: [
+        "Google Apps Script (GAS)", 
+        "VS Code (Environment)", 
+        "GitHub (Version Control)", 
+        "Vercel (Intermediate Deployment)"
       ] 
     }
   ]
@@ -64,7 +74,7 @@ export default function Skills() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Technical Skills Column (Sekarang berisi 4 kotak, akan jadi grid 2x2 yang rapi) */}
+        {/* Technical Skills Column */}
         <div className="lg:col-span-2 space-y-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {technicalSkills.map((group, idx) => (
@@ -74,7 +84,9 @@ export default function Skills() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: idx * 0.1 }}
-                className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm flex flex-col"
+                className={`bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm flex flex-col ${
+                  idx === 4 ? 'sm:col-span-2' : ''
+                }`}
               >
                 <h3 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-4 pb-2 border-b border-slate-100 dark:border-slate-800">
                   {group.category}

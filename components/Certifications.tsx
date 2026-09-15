@@ -56,7 +56,6 @@ export default function Certifications() {
   const wasPhotos = ["/SERTIF_DOC/WASPOTO1.jpeg", "/SERTIF_DOC/WASPOTO2.jpeg", "/SERTIF_DOC/WASPOTO3.jpeg"]
   
   const healthCrisisCerts = ["/SERTIF_DOC/PKKB_SERTIF.png"]
-  // PKKB1-3 pakai .JPG, PKKB4-5 pakai .jpeg sesuai foldermu
   const healthCrisisPhotos = [
     "/SERTIF_DOC/PKKB1.JPG", 
     "/SERTIF_DOC/PKKB2.JPG", 
@@ -243,7 +242,14 @@ export default function Certifications() {
                 <div className="relative w-full h-[50vh] flex items-center justify-center bg-slate-950/40 rounded-lg overflow-hidden shadow-md group">
                   <AnimatePresence mode="wait">
                     {fireTab === 'certs' ? (
-                      <motion.img key="fire-c" src={fireCerts[0]} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="max-h-full max-w-full object-contain select-none" />
+                      <div key="fire-c" className="relative w-full h-full flex items-center justify-center">
+                        <motion.img src={fireCerts[0]} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="max-h-full max-w-full object-contain select-none pointer-events-none" />
+                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
+                          <span className="text-white/15 dark:text-white/10 text-xl sm:text-2xl font-black uppercase tracking-widest -rotate-12">
+                            FOR RECRUITMENT ONLY
+                          </span>
+                        </div>
+                      </div>
                     ) : (
                       <motion.img key={`fire-p-${firePhotoIdx}`} src={firePhotos[firePhotoIdx]} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="max-h-full max-w-full object-contain select-none" />
                     )}
@@ -282,7 +288,14 @@ export default function Certifications() {
                 <div className="relative w-full h-[50vh] flex items-center justify-center bg-slate-950/40 rounded-lg overflow-hidden shadow-md group">
                   <AnimatePresence mode="wait">
                     {healthCrisisTab === 'certs' ? (
-                      <motion.img key="hc-c" src={healthCrisisCerts[0]} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="max-h-full max-w-full object-contain select-none" />
+                      <div key="hc-c" className="relative w-full h-full flex items-center justify-center">
+                        <motion.img src={healthCrisisCerts[0]} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="max-h-full max-w-full object-contain select-none pointer-events-none" />
+                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
+                          <span className="text-white/15 dark:text-white/10 text-xl sm:text-2xl font-black uppercase tracking-widest -rotate-12">
+                            FOR RECRUITMENT ONLY
+                          </span>
+                        </div>
+                      </div>
                     ) : (
                       <motion.img key={`hc-p-${healthCrisisPhotoIdx}`} src={healthCrisisPhotos[healthCrisisPhotoIdx]} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="max-h-full max-w-full object-contain select-none" />
                     )}
@@ -322,7 +335,14 @@ export default function Certifications() {
                 <div className="relative w-full h-[50vh] flex items-center justify-center bg-slate-950/40 rounded-lg overflow-hidden shadow-md group">
                   <AnimatePresence mode="wait">
                     {wasTab === 'certs' ? (
-                      <motion.img key={`was-c-${wasCertIdx}`} src={wasCerts[wasCertIdx]} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="max-h-full max-w-full object-contain select-none" />
+                      <div key={`was-c-${wasCertIdx}`} className="relative w-full h-full flex items-center justify-center">
+                        <motion.img src={wasCerts[wasCertIdx]} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="max-h-full max-w-full object-contain select-none pointer-events-none" />
+                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
+                          <span className="text-white/15 dark:text-white/10 text-xl sm:text-2xl font-black uppercase tracking-widest -rotate-12">
+                            FOR RECRUITMENT ONLY
+                          </span>
+                        </div>
+                      </div>
                     ) : (
                       <motion.img key={`was-p-${wasPhotoIdx}`} src={wasPhotos[wasPhotoIdx]} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="max-h-full max-w-full object-contain select-none" />
                     )}
@@ -351,7 +371,16 @@ export default function Certifications() {
               </div>
               <div className="my-4 relative flex flex-col items-center justify-center bg-slate-100 dark:bg-slate-950 rounded-xl p-3 border flex-1">
                 <div className="relative w-full h-[55vh] flex items-center justify-center bg-slate-950/40 rounded-lg overflow-hidden shadow-md">
-                  <AnimatePresence mode="wait"><motion.img key={k3Idx} src={k3Images[k3Idx]} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="max-h-full max-w-full object-contain select-none" /></AnimatePresence>
+                  <AnimatePresence mode="wait">
+                    <div key={k3Idx} className="relative w-full h-full flex items-center justify-center">
+                      <motion.img src={k3Images[k3Idx]} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="max-h-full max-w-full object-contain select-none pointer-events-none" />
+                      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
+                        <span className="text-white/15 dark:text-white/10 text-xl sm:text-2xl font-black uppercase tracking-widest -rotate-12">
+                          FOR RECRUITMENT ONLY
+                        </span>
+                      </div>
+                    </div>
+                  </AnimatePresence>
                   <button onClick={() => setK3Idx(prev => prev === 0 ? k3Images.length - 1 : prev - 1)} className="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-slate-950/70 text-white"><ChevronLeft className="w-4 h-4" /></button>
                   <button onClick={() => setK3Idx(prev => prev === k3Images.length - 1 ? 0 : prev + 1)} className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-slate-950/70 text-white"><ChevronRight className="w-4 h-4" /></button>
                 </div>
@@ -376,7 +405,16 @@ export default function Certifications() {
               </div>
               <div className="my-4 relative flex flex-col items-center justify-center bg-slate-100 dark:bg-slate-950 rounded-xl p-3 border flex-1">
                 <div className="relative w-full h-[55vh] flex items-center justify-center bg-slate-950/40 rounded-lg overflow-hidden shadow-md">
-                  <AnimatePresence mode="wait"><motion.img key={uklIdx} src={uklImages[uklIdx]} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="max-h-full max-w-full object-contain select-none" /></AnimatePresence>
+                  <AnimatePresence mode="wait">
+                    <div key={uklIdx} className="relative w-full h-full flex items-center justify-center">
+                      <motion.img src={uklImages[uklIdx]} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="max-h-full max-w-full object-contain select-none pointer-events-none" />
+                      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
+                        <span className="text-white/15 dark:text-white/10 text-xl sm:text-2xl font-black uppercase tracking-widest -rotate-12">
+                          FOR RECRUITMENT ONLY
+                        </span>
+                      </div>
+                    </div>
+                  </AnimatePresence>
                   <button onClick={() => setUklIdx(prev => prev === 0 ? uklImages.length - 1 : prev - 1)} className="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-slate-950/70 text-white"><ChevronLeft className="w-4 h-4" /></button>
                   <button onClick={() => setUklIdx(prev => prev === uklImages.length - 1 ? 0 : prev + 1)} className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-slate-950/70 text-white"><ChevronRight className="w-4 h-4" /></button>
                 </div>
@@ -401,7 +439,16 @@ export default function Certifications() {
               </div>
               <div className="my-4 relative flex flex-col items-center justify-center bg-slate-100 dark:bg-slate-950 rounded-xl p-3 border flex-1">
                 <div className="relative w-full h-[55vh] flex items-center justify-center bg-slate-950/40 rounded-lg overflow-hidden shadow-md">
-                  <AnimatePresence mode="wait"><motion.img key={popalIdx} src={popalImages[popalIdx]} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="max-h-full max-w-full object-contain select-none" /></AnimatePresence>
+                  <AnimatePresence mode="wait">
+                    <div key={popalIdx} className="relative w-full h-full flex items-center justify-center">
+                      <motion.img src={popalImages[popalIdx]} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="max-h-full max-w-full object-contain select-none pointer-events-none" />
+                      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
+                        <span className="text-white/15 dark:text-white/10 text-xl sm:text-2xl font-black uppercase tracking-widest -rotate-12">
+                          FOR RECRUITMENT ONLY
+                        </span>
+                      </div>
+                    </div>
+                  </AnimatePresence>
                   <button onClick={() => setPopalIdx(prev => prev === 0 ? popalImages.length - 1 : prev - 1)} className="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-slate-950/70 text-white"><ChevronLeft className="w-4 h-4" /></button>
                   <button onClick={() => setPopalIdx(prev => prev === popalImages.length - 1 ? 0 : prev + 1)} className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-slate-950/70 text-white"><ChevronRight className="w-4 h-4" /></button>
                 </div>
@@ -426,7 +473,16 @@ export default function Certifications() {
               </div>
               <div className="my-4 relative flex flex-col items-center justify-center bg-slate-100 dark:bg-slate-950 rounded-xl p-3 border flex-1">
                 <div className="relative w-full h-[55vh] flex items-center justify-center bg-slate-950/40 rounded-lg overflow-hidden shadow-md">
-                  <AnimatePresence mode="wait"><motion.img key={entoIdx} src={entoImages[entoIdx]} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="max-h-full max-w-full object-contain select-none" /></AnimatePresence>
+                  <AnimatePresence mode="wait">
+                    <div key={entoIdx} className="relative w-full h-full flex items-center justify-center">
+                      <motion.img src={entoImages[entoIdx]} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="max-h-full max-w-full object-contain select-none pointer-events-none" />
+                      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
+                        <span className="text-white/15 dark:text-white/10 text-xl sm:text-2xl font-black uppercase tracking-widest -rotate-12">
+                          FOR RECRUITMENT ONLY
+                        </span>
+                      </div>
+                    </div>
+                  </AnimatePresence>
                   <button onClick={() => setEntoIdx(prev => prev === 0 ? entoImages.length - 1 : prev - 1)} className="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-slate-950/70 text-white"><ChevronLeft className="w-4 h-4" /></button>
                   <button onClick={() => setEntoIdx(prev => prev === entoImages.length - 1 ? 0 : prev + 1)} className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-slate-950/70 text-white"><ChevronRight className="w-4 h-4" /></button>
                 </div>
@@ -451,7 +507,16 @@ export default function Certifications() {
               </div>
               <div className="my-4 relative flex flex-col items-center justify-center bg-slate-100 dark:bg-slate-950 rounded-xl p-3 border flex-1">
                 <div className="relative w-full h-[55vh] flex items-center justify-center bg-slate-950/40 rounded-lg overflow-hidden shadow-md">
-                  <AnimatePresence mode="wait"><motion.img key={hakliIdx} src={hakliImages[hakliIdx]} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="max-h-full max-w-full object-contain select-none" /></AnimatePresence>
+                  <AnimatePresence mode="wait">
+                    <div key={hakliIdx} className="relative w-full h-full flex items-center justify-center">
+                      <motion.img src={hakliImages[hakliIdx]} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="max-h-full max-w-full object-contain select-none pointer-events-none" />
+                      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
+                        <span className="text-white/15 dark:text-white/10 text-xl sm:text-2xl font-black uppercase tracking-widest -rotate-12">
+                          FOR RECRUITMENT ONLY
+                        </span>
+                      </div>
+                    </div>
+                  </AnimatePresence>
                   <button onClick={() => setHakliIdx(prev => prev === 0 ? hakliImages.length - 1 : prev - 1)} className="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-slate-950/70 text-white"><ChevronLeft className="w-4 h-4" /></button>
                   <button onClick={() => setHakliIdx(prev => prev === hakliImages.length - 1 ? 0 : prev + 1)} className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-slate-950/70 text-white"><ChevronRight className="w-4 h-4" /></button>
                 </div>
@@ -476,7 +541,16 @@ export default function Certifications() {
               </div>
               <div className="my-4 relative flex flex-col items-center justify-center bg-slate-100 dark:bg-slate-950 rounded-xl p-3 border flex-1">
                 <div className="relative w-full h-[55vh] flex items-center justify-center bg-slate-950/40 rounded-lg overflow-hidden shadow-md">
-                  <AnimatePresence mode="wait"><motion.img key={sbhIdx} src={sbhImages[sbhIdx]} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="max-h-full max-w-full object-contain select-none" /></AnimatePresence>
+                  <AnimatePresence mode="wait">
+                    <div key={sbhIdx} className="relative w-full h-full flex items-center justify-center">
+                      <motion.img src={sbhImages[sbhIdx]} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="max-h-full max-w-full object-contain select-none pointer-events-none" />
+                      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
+                        <span className="text-white/15 dark:text-white/10 text-xl sm:text-2xl font-black uppercase tracking-widest -rotate-12">
+                          FOR RECRUITMENT ONLY
+                        </span>
+                      </div>
+                    </div>
+                  </AnimatePresence>
                   <button onClick={() => setSbhIdx(prev => prev === 0 ? sbhImages.length - 1 : prev - 1)} className="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-slate-950/70 text-white"><ChevronLeft className="w-4 h-4" /></button>
                   <button onClick={() => setSbhIdx(prev => prev === sbhImages.length - 1 ? 0 : prev + 1)} className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-slate-950/70 text-white"><ChevronRight className="w-4 h-4" /></button>
                 </div>
@@ -501,7 +575,12 @@ export default function Certifications() {
               </div>
               <div className="my-4 relative flex flex-col items-center justify-center bg-slate-100 dark:bg-slate-950 rounded-xl p-3 border flex-1">
                 <div className="relative w-full h-[55vh] flex items-center justify-center bg-slate-950/40 rounded-lg overflow-hidden shadow-md">
-                  <img src="/SERTIF_DOC/LDK.png" alt="LDK Certificate" className="max-h-full max-w-full object-contain select-none" />
+                  <img src="/SERTIF_DOC/LDK.png" alt="LDK Certificate" className="max-h-full max-w-full object-contain select-none pointer-events-none" />
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
+                    <span className="text-white/15 dark:text-white/10 text-xl sm:text-2xl font-black uppercase tracking-widest -rotate-12">
+                      FOR RECRUITMENT ONLY
+                    </span>
+                  </div>
                 </div>
               </div>
               <div className="flex items-center justify-between pt-2 text-[11px] text-slate-500 font-mono"><span>Issuer: Poltekkes Kemenkes Yogyakarta (2022)</span><span>Secure Viewer</span></div>

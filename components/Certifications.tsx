@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Award, ExternalLink, X, CheckCircle2, Maximize2, Minimize2, ChevronLeft, ChevronRight, Camera, FileText } from 'lucide-react'
+import { Award, ExternalLink, X, CheckCircle2, Maximize2, Minimize2, ChevronLeft, ChevronRight, FileText } from 'lucide-react'
 
 export default function Certifications() {
   const [isFireModalOpen, setIsFireModalOpen] = useState(false)
@@ -14,9 +14,10 @@ export default function Certifications() {
   const [wasCertIdx, setWasCertIdx] = useState(0)
   const [wasPhotoIdx, setWasPhotoIdx] = useState(0)
 
-  // State untuk Health Crisis / PKKB Simulation Modal
+  // State untuk Health Crisis Simulation Modal
   const [isHealthCrisisModalOpen, setIsHealthCrisisModalOpen] = useState(false)
   const [isHealthCrisisFullScreen, setIsHealthCrisisFullScreen] = useState(false)
+  const [healthCrisisTab, setHealthCrisisTab] = useState<'certs' | 'photos'>('certs')
   const [healthCrisisPhotoIdx, setHealthCrisisPhotoIdx] = useState(0)
 
   const [isK3ModalOpen, setIsK3ModalOpen] = useState(false)
@@ -50,7 +51,8 @@ export default function Certifications() {
   const wasCerts = ["/SERTIF_DOC/WAS1.jpeg", "/SERTIF_DOC/WAS2.jpeg"]
   const wasPhotos = ["/SERTIF_DOC/WASPOTO1.jpeg", "/SERTIF_DOC/WASPOTO2.jpeg", "/SERTIF_DOC/WASPOTO3.jpeg"]
   
-  // File PKKB masuk ke dokumentasi Health Crisis
+  // File Sertifikat & Foto Lapangan Health Crisis
+  const healthCrisisCerts = ["/SERTIF_DOC/PKKB_SERTIF.png"]
   const healthCrisisPhotos = [
     "/SERTIF_DOC/PKKB1.jpg", 
     "/SERTIF_DOC/PKKB2.jpg", 
@@ -66,7 +68,6 @@ export default function Certifications() {
   const hakliImages = ["/SERTIF_DOC/HAKLI1.png", "/SERTIF_DOC/HAKLI2.png"]
   const sbhImages = ["/SERTIF_DOC/SBH1.png", "/SERTIF_DOC/SBH2.png"]
 
-  // Daftar pelatihan dengan Health Crisis yang sudah interaktif (menyimpan PKKB photos)
   const trainingList = [
     {
       title: "Healthcare Facility OHS / K3 Fasyankes",
@@ -122,7 +123,7 @@ export default function Certifications() {
       description: "Simulation training on health crisis management and interprofessional coordination during disaster scenarios.",
       isInteractive: true,
       type: "healthcrisis",
-      actionText: "View Field Documentation (PKKB)"
+      actionText: "View Certificate & Documentation"
     },
     {
       title: "Guest Lectures International Conference: Industrial Sanitation",
@@ -218,25 +219,37 @@ export default function Certifications() {
         ))}
       </div>
 
-      {/* --- MODAL: HEALTH CRISIS (DOKUMENTASI PKKB) --- */}
+      {/* --- MODAL: HEALTH CRISIS SIMULATION --- */}
       <AnimatePresence>
         {isHealthCrisisModalOpen && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md" onClick={() => setIsHealthCrisisModalOpen(false)}>
             <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className={`relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-2xl transition-all duration-300 flex flex-col ${isHealthCrisisFullScreen ? 'w-screen h-screen max-w-none max-h-none rounded-none p-4' : 'max-w-3xl w-full'}`} onClick={(e) => e.stopPropagation()}>
               <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800 shrink-0">
-                <div className="flex items-center gap-2"><Camera className="w-4 h-4 text-amber-500" /><h4 className="font-bold text-slate-900 dark:text-white text-xs sm:text-sm uppercase tracking-wider">Health Crisis & PKKB Field Documentation ({healthCrisisPhotoIdx + 1}/{healthCrisisPhotos.length})</h4></div>
+                <div className="flex items-center gap-2"><FileText className="w-4 h-4 text-amber-500" /><h4 className="font-bold text-slate-900 dark:text-white text-xs sm:text-sm uppercase tracking-wider">Health Crisis Management Simulation</h4></div>
                 <div className="flex items-center gap-2">
                   <button onClick={() => setIsHealthCrisisFullScreen(!isHealthCrisisFullScreen)} className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-amber-500 transition-colors cursor-pointer flex items-center gap-1.5 text-xs font-bold">{isHealthCrisisFullScreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}<span>{isHealthCrisisFullScreen ? "Normal" : "Fullscreen"}</span></button>
                   <button onClick={() => { setIsHealthCrisisModalOpen(false); setIsHealthCrisisFullScreen(false); }} className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-900 transition-colors cursor-pointer"><X className="w-5 h-5" /></button>
                 </div>
               </div>
+              <div className="flex items-center gap-2 mt-4 shrink-0">
+                <button onClick={() => setHealthCrisisTab('certs')} className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${healthCrisisTab === 'certs' ? 'bg-amber-600 text-white shadow-md' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'}`}>Certificate ({healthCrisisCerts.length})</button>
+                <button onClick={() => setHealthCrisisTab('photos')} className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${healthCrisisTab === 'photos' ? 'bg-amber-600 text-white shadow-md' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'}`}>Field Photos ({healthCrisisPhotos.length})</button>
+              </div>
               <div className="my-4 relative flex flex-col items-center justify-center bg-slate-100 dark:bg-slate-950 rounded-xl p-3 border border-slate-200 dark:border-slate-800 flex-1">
                 <div className="relative w-full h-[50vh] flex items-center justify-center bg-slate-950/40 rounded-lg overflow-hidden shadow-md group">
                   <AnimatePresence mode="wait">
-                    <motion.img key={`hc-p-${healthCrisisPhotoIdx}`} src={healthCrisisPhotos[healthCrisisPhotoIdx]} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="max-h-full max-w-full object-contain select-none" />
+                    {healthCrisisTab === 'certs' ? (
+                      <motion.img key="hc-c" src={healthCrisisCerts[0]} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="max-h-full max-w-full object-contain select-none" />
+                    ) : (
+                      <motion.img key={`hc-p-${healthCrisisPhotoIdx}`} src={healthCrisisPhotos[healthCrisisPhotoIdx]} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="max-h-full max-w-full object-contain select-none" />
+                    )}
                   </AnimatePresence>
-                  <button onClick={() => setHealthCrisisPhotoIdx(prev => prev === 0 ? healthCrisisPhotos.length - 1 : prev - 1)} className="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-slate-950/70 text-white"><ChevronLeft className="w-4 h-4" /></button>
-                  <button onClick={() => setHealthCrisisPhotoIdx(prev => prev === healthCrisisPhotos.length - 1 ? 0 : prev + 1)} className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-slate-950/70 text-white"><ChevronRight className="w-4 h-4" /></button>
+                  {healthCrisisTab === 'photos' && (
+                    <>
+                      <button onClick={() => setHealthCrisisPhotoIdx(prev => prev === 0 ? healthCrisisPhotos.length - 1 : prev - 1)} className="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-slate-950/70 text-white"><ChevronLeft className="w-4 h-4" /></button>
+                      <button onClick={() => setHealthCrisisPhotoIdx(prev => prev === healthCrisisPhotos.length - 1 ? 0 : prev + 1)} className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-slate-950/70 text-white"><ChevronRight className="w-4 h-4" /></button>
+                    </>
+                  )}
                 </div>
               </div>
               <div className="flex items-center justify-between pt-2 text-[11px] text-slate-500 font-mono shrink-0"><span>Issuer: Poltekkes Kemenkes Yogyakarta (2024)</span><span>Secure Document Viewer</span></div>
@@ -245,8 +258,8 @@ export default function Certifications() {
         )}
       </AnimatePresence>
 
-      {/* --- MODAL LAINNYA (Fire, WAS, K3, UKL, POPAL, Ento, Hakli, SBH, LDK) --- */}
-      {/* 1. Fire Safety Modal */}
+      {/* --- MODAL LAINNYA --- */}
+      {/* Fire Safety Modal */}
       <AnimatePresence>
         {isFireModalOpen && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md" onClick={() => setIsFireModalOpen(false)}>
@@ -280,7 +293,7 @@ export default function Certifications() {
         )}
       </AnimatePresence>
 
-      {/* 2. Water & Sanitation Simulation Modal */}
+      {/* Water & Sanitation Simulation Modal */}
       <AnimatePresence>
         {isWasModalOpen && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md" onClick={() => setIsWasModalOpen(false)}>
@@ -315,7 +328,7 @@ export default function Certifications() {
         )}
       </AnimatePresence>
 
-      {/* 3. K3 Fasyankes Modal */}
+      {/* K3 Fasyankes Modal */}
       <AnimatePresence>
         {isK3ModalOpen && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md" onClick={() => setIsK3ModalOpen(false)}>
@@ -340,7 +353,7 @@ export default function Certifications() {
         )}
       </AnimatePresence>
 
-      {/* 4. UKL-UPL Modal */}
+      {/* UKL-UPL Modal */}
       <AnimatePresence>
         {isUklModalOpen && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md" onClick={() => setIsUklModalOpen(false)}>
@@ -365,7 +378,7 @@ export default function Certifications() {
         )}
       </AnimatePresence>
 
-      {/* 5. POPAL Modal */}
+      {/* POPAL Modal */}
       <AnimatePresence>
         {isPopalModalOpen && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md" onClick={() => setIsPopalModalOpen(false)}>
@@ -390,7 +403,7 @@ export default function Certifications() {
         )}
       </AnimatePresence>
 
-      {/* 6. Entomology Modal */}
+      {/* Entomology Modal */}
       <AnimatePresence>
         {isEntoModalOpen && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md" onClick={() => setIsEntoModalOpen(false)}>
@@ -415,7 +428,7 @@ export default function Certifications() {
         )}
       </AnimatePresence>
 
-      {/* 7. HAKLI Modal */}
+      {/* HAKLI Modal */}
       <AnimatePresence>
         {isHakliModalOpen && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md" onClick={() => setIsHakliModalOpen(false)}>
@@ -440,7 +453,7 @@ export default function Certifications() {
         )}
       </AnimatePresence>
 
-      {/* 8. SBH Modal */}
+      {/* SBH Modal */}
       <AnimatePresence>
         {isSbhModalOpen && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md" onClick={() => setIsSbhModalOpen(false)}>
@@ -465,7 +478,7 @@ export default function Certifications() {
         )}
       </AnimatePresence>
 
-      {/* 9. LDK Modal */}
+      {/* LDK Modal */}
       <AnimatePresence>
         {isLdkModalOpen && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md" onClick={() => setIsLdkModalOpen(false)}>

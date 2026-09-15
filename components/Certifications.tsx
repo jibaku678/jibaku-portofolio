@@ -14,7 +14,6 @@ export default function Certifications() {
   const [wasCertIdx, setWasCertIdx] = useState(0)
   const [wasPhotoIdx, setWasPhotoIdx] = useState(0)
 
-  // State untuk Health Crisis Simulation Modal
   const [isHealthCrisisModalOpen, setIsHealthCrisisModalOpen] = useState(false)
   const [isHealthCrisisFullScreen, setIsHealthCrisisFullScreen] = useState(false)
   const [healthCrisisTab, setHealthCrisisTab] = useState<'certs' | 'photos'>('certs')
@@ -51,7 +50,6 @@ export default function Certifications() {
   const wasCerts = ["/SERTIF_DOC/WAS1.jpeg", "/SERTIF_DOC/WAS2.jpeg"]
   const wasPhotos = ["/SERTIF_DOC/WASPOTO1.jpeg", "/SERTIF_DOC/WASPOTO2.jpeg", "/SERTIF_DOC/WASPOTO3.jpeg"]
   
-  // File Sertifikat & Foto Lapangan Health Crisis
   const healthCrisisCerts = ["/SERTIF_DOC/PKKB_SERTIF.png"]
   const healthCrisisPhotos = [
     "/SERTIF_DOC/PKKB1.jpg", 
@@ -75,7 +73,7 @@ export default function Certifications() {
       description: "Specialized training on health and safety implementation in hospital environments.",
       isInteractive: true,
       type: "k3faskes",
-      actionText: "View Certificate Gallery"
+      actionText: "View Certificate & Documentation"
     },
     {
       title: "POPAL Competency-Based Training (Wastewater Treatment)",
@@ -83,7 +81,7 @@ export default function Certifications() {
       description: "Certified operational management for industrial and facility wastewater treatment plants.",
       isInteractive: true,
       type: "popal",
-      actionText: "View Certificate Gallery"
+      actionText: "View Certificate & Documentation"
     },
     {
       title: "UKL-UPL Document Preparation Training",
@@ -91,7 +89,7 @@ export default function Certifications() {
       description: "Technical guidance on environmental management and monitoring document drafting.",
       isInteractive: true,
       type: "uklupl",
-      actionText: "View Certificate Gallery"
+      actionText: "View Certificate & Documentation"
     },
     {
       title: "Health Entomology & Vector Control Training",
@@ -99,7 +97,7 @@ export default function Certifications() {
       description: "Vector surveillance and pest control management strategies.",
       isInteractive: true,
       type: "ento",
-      actionText: "View Certificate Gallery"
+      actionText: "View Certificate & Documentation"
     },
     {
       title: "Early Fire Prevention Training",
@@ -107,7 +105,7 @@ export default function Certifications() {
       description: "Basic fire safety, prevention, and response protocols.",
       isInteractive: true,
       type: "fire",
-      actionText: "View Credential & Field Documentation"
+      actionText: "View Certificate & Documentation"
     },
     {
       title: "Emergency Water & Sanitation Simulation",
@@ -115,7 +113,7 @@ export default function Certifications() {
       description: "Emergency response and sanitation setup during disaster situations.",
       isInteractive: true,
       type: "was",
-      actionText: "View Simulation & Certificate Gallery"
+      actionText: "View Certificate & Documentation"
     },
     {
       title: "Health Crisis Management Simulation in Disaster Situations via Interprofessional Education (IPE)",
@@ -131,7 +129,7 @@ export default function Certifications() {
       description: "International conference focusing on optimizing human resources and improving industrial sanitation quality.",
       isInteractive: true,
       type: "hakli",
-      actionText: "View Certificate Gallery"
+      actionText: "View Certificate & Documentation"
     },
     {
       title: "Health Bakti Camp IX (Kemah Bakti Kesehatan)",
@@ -139,7 +137,7 @@ export default function Certifications() {
       description: "Community health devotion camp with the theme 'Pramuka Berbudaya, Berbakti Untuk Negeri' in Prambanan.",
       isInteractive: true,
       type: "sbh",
-      actionText: "View Documentation & Certificate"
+      actionText: "View Certificate & Documentation"
     },
     {
       title: "Leadership Basic Training (Latihan Dasar Kepemimpinan)",

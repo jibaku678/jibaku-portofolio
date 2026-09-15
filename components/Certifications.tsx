@@ -1,12 +1,14 @@
 'use client'
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Award, ExternalLink, X, CheckCircle2, Maximize2, Minimize2, ChevronLeft, ChevronRight, FileText } from 'lucide-react'
+import { Award, ExternalLink, X, Maximize2, Minimize2, ChevronLeft, ChevronRight, FileText } from 'lucide-react'
 
 export default function Certifications() {
   const [isFireModalOpen, setIsFireModalOpen] = useState(false)
   const [isFireFullScreen, setIsFireFullScreen] = useState(false)
-  const [fireDocIdx, setFireDocIdx] = useState(0)
+  const [fireTab, setFireTab] = useState<'certs' | 'photos'>('certs')
+  const [fireCertIdx, setFireCertIdx] = useState(0)
+  const [firePhotoIdx, setFirePhotoIdx] = useState(0)
 
   const [isWasModalOpen, setIsWasModalOpen] = useState(false)
   const [isWasFullScreen, setIsWasFullScreen] = useState(false)
@@ -17,6 +19,7 @@ export default function Certifications() {
   const [isHealthCrisisModalOpen, setIsHealthCrisisModalOpen] = useState(false)
   const [isHealthCrisisFullScreen, setIsHealthCrisisFullScreen] = useState(false)
   const [healthCrisisTab, setHealthCrisisTab] = useState<'certs' | 'photos'>('certs')
+  const [healthCrisisCertIdx, setHealthCrisisCertIdx] = useState(0)
   const [healthCrisisPhotoIdx, setHealthCrisisPhotoIdx] = useState(0)
 
   const [isK3ModalOpen, setIsK3ModalOpen] = useState(false)
@@ -46,17 +49,20 @@ export default function Certifications() {
   const [isLdkModalOpen, setIsLdkModalOpen] = useState(false)
   const [isLdkFullScreen, setIsLdkFullScreen] = useState(false)
 
-  const fireImages = ["/SERTIF_DOC/kebakaran1.jpg", "/SERTIF_DOC/kebakaran2.jpg"]
+  const fireCerts = ["/SERTIF_DOC/sertif_kebakaran.jpeg"]
+  const firePhotos = ["/SERTIF_DOC/kebakaran1.jpg", "/SERTIF_DOC/kebakaran2.jpg"]
+
   const wasCerts = ["/SERTIF_DOC/WAS1.jpeg", "/SERTIF_DOC/WAS2.jpeg"]
   const wasPhotos = ["/SERTIF_DOC/WASPOTO1.jpeg", "/SERTIF_DOC/WASPOTO2.jpeg", "/SERTIF_DOC/WASPOTO3.jpeg"]
   
   const healthCrisisCerts = ["/SERTIF_DOC/PKKB_SERTIF.png"]
+  // PKKB1-3 pakai .JPG, PKKB4-5 pakai .jpeg sesuai foldermu
   const healthCrisisPhotos = [
-    "/SERTIF_DOC/PKKB1.jpg", 
-    "/SERTIF_DOC/PKKB2.jpg", 
-    "/SERTIF_DOC/PKKB3.jpg", 
-    "/SERTIF_DOC/PKKB4.jpg", 
-    "/SERTIF_DOC/PKKB5.jpg"
+    "/SERTIF_DOC/PKKB1.JPG", 
+    "/SERTIF_DOC/PKKB2.JPG", 
+    "/SERTIF_DOC/PKKB3.JPG", 
+    "/SERTIF_DOC/PKKB4.jpeg", 
+    "/SERTIF_DOC/PKKB5.jpeg"
   ]
 
   const k3Images = ["/SERTIF_DOC/k3faskes1.png", "/SERTIF_DOC/k3faskes2.png"]
@@ -73,7 +79,7 @@ export default function Certifications() {
       description: "Specialized training on health and safety implementation in hospital environments.",
       isInteractive: true,
       type: "k3faskes",
-      actionText: "View Certificate & Documentation"
+      actionText: "View Certificate"
     },
     {
       title: "POPAL Competency-Based Training (Wastewater Treatment)",
@@ -81,7 +87,7 @@ export default function Certifications() {
       description: "Certified operational management for industrial and facility wastewater treatment plants.",
       isInteractive: true,
       type: "popal",
-      actionText: "View Certificate & Documentation"
+      actionText: "View Certificate"
     },
     {
       title: "UKL-UPL Document Preparation Training",
@@ -89,7 +95,7 @@ export default function Certifications() {
       description: "Technical guidance on environmental management and monitoring document drafting.",
       isInteractive: true,
       type: "uklupl",
-      actionText: "View Certificate & Documentation"
+      actionText: "View Certificate"
     },
     {
       title: "Health Entomology & Vector Control Training",
@@ -97,7 +103,7 @@ export default function Certifications() {
       description: "Vector surveillance and pest control management strategies.",
       isInteractive: true,
       type: "ento",
-      actionText: "View Certificate & Documentation"
+      actionText: "View Certificate"
     },
     {
       title: "Early Fire Prevention Training",
@@ -129,7 +135,7 @@ export default function Certifications() {
       description: "International conference focusing on optimizing human resources and improving industrial sanitation quality.",
       isInteractive: true,
       type: "hakli",
-      actionText: "View Certificate & Documentation"
+      actionText: "View Certificate"
     },
     {
       title: "Health Bakti Camp IX (Kemah Bakti Kesehatan)",
@@ -137,7 +143,7 @@ export default function Certifications() {
       description: "Community health devotion camp with the theme 'Pramuka Berbudaya, Berbakti Untuk Negeri' in Prambanan.",
       isInteractive: true,
       type: "sbh",
-      actionText: "View Certificate & Documentation"
+      actionText: "View Certificate"
     },
     {
       title: "Leadership Basic Training (Latihan Dasar Kepemimpinan)",
@@ -217,6 +223,45 @@ export default function Certifications() {
         ))}
       </div>
 
+      {/* --- MODAL: EARLY FIRE PREVENTION --- */}
+      <AnimatePresence>
+        {isFireModalOpen && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md" onClick={() => setIsFireModalOpen(false)}>
+            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className={`relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-2xl transition-all duration-300 flex flex-col ${isFireFullScreen ? 'w-screen h-screen max-w-none max-h-none rounded-none p-4' : 'max-w-3xl w-full'}`} onClick={(e) => e.stopPropagation()}>
+              <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800 shrink-0">
+                <div className="flex items-center gap-2"><FileText className="w-4 h-4 text-amber-500" /><h4 className="font-bold text-slate-900 dark:text-white text-xs sm:text-sm uppercase tracking-wider">Early Fire Prevention Training</h4></div>
+                <div className="flex items-center gap-2">
+                  <button onClick={() => setIsFireFullScreen(!isFireFullScreen)} className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-amber-500 transition-colors cursor-pointer flex items-center gap-1.5 text-xs font-bold">{isFireFullScreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}<span>{isFireFullScreen ? "Normal" : "Fullscreen"}</span></button>
+                  <button onClick={() => { setIsFireModalOpen(false); setIsFireFullScreen(false); }} className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-900 transition-colors cursor-pointer"><X className="w-5 h-5" /></button>
+                </div>
+              </div>
+              <div className="flex items-center gap-2 mt-4 shrink-0">
+                <button onClick={() => setFireTab('certs')} className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${fireTab === 'certs' ? 'bg-amber-600 text-white shadow-md' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'}`}>Certificate ({fireCerts.length})</button>
+                <button onClick={() => setFireTab('photos')} className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${fireTab === 'photos' ? 'bg-amber-600 text-white shadow-md' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'}`}>Field Photos ({firePhotos.length})</button>
+              </div>
+              <div className="my-4 relative flex flex-col items-center justify-center bg-slate-100 dark:bg-slate-950 rounded-xl p-3 border border-slate-200 dark:border-slate-800 flex-1">
+                <div className="relative w-full h-[50vh] flex items-center justify-center bg-slate-950/40 rounded-lg overflow-hidden shadow-md group">
+                  <AnimatePresence mode="wait">
+                    {fireTab === 'certs' ? (
+                      <motion.img key="fire-c" src={fireCerts[0]} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="max-h-full max-w-full object-contain select-none" />
+                    ) : (
+                      <motion.img key={`fire-p-${firePhotoIdx}`} src={firePhotos[firePhotoIdx]} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="max-h-full max-w-full object-contain select-none" />
+                    )}
+                  </AnimatePresence>
+                  {fireTab === 'photos' && (
+                    <>
+                      <button onClick={() => setFirePhotoIdx(prev => prev === 0 ? firePhotos.length - 1 : prev - 1)} className="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-slate-950/70 text-white"><ChevronLeft className="w-4 h-4" /></button>
+                      <button onClick={() => setFirePhotoIdx(prev => prev === firePhotos.length - 1 ? 0 : prev + 1)} className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-slate-950/70 text-white"><ChevronRight className="w-4 h-4" /></button>
+                    </>
+                  )}
+                </div>
+              </div>
+              <div className="flex items-center justify-between pt-2 text-[11px] text-slate-500 font-mono shrink-0"><span>Issuer: Dinas Pemadam Kebakaran Kota Yogyakarta (2023)</span><span>Secure Document Viewer</span></div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* --- MODAL: HEALTH CRISIS SIMULATION --- */}
       <AnimatePresence>
         {isHealthCrisisModalOpen && (
@@ -257,40 +302,6 @@ export default function Certifications() {
       </AnimatePresence>
 
       {/* --- MODAL LAINNYA --- */}
-      {/* Fire Safety Modal */}
-      <AnimatePresence>
-        {isFireModalOpen && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md" onClick={() => setIsFireModalOpen(false)}>
-            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className={`relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-2xl transition-all duration-300 flex flex-col ${isFireFullScreen ? 'w-screen h-screen max-w-none max-h-none rounded-none p-4' : 'max-w-4xl w-full'}`} onClick={(e) => e.stopPropagation()}>
-              <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800 shrink-0">
-                <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-amber-500" /><h4 className="font-bold text-slate-900 dark:text-white text-xs sm:text-sm uppercase tracking-wider">Early Fire Prevention Training Credential & Field Practice</h4></div>
-                <div className="flex items-center gap-2">
-                  <button onClick={() => setIsFireFullScreen(!isFireFullScreen)} className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-amber-500 transition-colors cursor-pointer flex items-center gap-1.5 text-xs font-bold">{isFireFullScreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}<span>{isFireFullScreen ? "Normal" : "Fullscreen"}</span></button>
-                  <button onClick={() => { setIsFireModalOpen(false); setIsFireFullScreen(false); }} className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-900 transition-colors cursor-pointer"><X className="w-5 h-5" /></button>
-                </div>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-4 flex-1 overflow-y-auto">
-                <div className="relative flex flex-col items-center justify-center bg-slate-100 dark:bg-slate-950 rounded-xl p-3 border border-slate-200 dark:border-slate-800">
-                  <span className="text-[10px] font-mono font-bold text-amber-500 uppercase mb-2">Official Certificate</span>
-                  <div className="relative w-full h-[40vh] flex items-center justify-center overflow-hidden rounded-lg bg-slate-900/40">
-                    <img src="/SERTIF_DOC/sertif_kebakaran.jpeg" alt="Fire Safety Certificate" className="max-h-full max-w-full object-contain rounded-md shadow-md select-none pointer-events-none" />
-                  </div>
-                </div>
-                <div className="relative flex flex-col items-center justify-center bg-slate-100 dark:bg-slate-950 rounded-xl p-3 border border-slate-200 dark:border-slate-800">
-                  <span className="text-[10px] font-mono font-bold text-amber-500 uppercase mb-2">Field Practice Documentation ({fireDocIdx + 1}/{fireImages.length})</span>
-                  <div className="relative w-full h-[40vh] rounded-lg overflow-hidden bg-slate-900 flex items-center justify-center shadow-md group">
-                    <AnimatePresence mode="wait"><motion.img key={fireDocIdx} src={fireImages[fireDocIdx]} alt="Fire Practice" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="max-h-full max-w-full object-contain" /></AnimatePresence>
-                    <button onClick={(e) => { e.stopPropagation(); setFireDocIdx(prev => prev === 0 ? fireImages.length - 1 : prev - 1); }} className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-slate-950/70 text-white"><ChevronLeft className="w-4 h-4" /></button>
-                    <button onClick={(e) => { e.stopPropagation(); setFireDocIdx(prev => prev === fireImages.length - 1 ? 0 : prev + 1); }} className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-slate-950/70 text-white"><ChevronRight className="w-4 h-4" /></button>
-                  </div>
-                </div>
-              </div>
-              <div className="flex items-center justify-between pt-2 text-[11px] text-slate-500 font-mono shrink-0"><span>Issuer: Dinas Pemadam Kebakaran Kota Yogyakarta (2023)</span><span>Secure Document Viewer</span></div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       {/* Water & Sanitation Simulation Modal */}
       <AnimatePresence>
         {isWasModalOpen && (

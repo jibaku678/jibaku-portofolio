@@ -14,7 +14,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 15) {
+      if (window.scrollY > 20) {
         setScrolled(true)
       } else {
         setScrolled(false)
@@ -39,54 +39,57 @@ export default function Navbar() {
 
   return (
     <motion.header 
-      initial={{ y: -25, opacity: 0 }}
+      initial={{ y: -30, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-4 sm:px-6 lg:px-8 py-4 ${
-        scrolled ? 'bg-slate-950/90 backdrop-blur-xl border-b border-emerald-500/20 shadow-2xl py-3' : 'bg-transparent'
+      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 px-4 sm:px-6 lg:px-8 py-4 ${
+        scrolled 
+          ? 'bg-slate-950/85 backdrop-blur-2xl border-b border-emerald-500/30 shadow-[0_10px_30px_rgba(0,0,0,0.5)] py-3' 
+          : 'bg-transparent'
       }`}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         
-        {/* Logo / Nama dengan efek glow hijau tipis */}
+        {/* Logo / Nama */}
         <motion.a 
           href="#" 
-          whileHover={{ scale: 1.02 }}
-          className="text-sm sm:text-base font-black text-white tracking-tight uppercase flex items-center gap-2.5 group bg-slate-900/60 border border-slate-800 px-4 py-2 rounded-xl backdrop-blur-md"
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.97 }}
+          className="text-xs sm:text-sm font-black text-white tracking-wider uppercase flex items-center gap-2.5 bg-slate-900/80 border border-slate-800/80 px-4 py-2 rounded-xl backdrop-blur-md shadow-inner group"
         >
-          <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_10px_#10b981] animate-pulse"></span>
-          <span>Jibakudin Nur</span>
+          <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_12px_#10b981] animate-pulse"></span>
+          <span className="group-hover:text-emerald-400 transition-colors">Jibakudin Nur</span>
         </motion.a>
 
-        {/* Menu Desktop: Gaya Pill Mengambang yang Keren */}
-        <nav className="hidden md:flex items-center gap-1.5 bg-slate-900/70 border border-slate-800/80 px-4 py-1.5 rounded-full shadow-lg backdrop-blur-md">
+        {/* Menu Desktop */}
+        <nav className="hidden md:flex items-center gap-1 bg-slate-900/60 border border-slate-800/90 px-3 py-1.5 rounded-full shadow-lg backdrop-blur-xl">
           {navLinks.map((link, idx) => (
             <motion.a
               key={idx}
               href={link.href}
-              whileHover={{ scale: 1.06, color: '#34d399' }}
+              whileHover={{ scale: 1.05, color: '#34d399' }}
               whileTap={{ scale: 0.95 }}
-              className="px-3.5 py-1 text-xs font-bold text-slate-300 uppercase tracking-widest transition-colors rounded-full"
+              className="relative px-3.5 py-1 text-xs font-bold text-slate-300 uppercase tracking-widest transition-colors rounded-full hover:bg-emerald-500/10"
             >
               {link.name}
             </motion.a>
           ))}
         </nav>
 
-        {/* Tombol Kanan: CV & Tombol Tema dengan Keterangan Kecil */}
+        {/* Tombol Kanan (CV & Theme Toggle) */}
         <div className="hidden md:flex items-center gap-3">
           <motion.a
             href="/CV_JIBAKUDIN_NUR_fix_1.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            whileHover={{ scale: 1.05, boxShadow: '0 0 20px rgba(16, 185, 129, 0.4)' }}
+            whileHover={{ scale: 1.05, boxShadow: '0 0 20px rgba(16, 185, 129, 0.3)' }}
             whileTap={{ scale: 0.95 }}
             className="flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md shadow-emerald-600/30 cursor-pointer border border-emerald-500/40"
           >
             <FileText className="w-3.5 h-3.5" /> CV
           </motion.a>
 
-          {/* Tombol Dark/Light Mode dengan Keterangan Kecil di bawahnya */}
+          {/* Tombol Theme dengan Keterangan Kecil */}
           <div className="flex flex-col items-center">
             <motion.button
               onClick={toggleDarkMode}
@@ -97,7 +100,7 @@ export default function Navbar() {
             >
               {isDarkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-200" />}
             </motion.button>
-            <span className="text-[9px] font-mono text-slate-400 uppercase tracking-tighter mt-0.5">
+            <span className="text-[9px] font-mono text-slate-400 uppercase tracking-tighter mt-0.5 select-none">
               {isDarkMode ? 'Dark' : 'Light'}
             </span>
           </div>
@@ -129,9 +132,9 @@ export default function Navbar() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
+            initial={{ opacity: 0, y: -10, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.98 }}
             className="md:hidden bg-slate-950/95 backdrop-blur-2xl border border-slate-800 rounded-2xl mt-3 p-6 space-y-4 shadow-2xl overflow-hidden"
           >
             <div className="flex flex-col space-y-3">

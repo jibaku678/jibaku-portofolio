@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FileText, ChevronLeft, ChevronRight, X, Maximize2, Minimize2, Map, Camera, ExternalLink } from 'lucide-react'
+import { FileText, ChevronLeft, ChevronRight, X, Maximize2, Minimize2, Map, Camera, ExternalLink, MessageSquare } from 'lucide-react'
 
 export default function Projects() {
   const [isRaModalOpen, setIsRaModalOpen] = useState(false)
@@ -13,6 +13,11 @@ export default function Projects() {
   const [enumTab, setEnumTab] = useState<'photos' | 'maps'>('photos')
   const [enumPhotoIdx, setEnumPhotoIdx] = useState(0)
   const [enumMapIdx, setEnumMapIdx] = useState(0)
+
+  // State untuk Modal Kutensei Store (Testimoni Klien)
+  const [isStoreModalOpen, setIsStoreModalOpen] = useState(false)
+  const [isStoreFullScreen, setIsStoreFullScreen] = useState(false)
+  const [storeIdx, setStoreIdx] = useState(0)
 
   const raImages = [
     "/PROJEK_DOC/RA1.jpeg",
@@ -41,6 +46,13 @@ export default function Projects() {
     "/PROJEK_DOC/peta7.jpeg"
   ]
 
+  // Foto Testimoni Kutensei Store (FREE3 ditaruh paling awal)
+  const storeTestimonials = [
+    "/FREELANCE/FREE3.jpeg",
+    "/FREELANCE/FREE1.jpeg",
+    "/FREELANCE/FREE2.jpeg"
+  ]
+
   const nextRaSlide = () => setRaDocIdx((prev) => (prev === raImages.length - 1 ? 0 : prev + 1))
   const prevRaSlide = () => setRaDocIdx((prev) => (prev === 0 ? raImages.length - 1 : prev - 1))
 
@@ -49,6 +61,9 @@ export default function Projects() {
 
   const nextEnumMap = () => setEnumMapIdx((prev) => (prev === enumMaps.length - 1 ? 0 : prev + 1))
   const prevEnumMap = () => setEnumMapIdx((prev) => (prev === 0 ? enumMaps.length - 1 : prev - 1))
+
+  const nextStoreSlide = () => setStoreIdx((prev) => (prev === storeTestimonials.length - 1 ? 0 : prev + 1))
+  const prevStoreSlide = () => setStoreIdx((prev) => (prev === 0 ? storeTestimonials.length - 1 : prev - 1))
 
   const projectsList = [
     {
@@ -86,6 +101,18 @@ export default function Projects() {
       type: "enumerator",
       actionLabel: "View Field & Map Docs",
       icon: Map
+    },
+    {
+      tag: "FREELANCE SERVICE",
+      title: "Kutensei Store: Technical Research & Data Support",
+      description: "Independent peer tutoring & technical assistance for final-year students: SPSS data processing, ArcGIS mapping, and structured MS Office formatting.",
+      tools: ["SPSS", "ArcGIS", "MS Office", "Statistical Testing"],
+      metric: "Active / Ongoing",
+      link: "https://script.google.com/macros/s/AKfycbwzwlJ8K4KqUVB2jpHDpZHz3gAM-WoVzNeN_C6JlxcYReXgyoes5CTtv4-DAw4TfRVq/exec",
+      hasDocumentation: true,
+      type: "store",
+      actionLabel: "View Testimonials (3 Photos)",
+      icon: MessageSquare
     }
   ]
 
@@ -96,11 +123,11 @@ export default function Projects() {
           // Research & Case Studies
         </span>
         <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white uppercase tracking-tight">
-          Selected Projects
+          Selected Projects & Services
         </h2>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {projectsList.map((project, idx) => {
           const IconComponent = project.icon
           return (
@@ -113,6 +140,7 @@ export default function Projects() {
               onClick={() => {
                 if (project.type === 'ra') setIsRaModalOpen(true);
                 if (project.type === 'enumerator') setIsEnumModalOpen(true);
+                if (project.type === 'store') setIsStoreModalOpen(true);
               }}
               className={`bg-white dark:bg-slate-900 border rounded-xl p-6 shadow-sm flex flex-col justify-between transition-all ${
                 project.hasDocumentation 
@@ -127,7 +155,7 @@ export default function Projects() {
                   </span>
                   {project.hasDocumentation && (
                     <span className="text-[10px] font-mono font-bold text-emerald-600 dark:text-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity">
-                      Click to view gallery ➔
+                      Click to view ➔
                     </span>
                   )}
                 </div>
@@ -153,11 +181,7 @@ export default function Projects() {
                 <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs font-mono font-bold text-slate-500">
                   <span>{project.metric}</span>
                   
-                  {project.hasDocumentation ? (
-                    <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 group-hover:underline font-bold text-xs">
-                      {project.actionLabel} <IconComponent className="w-3.5 h-3.5" />
-                    </span>
-                  ) : (
+                  {project.type === 'thesis' ? (
                     <a 
                       href={project.link} 
                       onClick={(e) => e.stopPropagation()} 
@@ -167,6 +191,10 @@ export default function Projects() {
                     >
                       {project.actionLabel} <IconComponent className="w-3.5 h-3.5" />
                     </a>
+                  ) : (
+                    <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 group-hover:underline font-bold text-xs">
+                      {project.actionLabel} <IconComponent className="w-3.5 h-3.5" />
+                    </span>
                   )}
                 </div>
               </div>
@@ -174,6 +202,90 @@ export default function Projects() {
           )
         })}
       </div>
+
+      {/* Lightbox Modal: Kutensei Store Testimonials */}
+      <AnimatePresence>
+        {isStoreModalOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md"
+            onClick={() => setIsStoreModalOpen(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className={`relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-2xl transition-all duration-300 flex flex-col ${
+                isStoreFullScreen ? 'w-screen h-screen max-w-none max-h-none rounded-none p-4' : 'max-w-4xl w-full'
+              }`}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800 shrink-0">
+                <div className="flex items-center gap-2">
+                  <MessageSquare className="w-4 h-4 text-emerald-500" />
+                  <h4 className="font-bold text-slate-900 dark:text-white text-xs sm:text-sm uppercase tracking-wider">
+                    Kutensei Store Testimonials ({storeIdx + 1} / {storeTestimonials.length})
+                  </h4>
+                </div>
+                
+                <div className="flex items-center gap-2">
+                  <a 
+                    href="https://script.google.com/macros/s/AKfycbwzwlJ8K4KqUVB2jpHDpZHz3gAM-WoVzNeN_C6JlxcYReXgyoes5CTtv4-DAw4TfRVq/exec" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="px-3 py-1.5 rounded-lg bg-emerald-600 text-white text-xs font-bold flex items-center gap-1 hover:bg-emerald-500 transition-colors"
+                  >
+                    Open Live Web <ExternalLink className="w-3 h-3" />
+                  </a>
+                  <button onClick={() => setIsStoreFullScreen(!isStoreFullScreen)} className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-emerald-500 transition-colors cursor-pointer flex items-center gap-1.5 text-xs font-bold">
+                    {isStoreFullScreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
+                  </button>
+                  <button onClick={() => { setIsStoreModalOpen(false); setIsStoreFullScreen(false); }} className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer">
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
+
+              <div className="my-4 relative flex flex-col items-center justify-center bg-slate-100 dark:bg-slate-950 rounded-xl p-3 border border-slate-200 dark:border-slate-800 flex-1">
+                <div className="relative w-full h-[60vh] flex items-center justify-center bg-slate-950/40 rounded-lg overflow-hidden shadow-md group">
+                  <AnimatePresence mode="wait">
+                    <motion.img
+                      key={storeIdx}
+                      src={storeTestimonials[storeIdx]}
+                      alt={`Kutensei Store Testimonial ${storeIdx + 1}`}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="max-h-full max-w-full object-contain select-none"
+                    />
+                  </AnimatePresence>
+
+                  <button onClick={prevStoreSlide} className="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-slate-950/70 text-white hover:bg-slate-950 transition-all cursor-pointer">
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+                  <button onClick={nextStoreSlide} className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-slate-950/70 text-white hover:bg-slate-950 transition-all cursor-pointer">
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+
+                <div className="flex items-center gap-1.5 mt-3">
+                  {storeTestimonials.map((_, dIdx) => (
+                    <button key={dIdx} onClick={() => setStoreIdx(dIdx)} className={`h-1.5 rounded-full transition-all cursor-pointer ${storeIdx === dIdx ? 'w-6 bg-emerald-500' : 'w-1.5 bg-slate-300 dark:bg-slate-700'}`} />
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between pt-2 text-[11px] text-slate-500 font-mono shrink-0">
+                <span>Client Feedback & Testimonials (Kutensei Store)</span>
+                <span>Peer Tutoring & Technical Support</span>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Lightbox Modal: Research Assistant */}
       <AnimatePresence>
@@ -205,7 +317,6 @@ export default function Projects() {
                 <div className="flex items-center gap-2">
                   <button onClick={() => setIsRaFullScreen(!isRaFullScreen)} className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-emerald-500 transition-colors cursor-pointer flex items-center gap-1.5 text-xs font-bold">
                     {isRaFullScreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
-                    <span className="hidden sm:inline">{isRaFullScreen ? "Normal" : "Fullscreen"}</span>
                   </button>
                   <button onClick={() => { setIsRaModalOpen(false); setIsRaFullScreen(false); }} className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer">
                     <X className="w-5 h-5" />
@@ -213,7 +324,6 @@ export default function Projects() {
                 </div>
               </div>
 
-              {/* Menggunakan object-contain agar foto tampil utuh tanpa terpotong */}
               <div className="my-4 relative flex flex-col items-center justify-center bg-slate-100 dark:bg-slate-950 rounded-xl p-3 border border-slate-200 dark:border-slate-800 flex-1">
                 <div className="relative w-full h-[60vh] flex items-center justify-center bg-slate-950/40 rounded-lg overflow-hidden shadow-md group">
                   <AnimatePresence mode="wait">
@@ -283,7 +393,6 @@ export default function Projects() {
                 <div className="flex items-center gap-2">
                   <button onClick={() => setIsEnumFullScreen(!isEnumFullScreen)} className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-emerald-500 transition-colors cursor-pointer flex items-center gap-1.5 text-xs font-bold">
                     {isEnumFullScreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
-                    <span className="hidden sm:inline">{isEnumFullScreen ? "Normal" : "Fullscreen"}</span>
                   </button>
                   <button onClick={() => { setIsEnumModalOpen(false); setIsEnumFullScreen(false); }} className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer">
                     <X className="w-5 h-5" />
@@ -310,7 +419,6 @@ export default function Projects() {
                 </button>
               </div>
 
-              {/* Menggunakan object-contain agar foto & peta tampil utuh tanpa terpotong */}
               <div className="my-4 relative flex flex-col items-center justify-center bg-slate-100 dark:bg-slate-950 rounded-xl p-3 border border-slate-200 dark:border-slate-800 flex-1">
                 <div className="relative w-full h-[60vh] flex items-center justify-center bg-slate-950/40 rounded-lg overflow-hidden shadow-md group">
                   <AnimatePresence mode="wait">

@@ -4,56 +4,53 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Award, ExternalLink, X, CheckCircle2, Maximize2, Minimize2, ChevronLeft, ChevronRight, Camera, FileText } from 'lucide-react'
 
 export default function Certifications() {
-  // State untuk Modal Fire Safety
   const [isFireModalOpen, setIsFireModalOpen] = useState(false)
   const [isFireFullScreen, setIsFireFullScreen] = useState(false)
   const [fireDocIdx, setFireDocIdx] = useState(0)
 
-  // State untuk Modal Water & Sanitation Simulation (WAS)
   const [isWasModalOpen, setIsWasModalOpen] = useState(false)
   const [isWasFullScreen, setIsWasFullScreen] = useState(false)
   const [wasTab, setWasTab] = useState<'certs' | 'photos'>('certs')
   const [wasCertIdx, setWasCertIdx] = useState(0)
   const [wasPhotoIdx, setWasPhotoIdx] = useState(0)
 
-  // State untuk Modal K3 Fasyankes
+  const [isPkkbModalOpen, setIsPkkbModalOpen] = useState(false)
+  const [isPkkbFullScreen, setIsPkkbFullScreen] = useState(false)
+  const [pkkbTab, setPkkbTab] = useState<'certs' | 'photos'>('certs')
+  const [pkkbPhotoIdx, setPkkbPhotoIdx] = useState(0)
+
   const [isK3ModalOpen, setIsK3ModalOpen] = useState(false)
   const [isK3FullScreen, setIsK3FullScreen] = useState(false)
   const [k3Idx, setK3Idx] = useState(0)
 
-  // State untuk Modal UKL-UPL
   const [isUklModalOpen, setIsUklModalOpen] = useState(false)
   const [isUklFullScreen, setIsUklFullScreen] = useState(false)
   const [uklIdx, setUklIdx] = useState(0)
 
-  // State untuk Modal POPAL (Wastewater)
   const [isPopalModalOpen, setIsPopalModalOpen] = useState(false)
   const [isPopalFullScreen, setIsPopalFullScreen] = useState(false)
   const [popalIdx, setPopalIdx] = useState(0)
 
-  // State untuk Modal Entomology & Vector Control
   const [isEntoModalOpen, setIsEntoModalOpen] = useState(false)
   const [isEntoFullScreen, setIsEntoFullScreen] = useState(false)
   const [entoIdx, setEntoIdx] = useState(0)
 
-  // State untuk Modal HAKLI (International Conference)
   const [isHakliModalOpen, setIsHakliModalOpen] = useState(false)
   const [isHakliFullScreen, setIsHakliFullScreen] = useState(false)
   const [hakliIdx, setHakliIdx] = useState(0)
 
-  // State untuk Modal Health Bakti Camp (SBH)
   const [isSbhModalOpen, setIsSbhModalOpen] = useState(false)
   const [isSbhFullScreen, setIsSbhFullScreen] = useState(false)
   const [sbhIdx, setSbhIdx] = useState(0)
 
-  // State untuk Modal LDK
   const [isLdkModalOpen, setIsLdkModalOpen] = useState(false)
   const [isLdkFullScreen, setIsLdkFullScreen] = useState(false)
 
-  // Data Gambar / Sertifikat
   const fireImages = ["/SERTIF_DOC/kebakaran1.jpg", "/SERTIF_DOC/kebakaran2.jpg"]
   const wasCerts = ["/SERTIF_DOC/WAS1.jpeg", "/SERTIF_DOC/WAS2.jpeg"]
   const wasPhotos = ["/SERTIF_DOC/WASPOTO1.jpeg", "/SERTIF_DOC/WASPOTO2.jpeg", "/SERTIF_DOC/WASPOTO3.jpeg"]
+  const pkkbCerts = ["/SERTIF_DOC/PKKB_SERTIF.png"]
+  const pkkbPhotos = ["/SERTIF_DOC/PKKB1.jpg", "/SERTIF_DOC/PKKB2.jpg", "/SERTIF_DOC/PKKB3.jpg", "/SERTIF_DOC/PKKB4.jpg", "/SERTIF_DOC/PKKB5.jpg"]
   const k3Images = ["/SERTIF_DOC/k3faskes1.png", "/SERTIF_DOC/k3faskes2.png"]
   const uklImages = ["/SERTIF_DOC/UKL1.jpeg", "/SERTIF_DOC/UKL2.jpeg"]
   const popalImages = ["/SERTIF_DOC/POPAL1.jpeg", "/SERTIF_DOC/POPAL2.jpeg"]
@@ -63,34 +60,12 @@ export default function Certifications() {
 
   const trainingList = [
     {
-      title: "Health Crisis Management Simulation in Disaster Situations via Interprofessional Education (IPE)",
-      issuer: "Poltekkes Kemenkes Yogyakarta (2024)",
-      description: "Simulation training on health crisis management and interprofessional coordination during disaster scenarios.",
-      isInteractive: false
-    },
-    {
-      title: "Guest Lectures International Conference: Industrial Sanitation",
-      issuer: "Poltekkes Kemenkes Yogyakarta & HAKLI (2023)",
-      description: "International conference focusing on optimizing human resources and improving industrial sanitation quality.",
+      title: "Healthcare Facility OHS / K3 Fasyankes",
+      issuer: "PT. Nata Supervisi (PT. NEVIS) (2025)",
+      description: "Specialized training on health and safety implementation in hospital environments.",
       isInteractive: true,
-      type: "hakli",
+      type: "k3faskes",
       actionText: "View Certificate Gallery"
-    },
-    {
-      title: "Health Bakti Camp IX (Kemah Bakti Kesehatan)",
-      issuer: "Poltekkes Kemenkes Yogyakarta Scout Movement (2023)",
-      description: "Community health devotion camp with the theme 'Pramuka Berbudaya, Berbakti Untuk Negeri' in Prambanan.",
-      isInteractive: true,
-      type: "sbh",
-      actionText: "View Documentation & Certificate"
-    },
-    {
-      title: "Leadership Basic Training (Latihan Dasar Kepemimpinan)",
-      issuer: "Poltekkes Kemenkes Yogyakarta (2022)",
-      description: "Soft skills enhancement program focused on patriotic values and national dedication.",
-      isInteractive: true,
-      type: "ldk",
-      actionText: "View Certificate"
     },
     {
       title: "POPAL Competency-Based Training (Wastewater Treatment)",
@@ -98,14 +73,6 @@ export default function Certifications() {
       description: "Certified operational management for industrial and facility wastewater treatment plants.",
       isInteractive: true,
       type: "popal",
-      actionText: "View Certificate Gallery"
-    },
-    {
-      title: "Healthcare Facility OHS / K3 Fasyankes",
-      issuer: "PT. Nata Supervisi (PT. NEVIS) (2025)",
-      description: "Specialized training on health and safety implementation in hospital environments.",
-      isInteractive: true,
-      type: "k3faskes",
       actionText: "View Certificate Gallery"
     },
     {
@@ -139,6 +106,44 @@ export default function Certifications() {
       isInteractive: true,
       type: "was",
       actionText: "View Simulation & Certificate Gallery"
+    },
+    {
+      title: "PKKB (Pelatihan Kompetensi Kesehatan Buatan / Lingkungan)",
+      issuer: "Poltekkes Kemenkes Yogyakarta (2024)",
+      description: "Practical field training on environmental health assessment and sanitary engineering interventions.",
+      isInteractive: true,
+      type: "pkkb",
+      actionText: "View Certificate & Field Documentation"
+    },
+    {
+      title: "Health Crisis Management Simulation in Disaster Situations via Interprofessional Education (IPE)",
+      issuer: "Poltekkes Kemenkes Yogyakarta (2024)",
+      description: "Simulation training on health crisis management and interprofessional coordination during disaster scenarios.",
+      isInteractive: false
+    },
+    {
+      title: "Guest Lectures International Conference: Industrial Sanitation",
+      issuer: "Poltekkes Kemenkes Yogyakarta & HAKLI (2023)",
+      description: "International conference focusing on optimizing human resources and improving industrial sanitation quality.",
+      isInteractive: true,
+      type: "hakli",
+      actionText: "View Certificate Gallery"
+    },
+    {
+      title: "Health Bakti Camp IX (Kemah Bakti Kesehatan)",
+      issuer: "Poltekkes Kemenkes Yogyakarta Scout Movement (2023)",
+      description: "Community health devotion camp with the theme 'Pramuka Berbudaya, Berbakti Untuk Negeri' in Prambanan.",
+      isInteractive: true,
+      type: "sbh",
+      actionText: "View Documentation & Certificate"
+    },
+    {
+      title: "Leadership Basic Training (Latihan Dasar Kepemimpinan)",
+      issuer: "Poltekkes Kemenkes Yogyakarta (2022)",
+      description: "Soft skills enhancement program focused on patriotic values and national dedication.",
+      isInteractive: true,
+      type: "ldk",
+      actionText: "View Certificate"
     }
   ]
 
@@ -165,6 +170,7 @@ export default function Certifications() {
               if (item.isInteractive) {
                 if (item.type === 'fire') setIsFireModalOpen(true);
                 if (item.type === 'was') setIsWasModalOpen(true);
+                if (item.type === 'pkkb') setIsPkkbModalOpen(true);
                 if (item.type === 'k3faskes') setIsK3ModalOpen(true);
                 if (item.type === 'uklupl') setIsUklModalOpen(true);
                 if (item.type === 'popal') setIsPopalModalOpen(true);
@@ -209,8 +215,46 @@ export default function Certifications() {
         ))}
       </div>
 
-      {/* --- MODAL GENERATOR HELPER UNTUK SERTIFIKAT LAINNYA --- */}
-      
+      {/* --- MODAL: PKKB --- */}
+      <AnimatePresence>
+        {isPkkbModalOpen && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md" onClick={() => setIsPkkbModalOpen(false)}>
+            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className={`relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-2xl transition-all duration-300 flex flex-col ${isPkkbFullScreen ? 'w-screen h-screen max-w-none max-h-none rounded-none p-4' : 'max-w-3xl w-full'}`} onClick={(e) => e.stopPropagation()}>
+              <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800 shrink-0">
+                <div className="flex items-center gap-2"><FileText className="w-4 h-4 text-amber-500" /><h4 className="font-bold text-slate-900 dark:text-white text-xs sm:text-sm uppercase tracking-wider">PKKB Training & Field Documentation</h4></div>
+                <div className="flex items-center gap-2">
+                  <button onClick={() => setIsPkkbFullScreen(!isPkkbFullScreen)} className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-amber-500 transition-colors cursor-pointer flex items-center gap-1.5 text-xs font-bold">{isPkkbFullScreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}<span>{isPkkbFullScreen ? "Normal" : "Fullscreen"}</span></button>
+                  <button onClick={() => { setIsPkkbModalOpen(false); setIsPkkbFullScreen(false); }} className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-900 transition-colors cursor-pointer"><X className="w-5 h-5" /></button>
+                </div>
+              </div>
+              <div className="flex items-center gap-2 mt-4 shrink-0">
+                <button onClick={() => setPkkbTab('certs')} className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${pkkbTab === 'certs' ? 'bg-amber-600 text-white shadow-md' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'}`}>Certificate ({pkkbCerts.length})</button>
+                <button onClick={() => setPkkbTab('photos')} className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${pkkbTab === 'photos' ? 'bg-amber-600 text-white shadow-md' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'}`}>Field Photos ({pkkbPhotos.length})</button>
+              </div>
+              <div className="my-4 relative flex flex-col items-center justify-center bg-slate-100 dark:bg-slate-950 rounded-xl p-3 border border-slate-200 dark:border-slate-800 flex-1">
+                <div className="relative w-full h-[50vh] flex items-center justify-center bg-slate-950/40 rounded-lg overflow-hidden shadow-md group">
+                  <AnimatePresence mode="wait">
+                    {pkkbTab === 'certs' ? (
+                      <motion.img key="pkkb-c" src={pkkbCerts[0]} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="max-h-full max-w-full object-contain select-none" />
+                    ) : (
+                      <motion.img key={`pkkb-p-${pkkbPhotoIdx}`} src={pkkbPhotos[pkkbPhotoIdx]} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="max-h-full max-w-full object-contain select-none" />
+                    )}
+                  </AnimatePresence>
+                  {pkkbTab === 'photos' && (
+                    <>
+                      <button onClick={() => setPkkbPhotoIdx(prev => prev === 0 ? pkkbPhotos.length - 1 : prev - 1)} className="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-slate-950/70 text-white"><ChevronLeft className="w-4 h-4" /></button>
+                      <button onClick={() => setPkkbPhotoIdx(prev => prev === pkkbPhotos.length - 1 ? 0 : prev + 1)} className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-slate-950/70 text-white"><ChevronRight className="w-4 h-4" /></button>
+                    </>
+                  )}
+                </div>
+              </div>
+              <div className="flex items-center justify-between pt-2 text-[11px] text-slate-500 font-mono shrink-0"><span>Issuer: Poltekkes Kemenkes Yogyakarta (2024)</span><span>Secure Document Viewer</span></div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* --- MODAL LAINNYA --- */}
       {/* 1. Fire Safety Modal */}
       <AnimatePresence>
         {isFireModalOpen && (
@@ -355,7 +399,7 @@ export default function Certifications() {
         )}
       </AnimatePresence>
 
-      {/* 6. Entomology & Vector Control Modal */}
+      {/* 6. Entomology Modal */}
       <AnimatePresence>
         {isEntoModalOpen && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md" onClick={() => setIsEntoModalOpen(false)}>
@@ -380,7 +424,7 @@ export default function Certifications() {
         )}
       </AnimatePresence>
 
-      {/* 7. HAKLI (International Conference) Modal */}
+      {/* 7. HAKLI Modal */}
       <AnimatePresence>
         {isHakliModalOpen && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md" onClick={() => setIsHakliModalOpen(false)}>
@@ -405,7 +449,7 @@ export default function Certifications() {
         )}
       </AnimatePresence>
 
-      {/* 8. Health Bakti Camp (SBH) Modal */}
+      {/* 8. SBH Modal */}
       <AnimatePresence>
         {isSbhModalOpen && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md" onClick={() => setIsSbhModalOpen(false)}>
@@ -430,7 +474,7 @@ export default function Certifications() {
         )}
       </AnimatePresence>
 
-      {/* 9. LDK Modal */}
+      {/* 9. LDK Modal (.png) */}
       <AnimatePresence>
         {isLdkModalOpen && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md" onClick={() => setIsLdkModalOpen(false)}>
@@ -444,7 +488,8 @@ export default function Certifications() {
               </div>
               <div className="my-4 relative flex flex-col items-center justify-center bg-slate-100 dark:bg-slate-950 rounded-xl p-3 border flex-1">
                 <div className="relative w-full h-[55vh] flex items-center justify-center bg-slate-950/40 rounded-lg overflow-hidden shadow-md">
-                  <img src="/SERTIF_DOC/LDK.jpeg" alt="LDK Certificate" className="max-h-full max-w-full object-contain select-none" />
+                  {/* Ekstensi LDK sudah disesuaikan menjadi .png sesuai foldermu */}
+                  <img src="/SERTIF_DOC/LDK.png" alt="LDK Certificate" className="max-h-full max-w-full object-contain select-none" />
                 </div>
               </div>
               <div className="flex items-center justify-between pt-2 text-[11px] text-slate-500 font-mono"><span>Issuer: Poltekkes Kemenkes Yogyakarta (2022)</span><span>Secure Viewer</span></div>

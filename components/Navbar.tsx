@@ -14,11 +14,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setScrolled(true)
-      } else {
-        setScrolled(false)
-      }
+      setScrolled(window.scrollY > 20)
     }
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
@@ -39,12 +35,12 @@ export default function Navbar() {
 
   return (
     <motion.header 
-      initial={{ y: -30, opacity: 0 }}
+      initial={{ y: -25, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 px-4 sm:px-6 lg:px-8 py-4 ${
         scrolled 
-          ? 'bg-slate-950/85 backdrop-blur-2xl border-b border-emerald-500/30 shadow-[0_10px_30px_rgba(0,0,0,0.5)] py-3' 
+          ? 'bg-slate-950/85 backdrop-blur-2xl border-b border-emerald-500/30 shadow-[0_15px_40px_rgba(0,0,0,0.6)] py-3' 
           : 'bg-transparent'
       }`}
     >
@@ -53,8 +49,8 @@ export default function Navbar() {
         {/* Logo / Nama */}
         <motion.a 
           href="#" 
-          whileHover={{ scale: 1.03 }}
-          whileTap={{ scale: 0.97 }}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
           className="text-xs sm:text-sm font-black text-white tracking-wider uppercase flex items-center gap-2.5 bg-slate-900/80 border border-slate-800/80 px-4 py-2 rounded-xl backdrop-blur-md shadow-inner group"
         >
           <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_12px_#10b981] animate-pulse"></span>
@@ -62,14 +58,14 @@ export default function Navbar() {
         </motion.a>
 
         {/* Menu Desktop */}
-        <nav className="hidden md:flex items-center gap-1 bg-slate-900/60 border border-slate-800/90 px-3 py-1.5 rounded-full shadow-lg backdrop-blur-xl">
+        <nav className="hidden md:flex items-center gap-1 bg-slate-900/60 border border-slate-800/90 px-3.5 py-1.5 rounded-full shadow-lg backdrop-blur-xl">
           {navLinks.map((link, idx) => (
             <motion.a
               key={idx}
               href={link.href}
               whileHover={{ scale: 1.05, color: '#34d399' }}
               whileTap={{ scale: 0.95 }}
-              className="relative px-3.5 py-1 text-xs font-bold text-slate-300 uppercase tracking-widest transition-colors rounded-full hover:bg-emerald-500/10"
+              className="px-3.5 py-1 text-xs font-bold text-slate-300 uppercase tracking-widest transition-colors rounded-full hover:bg-emerald-500/10"
             >
               {link.name}
             </motion.a>

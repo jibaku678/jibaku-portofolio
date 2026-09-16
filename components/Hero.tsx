@@ -6,7 +6,7 @@ import {
   Briefcase, Sparkles, X, Printer, CheckCircle2, 
   ShieldCheck, Leaf, HeartPulse, MapPin, Droplets, Activity,
   Microscope, Satellite, HardHat, Bug, FlaskConical, Radar, Globe2, Wind,
-  ChevronDown, ListOrdered, ArrowRight
+  ChevronDown
 } from 'lucide-react'
 
 export default function Hero() {
@@ -180,19 +180,10 @@ export default function Hero() {
     { Icon: Satellite, color: "text-emerald-400/20", size: 50, startX: "40%", startY: "10%", duration: 21 },
   ]
 
-  // Daftar Isi untuk HRD (Insight Baru)
-  const portfolioIndex = [
-    { num: '01', title: 'Selected Work', href: '#projects' },
-    { num: '02', title: 'About & Profile', href: '#about' },
-    { num: '03', title: 'Professional Experience', href: '#experience' },
-    { num: '04', title: 'Core Skills', href: '#skills' },
-    { num: '05', title: 'Contact', href: '#contact' },
-  ]
-
   return (
-    <section className="relative w-full min-h-[100svh] flex flex-col items-center justify-center overflow-hidden bg-slate-50 dark:bg-slate-950 transition-colors duration-300 pt-28 pb-16">
+    <section className="relative w-full min-h-[100svh] flex flex-col items-center justify-center overflow-hidden bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
       
-      {/* 1. BACKGROUND DENGAN BLUR TIPIS & LIGHT/DARK MODE SUPPORT */}
+      {/* 1. BACKGROUND DENGAN BLUR SANGAT TIPIS & LIGHT/DARK MODE SUPPORT */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <AnimatePresence mode="popLayout">
           <motion.div
@@ -203,10 +194,12 @@ export default function Hero() {
             transition={{ duration: 1.5, ease: "easeInOut" }}
             className="absolute inset-0 flex items-center justify-center"
           >
+            {/* Blur sangat tipis (blur-sm) agar foto tetap tajam & mengisi ruang merata */}
             <div className="absolute inset-0 filter blur-sm opacity-20 dark:opacity-25 scale-105 select-none">
               <Image src={backgrounds[bgIndex]} alt="Ambient Fill" fill className="object-cover" />
             </div>
 
+            {/* Foto Utama Tampil Utuh Proporsional */}
             <div className="absolute inset-0 w-full h-full flex items-center justify-center p-2 sm:p-6">
               <motion.div
                 animate={{ scale: [1, 1.02, 1] }}
@@ -225,6 +218,7 @@ export default function Hero() {
           </motion.div>
         </AnimatePresence>
 
+        {/* Dynamic Gradient Mask untuk Light & Dark Mode */}
         <div className="absolute inset-0 bg-gradient-to-b from-slate-50/80 via-slate-50/70 to-slate-50 dark:from-slate-950/85 dark:via-slate-950/70 dark:to-slate-950 pointer-events-none"></div>
       </div>
 
@@ -246,14 +240,14 @@ export default function Hero() {
       </div>
 
       {/* 3. KONTEN UTAMA INFORMASI */}
-      <div className="relative z-[10] w-full max-w-4xl mx-auto px-4 sm:px-6 flex flex-col items-center text-center">
+      <div className="relative z-[10] w-full max-w-4xl mx-auto px-4 sm:px-6 pt-24 pb-12 flex flex-col items-center text-center">
         
-        {/* Badge */}
+        {/* Badge (Open to Opportunities saja) */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="flex flex-wrap justify-center items-center gap-3 mb-5"
+          className="flex flex-wrap justify-center items-center gap-3 mb-6"
         >
           <span className="px-4 py-1.5 bg-emerald-100 dark:bg-emerald-500/15 text-emerald-800 dark:text-emerald-300 text-xs font-bold tracking-widest border border-emerald-300 dark:border-emerald-500/30 rounded-full uppercase flex items-center gap-2 shadow-sm backdrop-blur-md">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> 
@@ -266,13 +260,13 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="space-y-3 mb-5"
+          className="space-y-4 mb-6"
         >
           <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-slate-900 dark:text-white leading-tight drop-shadow-md">
             JIBAKUDIN NUR
           </h1>
           <h2 className="text-xs sm:text-sm font-bold text-amber-700 dark:text-amber-400 flex items-center justify-center gap-2 uppercase tracking-widest drop-shadow-sm">
-            Environmental Health • HSE • One Health & Public Health Research
+            Environmental Health • HSE • Public Health Research
           </h2>
         </motion.div>
 
@@ -281,7 +275,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="max-w-2xl mb-6"
+          className="max-w-2xl mb-8"
         >
           <p className="text-sm sm:text-base text-slate-700 dark:text-slate-200 leading-relaxed font-medium">
             Bachelor Applied (D4) in Environmental Sanitation specialized in systematic field risk assessment, spatial epidemiological analysis, and industrial HSE systems—dedicated to executing high-impact workplace safety and public health initiatives.
@@ -293,7 +287,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="flex flex-wrap justify-center gap-y-2 gap-x-5 text-[11px] sm:text-xs font-extrabold text-slate-700 dark:text-slate-200 uppercase mb-8"
+          className="flex flex-wrap justify-center gap-y-2 gap-x-5 text-[11px] sm:text-xs font-extrabold text-slate-700 dark:text-slate-200 uppercase mb-10"
         >
           <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" /> ArcGIS</span>
           <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" /> SPSS</span>
@@ -306,63 +300,33 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="flex flex-wrap justify-center gap-4 w-full sm:w-auto mb-8"
+          className="flex flex-wrap justify-center gap-4 w-full sm:w-auto"
         >
           <button
             onClick={() => setIsSummaryModalOpen(true)}
-            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-7 py-3 rounded-full bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-lg shadow-emerald-600/20 cursor-pointer"
+            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-lg shadow-emerald-600/20 cursor-pointer"
           >
             <Sparkles className="w-4 h-4" /> Generate Summary
           </button>
 
           <a
             href="#projects"
-            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-7 py-3 rounded-full bg-white dark:bg-slate-900 border-2 border-slate-300 dark:border-slate-700 hover:border-amber-500 text-slate-900 dark:text-white font-bold text-xs uppercase tracking-wider transition-all shadow-sm cursor-pointer"
+            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-white dark:bg-slate-900 border-2 border-slate-300 dark:border-slate-700 hover:border-amber-500 text-slate-900 dark:text-white font-bold text-xs uppercase tracking-wider transition-all shadow-sm cursor-pointer"
           >
             <Briefcase className="w-4 h-4" /> View Portfolio
           </a>
         </motion.div>
 
-        {/* DAFTAR ISI PORTFOLIO (INSIGHT BARU UNTUK HRD) */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="w-full max-w-2xl bg-white/60 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800/80 rounded-2xl p-4 backdrop-blur-md shadow-sm"
-        >
-          <div className="flex items-center justify-between pb-2.5 mb-2.5 border-b border-slate-200 dark:border-slate-800 text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-widest px-2">
-            <span className="flex items-center gap-2">
-              <ListOrdered className="w-4 h-4 text-emerald-600 dark:text-emerald-400" /> Portfolio Index / Daftar Isi
-            </span>
-            <span className="text-[10px] font-mono text-slate-400">HRD Navigation Guide</span>
-          </div>
-          
-          <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
-            {portfolioIndex.map((item, idx) => (
-              <a
-                key={idx}
-                href={item.href}
-                className="flex flex-col items-center sm:items-start p-2 rounded-xl bg-slate-100/70 dark:bg-slate-950/50 hover:bg-emerald-500/10 dark:hover:bg-emerald-500/10 border border-slate-200/60 dark:border-slate-800/60 transition-all group"
-              >
-                <span className="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 font-bold">{item.num}</span>
-                <span className="text-xs font-bold text-slate-800 dark:text-slate-200 group-hover:text-emerald-700 dark:group-hover:text-emerald-300 transition-colors text-center sm:text-left mt-0.5">
-                  {item.title}
-                </span>
-              </a>
-            ))}
-          </div>
-        </motion.div>
-
       </div>
 
-      {/* Scroll Indicator */}
+      {/* Floating Scroll Down Arrow */}
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2, duration: 1 }}
-        className="absolute bottom-3 z-[10] flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500 animate-bounce pointer-events-none"
+        className="absolute bottom-6 z-[10] flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500 animate-bounce pointer-events-none"
       >
-        <ChevronDown className="w-4 h-4 opacity-80" />
+        <ChevronDown className="w-5 h-5 opacity-80" />
       </motion.div>
 
       {/* --- MODAL EXECUTIVE SUMMARY (Original 100%) --- */}
@@ -403,7 +367,7 @@ export default function Hero() {
                 <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
                   <h4 className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-widest">// Profile Overview</h4>
                   <p>
-                    Bachelor Applied (D4) in Environmental Sanitation berpredikat <strong className="text-white">Cum Laude (GPA 3.71)</strong> dengan spesialisasi komprehensif pada bidang <strong className="text-white">Environmental Health, Industrial HSE, GIS Spatial Risk Analysis, serta Public Health Research & One Health</strong>. Berpengalaman dalam merancang investigasi epidemiologi, surveilans vektor penyakit, serta analisis data kesehatan masyarakat berbasis bukti ilmiah untuk mendukung intervensi lintas sektor yang efektif.
+                    Bachelor Applied (D4) in Environmental Sanitation berpredikat <strong className="text-white">Cum Laude (GPA 3.71)</strong> dengan spesialisasi komprehensif pada bidang <strong className="text-white">Environmental Health, Industrial HSE, GIS Spatial Risk Analysis, serta Public Health Research</strong>. Berpengalaman dalam merancang investigasi epidemiologi, surveilans vektor penyakit, serta analisis data kesehatan masyarakat berbasis bukti ilmiah untuk mendukung intervensi lintas sektor yang efektif.
                   </p>
                 </div>
 

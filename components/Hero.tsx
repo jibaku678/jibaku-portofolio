@@ -53,15 +53,15 @@ export default function Hero() {
 
     window.addEventListener('resize', handleResize)
 
-    const particlesCount = 50
+    const particlesCount = 60
     const particles: { x: number; y: number; vx: number; vy: number; radius: number }[] = []
 
     for (let i = 0; i < particlesCount; i++) {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: (Math.random() - 0.5) * 0.5,
+        vx: (Math.random() - 0.5) * 0.6,
+        vy: (Math.random() - 0.5) * 0.6,
         radius: Math.random() * 1.5 + 0.5,
       })
     }
@@ -99,7 +99,7 @@ export default function Hero() {
 
         ctx.beginPath()
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2)
-        ctx.fillStyle = 'rgba(16, 185, 129, 0.4)' 
+        ctx.fillStyle = 'rgba(16, 185, 129, 0.5)' 
         ctx.fill()
 
         for (let j = i + 1; j < particles.length; j++) {
@@ -112,7 +112,7 @@ export default function Hero() {
             ctx.beginPath()
             ctx.moveTo(p.x, p.y)
             ctx.lineTo(p2.x, p2.y)
-            ctx.strokeStyle = `rgba(16, 185, 129, ${0.12 * (1 - dist / 110)})`
+            ctx.strokeStyle = `rgba(16, 185, 129, ${0.15 * (1 - dist / 110)})`
             ctx.lineWidth = 1
             ctx.stroke()
           }
@@ -122,7 +122,7 @@ export default function Hero() {
       for (let i = clickRipples.length - 1; i >= 0; i--) {
         const ripple = clickRipples[i]
         ripple.radius += 3 
-        ripple.alpha -= 0.015 
+        ripple.alpha -= 0.012 
 
         if (ripple.alpha <= 0) {
           clickRipples.splice(i, 1)
@@ -132,7 +132,7 @@ export default function Hero() {
         ctx.beginPath()
         ctx.arc(ripple.x, ripple.y, ripple.radius, 0, Math.PI * 2)
         ctx.strokeStyle = `rgba(52, 211, 153, ${ripple.alpha})`
-        ctx.lineWidth = 1.5
+        ctx.lineWidth = 2
         ctx.stroke()
       }
 
@@ -150,59 +150,52 @@ export default function Hero() {
   }, [])
 
   const floatingIcons = [
-    { Icon: ShieldCheck, color: "text-amber-500/15", size: 56, startX: "5%", startY: "15%", duration: 25 },
-    { Icon: HardHat, color: "text-amber-500/15", size: 48, startX: "85%", startY: "80%", duration: 22 },
-    { Icon: Leaf, color: "text-emerald-500/15", size: 72, startX: "88%", startY: "15%", duration: 30 },
-    { Icon: Wind, color: "text-teal-400/15", size: 40, startX: "15%", startY: "45%", duration: 24 },
-    { Icon: HeartPulse, color: "text-emerald-400/15", size: 48, startX: "80%", startY: "60%", duration: 22 },
-    { Icon: Microscope, color: "text-emerald-300/15", size: 54, startX: "25%", startY: "85%", duration: 26 },
+    { Icon: ShieldCheck, color: "text-amber-500/20", size: 56, startX: "5%", startY: "15%", duration: 25 },
+    { Icon: HardHat, color: "text-amber-500/20", size: 48, startX: "85%", startY: "80%", duration: 22 },
+    { Icon: Leaf, color: "text-emerald-500/20", size: 72, startX: "88%", startY: "15%", duration: 30 },
+    { Icon: Wind, color: "text-teal-400/20", size: 40, startX: "15%", startY: "45%", duration: 24 },
+    { Icon: HeartPulse, color: "text-emerald-400/20", size: 48, startX: "80%", startY: "60%", duration: 22 },
+    { Icon: Microscope, color: "text-emerald-300/20", size: 54, startX: "25%", startY: "85%", duration: 26 },
   ]
 
   return (
-    <section className="relative w-full min-h-[100svh] flex flex-col items-center justify-center overflow-hidden bg-slate-900 dark:bg-slate-950 transition-colors duration-300 py-16">
+    <section className="relative w-full min-h-[100svh] flex flex-col items-center justify-center overflow-hidden bg-slate-950 transition-colors duration-300">
       
-      {/* 1. BACKGROUND FOTO UTUH MENYELURUH (Tanpa Terpotong & Merata) */}
+      {/* 1. CINEMATIC FULL-COVERAGE BACKGROUND (FOTO FULL TERLIHAT, MERATA UTARA-SELATAN-TIMUR-BARAT DENGAN FADE HALUS) */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <AnimatePresence mode="popLayout">
           <motion.div
             key={bgIndex}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            initial={{ opacity: 0, scale: 1.02 }}
+            animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 1.5, ease: "easeInOut" }}
-            className="absolute inset-0"
+            className="absolute inset-0 flex items-center justify-center"
           >
-            {/* Layer Blur Ambient untuk menutup semua sisi luar agar merata */}
-            <div className="absolute inset-0 filter blur-3xl opacity-30 dark:opacity-20 scale-110">
-              <Image
-                src={backgrounds[bgIndex]}
-                alt="Ambient Background Fill"
-                fill
-                className="object-cover"
-              />
+            {/* Layer Blur Ambient untuk mengisi penuh seluruh layar tanpa jeda hitam */}
+            <div className="absolute inset-0 filter blur-3xl opacity-40 scale-125">
+              <Image src={backgrounds[bgIndex]} alt="Ambient Fill" fill className="object-cover" />
             </div>
 
-            {/* Layer Utama: Foto tampil utuh 100% (object-contain) di tengah */}
-            <div className="absolute inset-0 flex items-center justify-center p-4 md:p-8">
-              <div className="relative w-full h-full max-w-6xl max-h-[85vh] flex items-center justify-center">
-                <Image
-                  src={backgrounds[bgIndex]}
-                  alt="Jibakudin Nur Field Canvas"
-                  fill
-                  className="object-contain opacity-35 dark:opacity-30 select-none"
-                  priority
-                />
-              </div>
+            {/* Layer Utama: Foto tampil penuh merata proporsional */}
+            <div className="absolute inset-0 w-full h-full">
+              <Image
+                src={backgrounds[bgIndex]}
+                alt="Jibakudin Nur Field Canvas"
+                fill
+                className="object-cover md:object-contain opacity-55 select-none"
+                priority
+              />
             </div>
           </motion.div>
         </AnimatePresence>
 
-        {/* Gradasi Lembut agar menyatu dengan tema web */}
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/90 via-slate-900/80 to-slate-900 dark:from-slate-950/90 dark:via-slate-950/85 dark:to-slate-950"></div>
+        {/* Gradient Overlay Transparan Super Halus */}
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-slate-950/60 pointer-events-none"></div>
       </div>
 
-      {/* 2. CANVAS & FLOATING ICONS */}
-      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none z-[1] opacity-60"></canvas>
+      {/* 2. CANVAS INTERACTIVE & FLOATING ICONS */}
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none z-[1] opacity-70"></canvas>
       
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-[2]">
         {floatingIcons.map((item, index) => (
@@ -210,106 +203,109 @@ export default function Hero() {
             key={index}
             className={`absolute ${item.color}`}
             style={{ left: item.startX, top: item.startY }}
-            animate={{ y: [0, -30, 0], x: [0, 20, 0], rotate: [0, 180, 360] }}
+            animate={{ y: [0, -35, 0], x: [0, 25, 0], rotate: [0, 180, 360] }}
             transition={{ duration: item.duration, repeat: Infinity, ease: "linear" }}
           >
-            <item.Icon size={item.size} strokeWidth={1.2} />
+            <item.Icon size={item.size} strokeWidth={1.3} />
           </motion.div>
         ))}
       </div>
 
-      {/* 3. KARTU KONTEN UTAMA (Glassmorphism Card agar Teks Terbaca Super Jelas & Rapi) */}
-      <div className="relative z-[10] w-full max-w-4xl mx-auto px-4 sm:px-6 z-10">
-        <div className="bg-white/80 dark:bg-slate-900/85 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800 rounded-3xl p-6 sm:p-10 shadow-2xl flex flex-col items-center text-center">
+      {/* 3. KONTEN UTAMA INFORMASI DENGAN FROSTED GLASS BACKDROP (Agar teks sangat kontras & terbaca jelas di atas foto penuh) */}
+      <div className="relative z-[10] w-full max-w-4xl mx-auto px-4 sm:px-6 pt-24 pb-12 flex flex-col items-center text-center">
+        
+        {/* Container Frosted Glass tipis agar teks menonjol di atas background foto */}
+        <div className="w-full bg-slate-900/60 dark:bg-slate-950/60 backdrop-blur-md border border-slate-800/80 p-6 sm:p-10 rounded-3xl shadow-2xl">
           
           {/* Badges */}
           <motion.div 
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="flex flex-wrap justify-center items-center gap-3 mb-5"
+            transition={{ duration: 0.6 }}
+            className="flex flex-wrap justify-center items-center gap-3 mb-6"
           >
-            <span className="px-3.5 py-1.5 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 text-xs font-bold tracking-widest border border-emerald-500/20 rounded-full uppercase flex items-center gap-2">
+            <span className="px-4 py-1.5 bg-emerald-500/10 text-emerald-400 text-xs font-bold tracking-widest border border-emerald-500/30 rounded-full uppercase flex items-center gap-2 shadow-sm">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> 
               Open to Opportunities
             </span>
-            <span className="px-3.5 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold tracking-widest border border-slate-200 dark:border-slate-700 rounded-full uppercase">
+            <span className="px-4 py-1.5 bg-slate-800 text-slate-300 text-xs font-bold tracking-widest border border-slate-700 rounded-full uppercase shadow-sm">
               GPA 3.71 (Cum Laude)
             </span>
           </motion.div>
 
           {/* Name & Subtitle */}
           <motion.div 
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="space-y-3 mb-5"
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="space-y-4 mb-6"
           >
-            <h1 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight text-slate-900 dark:text-white uppercase leading-tight">
+            <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white leading-tight drop-shadow-md">
               JIBAKUDIN NUR
             </h1>
-            <h2 className="text-xs sm:text-sm font-bold text-amber-600 dark:text-amber-400 flex items-center justify-center gap-2 uppercase tracking-wider">
+            <h2 className="text-xs sm:text-sm font-bold text-amber-400 flex items-center justify-center gap-2 uppercase tracking-widest drop-shadow">
               Environmental Health • HSE • One Health & Public Health Research
             </h2>
           </motion.div>
 
           {/* Paragraph (Original Content) */}
           <motion.div 
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="max-w-2xl mb-6"
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="max-w-2xl mx-auto mb-8"
           >
-            <p className="text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed font-normal">
+            <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-medium">
               Bachelor Applied (D4) in Environmental Sanitation specialized in systematic field risk assessment, spatial epidemiological analysis, and industrial HSE systems—dedicated to executing high-impact workplace safety and public health initiatives.
             </p>
           </motion.div>
 
           {/* Tech Stack / Skills (Original Content) */}
           <motion.div 
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="flex flex-wrap justify-center gap-y-2 gap-x-5 text-xs font-extrabold text-slate-700 dark:text-slate-300 uppercase mb-8"
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="flex flex-wrap justify-center gap-y-2 gap-x-5 text-[11px] sm:text-xs font-extrabold text-slate-200 uppercase mb-8"
           >
-            <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400"><CheckCircle2 className="w-4 h-4" /> ArcGIS</span>
-            <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400"><CheckCircle2 className="w-4 h-4" /> SPSS</span>
-            <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400"><CheckCircle2 className="w-4 h-4" /> MS Office</span>
-            <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400"><CheckCircle2 className="w-4 h-4" /> Figma</span>
+            <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-500" /> ArcGIS</span>
+            <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-500" /> SPSS</span>
+            <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-500" /> MS Office</span>
+            <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-500" /> Figma</span>
           </motion.div>
 
-          {/* Buttons (Fungsi Original: Modal & Scroll Anchor) */}
+          {/* Buttons */}
           <motion.div 
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="flex flex-wrap justify-center gap-4 w-full sm:w-auto"
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="flex flex-wrap justify-center gap-4 w-full"
           >
             <button
               onClick={() => setIsSummaryModalOpen(true)}
-              className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-7 py-3.5 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white font-bold text-xs uppercase tracking-wider shadow-lg shadow-emerald-600/20 cursor-pointer"
+              className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-lg shadow-emerald-600/20 cursor-pointer"
             >
               <Sparkles className="w-4 h-4" /> Generate Summary
             </button>
 
-            {/* Anchor Asli Menuju Bagian Bawah Web */}
+            {/* Anchor Asli Menuju Bagian Bawah Web (#projects) */}
             <a
               href="#projects"
-              className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-7 py-3.5 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-900 dark:text-white font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer shadow-sm"
+              className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-slate-900 border-2 border-slate-700 hover:border-amber-500 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-sm cursor-pointer"
             >
               <Briefcase className="w-4 h-4" /> View Portfolio
             </a>
           </motion.div>
 
         </div>
+
       </div>
 
       {/* Scroll Indicator */}
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1, duration: 1 }}
-        className="absolute bottom-4 z-[10] flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500 animate-bounce pointer-events-none"
+        transition={{ delay: 1.2, duration: 1 }}
+        className="absolute bottom-4 z-[10] flex flex-col items-center gap-1 text-slate-400 animate-bounce pointer-events-none"
       >
         <ChevronDown className="w-5 h-5 opacity-80" />
       </motion.div>

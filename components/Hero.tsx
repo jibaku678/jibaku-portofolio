@@ -11,11 +11,10 @@ import {
 
 export default function Hero() {
   const [isSummaryModalOpen, setIsSummaryModalOpen] = useState(false)
+  const [bgIndex, setBgIndex] = useState(0)
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
 
-  // Kita gunakan kedua banner secara bersamaan untuk mengisi space
-  const banner1 = '/newbanner1.png'
-  const banner2 = '/newbanner2.png'
+  const backgrounds = ['/newbanner1.png', '/newbanner2.png']
 
   const currentDate = new Date().toLocaleDateString('id-ID', {
     day: 'numeric',
@@ -27,7 +26,15 @@ export default function Hero() {
     window.print()
   }
 
-  // --- EFEK: HTML5 CANVAS INTERACTIVE (TETAP DIPERTAHANKAN 100%) ---
+  // --- AUTO SLIDESHOW BACKGROUND ---
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setBgIndex((prev) => (prev + 1) % backgrounds.length)
+    }, 8000)
+    return () => clearInterval(timer)
+  }, [backgrounds.length])
+
+  // --- HTML5 CANVAS INTERACTIVE ---
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
@@ -46,15 +53,15 @@ export default function Hero() {
 
     window.addEventListener('resize', handleResize)
 
-    const particlesCount = 70
+    const particlesCount = 60
     const particles: { x: number; y: number; vx: number; vy: number; radius: number }[] = []
 
     for (let i = 0; i < particlesCount; i++) {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.7,
-        vy: (Math.random() - 0.5) * 0.7,
+        vx: (Math.random() - 0.5) * 0.6,
+        vy: (Math.random() - 0.5) * 0.6,
         radius: Math.random() * 1.5 + 0.5,
       })
     }
@@ -92,7 +99,7 @@ export default function Hero() {
 
         ctx.beginPath()
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2)
-        ctx.fillStyle = 'rgba(16, 185, 129, 0.6)' 
+        ctx.fillStyle = 'rgba(16, 185, 129, 0.5)' 
         ctx.fill()
 
         for (let j = i + 1; j < particles.length; j++) {
@@ -105,22 +112,10 @@ export default function Hero() {
             ctx.beginPath()
             ctx.moveTo(p.x, p.y)
             ctx.lineTo(p2.x, p2.y)
-            ctx.strokeStyle = `rgba(16, 185, 129, ${0.2 * (1 - dist / 110)})`
+            ctx.strokeStyle = `rgba(16, 185, 129, ${0.15 * (1 - dist / 110)})`
             ctx.lineWidth = 1
             ctx.stroke()
           }
-        }
-
-        const mdx = p.x - mouseX
-        const mdy = p.y - mouseY
-        const mdist = Math.sqrt(mdx * mdx + mdy * mdy)
-        if (mdist < 180) {
-          ctx.beginPath()
-          ctx.moveTo(p.x, p.y)
-          ctx.lineTo(mouseX, mouseY)
-          ctx.strokeStyle = `rgba(52, 211, 153, ${0.35 * (1 - mdist / 180)})`
-          ctx.lineWidth = 1
-          ctx.stroke()
         }
       }
 
@@ -138,12 +133,6 @@ export default function Hero() {
         ctx.arc(ripple.x, ripple.y, ripple.radius, 0, Math.PI * 2)
         ctx.strokeStyle = `rgba(52, 211, 153, ${ripple.alpha})`
         ctx.lineWidth = 2
-        ctx.stroke()
-
-        ctx.beginPath()
-        ctx.arc(ripple.x, ripple.y, ripple.radius * 0.7, 0, Math.PI * 2)
-        ctx.strokeStyle = `rgba(16, 185, 129, ${ripple.alpha * 0.5})`
-        ctx.lineWidth = 1
         ctx.stroke()
       }
 
@@ -167,86 +156,57 @@ export default function Hero() {
     { Icon: Wind, color: "text-teal-400/20", size: 40, startX: "15%", startY: "45%", duration: 24 },
     { Icon: HeartPulse, color: "text-emerald-400/20", size: 48, startX: "80%", startY: "60%", duration: 22 },
     { Icon: Microscope, color: "text-emerald-300/20", size: 54, startX: "25%", startY: "85%", duration: 26 },
-    { Icon: FlaskConical, color: "text-emerald-500/20", size: 42, startX: "65%", startY: "25%", duration: 19 },
-    { Icon: MapPin, color: "text-emerald-600/20", size: 80, startX: "12%", startY: "75%", duration: 28 },
-    { Icon: Globe2, color: "text-teal-500/20", size: 60, startX: "55%", startY: "70%", duration: 27 },
-    { Icon: Satellite, color: "text-emerald-400/20", size: 50, startX: "40%", startY: "10%", duration: 21 },
   ]
 
   return (
-    <section className="relative w-full min-h-[100svh] flex flex-col items-center justify-center overflow-hidden bg-slate-950">
+    <section className="relative w-full min-h-[100svh] flex flex-col items-center justify-center overflow-hidden bg-white dark:bg-slate-950 transition-colors duration-300">
       
-      {/* 1. BACKGROUND FADE MOSAIC (Mengisi ruang kosong) */}
-      <div className="absolute inset-0 z-0 overflow-hidden bg-slate-950">
-        
-        {/* Mosaic Kiri Atas (Banner 1) */}
-        <motion.div
-          animate={{ scale: [1, 1.05, 1], x: [0, 10, 0], y: [0, 10, 0] }}
-          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute -top-[10%] -left-[10%] w-[60%] h-[60%] sm:w-[50%] sm:h-[60%] opacity-25"
-        >
-          <Image
-            src={banner1}
-            alt="Decoration Left"
-            fill
-            className="object-contain sm:object-cover mix-blend-screen mask-image-radial select-none"
-            style={{ maskImage: 'radial-gradient(ellipse at center, black 10%, transparent 70%)', WebkitMaskImage: 'radial-gradient(ellipse at center, black 10%, transparent 70%)' }}
-            priority
-          />
-        </motion.div>
+      {/* 1. AMBIENT MOSAIC BACKGROUND (Pemerataan Utara-Selatan-Timur-Barat dengan Fade Halus) */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        <AnimatePresence mode="popLayout">
+          <motion.div
+            key={bgIndex}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.5, ease: "easeInOut" }}
+            className="absolute inset-0"
+          >
+            {/* Sisi Utara, Selatan, Timur, Barat diisi duplikasi foto dengan blur & fade agar tidak ada space kosong */}
+            <div className="absolute -inset-20 filter blur-2xl opacity-30 dark:opacity-20 scale-110">
+              <Image
+                src={backgrounds[bgIndex]}
+                alt="Ambient Fill"
+                fill
+                className="object-cover"
+              />
+            </div>
 
-        {/* Mosaic Kanan Bawah (Banner 2) */}
-        <motion.div
-          animate={{ scale: [1, 1.05, 1], x: [0, -10, 0], y: [0, -10, 0] }}
-          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          className="absolute -bottom-[10%] -right-[10%] w-[70%] h-[60%] sm:w-[50%] sm:h-[60%] opacity-25"
-        >
-          <Image
-            src={banner2}
-            alt="Decoration Right"
-            fill
-            className="object-contain sm:object-cover mix-blend-screen mask-image-radial select-none"
-            style={{ maskImage: 'radial-gradient(ellipse at center, black 10%, transparent 70%)', WebkitMaskImage: 'radial-gradient(ellipse at center, black 10%, transparent 70%)' }}
-          />
-        </motion.div>
+            {/* Center Stage: Foto Utama tampil utuh 100% tanpa terpotong di dalam bingkai pemerataan */}
+            <div className="absolute inset-0 flex items-center justify-center p-2 sm:p-6 md:p-12">
+              <motion.div 
+                animate={{ scale: [1, 1.02, 1] }}
+                transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+                className="relative w-full h-full max-w-6xl max-h-[85vh] flex items-center justify-center"
+              >
+                <Image
+                  src={backgrounds[bgIndex]}
+                  alt="Jibakudin Nur Field Canvas"
+                  fill
+                  className="object-contain opacity-40 dark:opacity-35 select-none drop-shadow-2xl"
+                  priority
+                />
+              </motion.div>
+            </div>
+          </motion.div>
+        </AnimatePresence>
 
-        {/* Mosaic Kiri Bawah (Banner 2) - untuk layar lebar */}
-        <motion.div
-          animate={{ opacity: [0.1, 0.2, 0.1] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute -bottom-[10%] -left-[5%] w-[40%] h-[40%] hidden sm:block"
-        >
-          <Image
-            src={banner2}
-            alt="Decoration Bottom Left"
-            fill
-            className="object-cover mix-blend-overlay mask-image-radial select-none grayscale"
-            style={{ maskImage: 'radial-gradient(ellipse at center, black 10%, transparent 60%)', WebkitMaskImage: 'radial-gradient(ellipse at center, black 10%, transparent 60%)' }}
-          />
-        </motion.div>
-
-        {/* Mosaic Kanan Atas (Banner 1) - untuk layar lebar */}
-        <motion.div
-          animate={{ opacity: [0.1, 0.2, 0.1] }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-          className="absolute -top-[5%] -right-[5%] w-[40%] h-[40%] hidden sm:block"
-        >
-          <Image
-            src={banner1}
-            alt="Decoration Top Right"
-            fill
-            className="object-cover mix-blend-overlay mask-image-radial select-none grayscale"
-            style={{ maskImage: 'radial-gradient(ellipse at center, black 10%, transparent 60%)', WebkitMaskImage: 'radial-gradient(ellipse at center, black 10%, transparent 60%)' }}
-          />
-        </motion.div>
-
-        {/* Gradient Utama (Agar Tengah Gelap & Teks Terbaca) */}
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/40 via-slate-950/80 to-slate-950 pointer-events-none"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_rgba(2,6,23,0.9)_80%)] pointer-events-none"></div>
+        {/* Gradient Fade Overlay untuk Light & Dark Mode */}
+        <div className="absolute inset-0 bg-gradient-to-t from-white via-white/80 to-white/60 dark:from-slate-950 dark:via-slate-950/80 dark:to-slate-950/70 pointer-events-none"></div>
       </div>
 
-      {/* 2. CANVAS INTERACTIVE & ICONS */}
-      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none z-[1] opacity-70"></canvas>
+      {/* 2. CANVAS INTERACTIVE & FLOATING ICONS */}
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none z-[1] opacity-50 dark:opacity-70"></canvas>
       
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-[2]">
         {floatingIcons.map((item, index) => (
@@ -254,7 +214,7 @@ export default function Hero() {
             key={index}
             className={`absolute ${item.color}`}
             style={{ left: item.startX, top: item.startY }}
-            animate={{ y: [0, -40, 0], x: [0, 30, 0], rotate: [0, 180, 360] }}
+            animate={{ y: [0, -35, 0], x: [0, 25, 0], rotate: [0, 180, 360] }}
             transition={{ duration: item.duration, repeat: Infinity, ease: "linear" }}
           >
             <item.Icon size={item.size} strokeWidth={1.3} />
@@ -272,11 +232,11 @@ export default function Hero() {
           transition={{ duration: 0.6 }}
           className="flex flex-wrap justify-center items-center gap-3 mb-6"
         >
-          <span className="px-4 py-1.5 bg-emerald-500/10 text-emerald-400 text-xs font-bold tracking-widest border border-emerald-500/30 rounded-full uppercase flex items-center gap-2 shadow-sm backdrop-blur-sm">
+          <span className="px-4 py-1.5 bg-emerald-100 dark:bg-emerald-500/10 text-emerald-800 dark:text-emerald-400 text-xs font-bold tracking-widest border border-emerald-300 dark:border-emerald-500/30 rounded-full uppercase flex items-center gap-2 shadow-sm backdrop-blur-md">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> 
             Open to Opportunities
           </span>
-          <span className="px-4 py-1.5 bg-slate-800/60 text-slate-300 text-xs font-bold tracking-widest border border-slate-700/60 rounded-full uppercase shadow-sm backdrop-blur-sm">
+          <span className="px-4 py-1.5 bg-slate-100 dark:bg-slate-800/80 text-slate-800 dark:text-slate-200 text-xs font-bold tracking-widest border border-slate-300 dark:border-slate-700 rounded-full uppercase shadow-sm backdrop-blur-md">
             GPA 3.71 (Cum Laude)
           </span>
         </motion.div>
@@ -288,10 +248,10 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="space-y-4 mb-6"
         >
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white leading-tight drop-shadow-lg">
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-slate-900 dark:text-white leading-tight">
             JIBAKUDIN NUR
           </h1>
-          <h2 className="text-xs sm:text-sm font-bold text-amber-400 flex items-center justify-center gap-2 uppercase tracking-widest drop-shadow-md">
+          <h2 className="text-xs sm:text-sm font-bold text-amber-700 dark:text-amber-400 flex items-center justify-center gap-2 uppercase tracking-widest">
             Environmental Health • HSE • One Health & Public Health Research
           </h2>
         </motion.div>
@@ -303,7 +263,7 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="max-w-2xl mb-8"
         >
-          <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-medium drop-shadow-md">
+          <p className="text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed font-medium">
             Bachelor Applied (D4) in Environmental Sanitation specialized in systematic field risk assessment, spatial epidemiological analysis, and industrial HSE systems—dedicated to executing high-impact workplace safety and public health initiatives.
           </p>
         </motion.div>
@@ -313,15 +273,15 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="flex flex-wrap justify-center gap-y-2 gap-x-5 text-[11px] sm:text-xs font-extrabold text-slate-200 uppercase mb-10"
+          className="flex flex-wrap justify-center gap-y-2 gap-x-5 text-[11px] sm:text-xs font-extrabold text-slate-700 dark:text-slate-300 uppercase mb-10"
         >
-          <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-500" /> ArcGIS</span>
-          <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-500" /> SPSS</span>
-          <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-500" /> MS Office</span>
-          <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-500" /> Figma</span>
+          <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-500" /> ArcGIS</span>
+          <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-500" /> SPSS</span>
+          <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-500" /> MS Office</span>
+          <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-500" /> Figma</span>
         </motion.div>
 
-        {/* Buttons (Fungsi Original: Modal & Scroll Anchor) */}
+        {/* Buttons */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -330,7 +290,7 @@ export default function Hero() {
         >
           <button
             onClick={() => setIsSummaryModalOpen(true)}
-            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] cursor-pointer"
+            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-lg shadow-emerald-600/20 cursor-pointer"
           >
             <Sparkles className="w-4 h-4" /> Generate Summary
           </button>
@@ -338,7 +298,7 @@ export default function Hero() {
           {/* Anchor Asli Menuju Bagian Bawah Web */}
           <a
             href="#projects"
-            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-sm backdrop-blur-md cursor-pointer"
+            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-white dark:bg-slate-900 border-2 border-slate-300 dark:border-slate-700 hover:border-amber-500 text-slate-900 dark:text-white font-bold text-xs uppercase tracking-wider transition-all shadow-sm cursor-pointer"
           >
             <Briefcase className="w-4 h-4" /> View Portfolio
           </a>
@@ -346,12 +306,12 @@ export default function Hero() {
 
       </div>
 
-      {/* Floating Scroll Down Arrow */}
+      {/* Scroll Indicator */}
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2, duration: 1 }}
-        className="absolute bottom-6 z-[10] flex flex-col items-center gap-1 text-slate-500 animate-bounce pointer-events-none"
+        className="absolute bottom-6 z-[10] flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500 animate-bounce pointer-events-none"
       >
         <ChevronDown className="w-5 h-5 opacity-80" />
       </motion.div>

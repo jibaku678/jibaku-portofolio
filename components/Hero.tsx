@@ -183,7 +183,7 @@ export default function Hero() {
   return (
     <section className="relative w-full min-h-[100svh] flex flex-col items-center justify-center overflow-hidden bg-slate-950">
       
-      {/* 1. DUAL-LAYER CINEMATIC BLUR BACKGROUND (FOTO JELAS DI TENGAH, DUPLIKAT BLUR PENUH DI BELAKANG) */}
+      {/* 1. BACKGROUND DENGAN BLUR TIPIS & ELEGAN (MENUTUPI LAYAR MERATA TANPA RUANG KOSONG) */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <AnimatePresence mode="popLayout">
           <motion.div
@@ -194,17 +194,12 @@ export default function Hero() {
             transition={{ duration: 1.5, ease: "easeInOut" }}
             className="absolute inset-0 flex items-center justify-center"
           >
-            {/* LAYER 1: Duplikat Foto di Belakang (Di-blur & scale besar untuk menutupi seluruh layar secara merata tanpa ruang kosong) */}
-            <div className="absolute inset-0 filter blur-2xl opacity-30 scale-110 select-none">
-              <Image 
-                src={backgrounds[bgIndex]} 
-                alt="Blurred Ambient Background" 
-                fill 
-                className="object-cover" 
-              />
+            {/* Blur tipis elegan di belakang untuk mengisi ruang */}
+            <div className="absolute inset-0 filter blur-md opacity-25 scale-105 select-none">
+              <Image src={backgrounds[bgIndex]} alt="Ambient Fill" fill className="object-cover" />
             </div>
 
-            {/* LAYER 2: Foto Asli di Depan (Tampil utuh 100%, object-contain, tidak terpotong sama sekali) */}
+            {/* Foto Utama Tampil Utuh Proporsional */}
             <div className="absolute inset-0 w-full h-full flex items-center justify-center p-2 sm:p-6">
               <motion.div
                 animate={{ scale: [1, 1.02, 1] }}
@@ -215,7 +210,7 @@ export default function Hero() {
                   src={backgrounds[bgIndex]}
                   alt="Jibakudin Nur Field Canvas"
                   fill
-                  className="object-contain opacity-55 select-none drop-shadow-2xl"
+                  className="object-contain opacity-45 select-none"
                   priority
                 />
               </motion.div>
@@ -223,8 +218,8 @@ export default function Hero() {
           </motion.div>
         </AnimatePresence>
 
-        {/* Gradient Overlay & Vignette untuk menjaga keterbacaan teks */}
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950/60 to-slate-950 pointer-events-none"></div>
+        {/* Gradient Overlay Bersih */}
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/85 via-slate-950/70 to-slate-950 pointer-events-none"></div>
       </div>
 
       {/* 2. CANVAS INTERACTIVE & FLOATING ICONS */}
@@ -244,7 +239,7 @@ export default function Hero() {
         ))}
       </div>
 
-      {/* 3. KONTEN UTAMA INFORMASI (100% Sesuai Asli) */}
+      {/* 3. KONTEN UTAMA INFORMASI (BERSIH TANPA KOTAK KACA/GLASS DI PARAGRAF) */}
       <div className="relative z-[10] w-full max-w-4xl mx-auto px-4 sm:px-6 pt-24 pb-12 flex flex-col items-center text-center">
         
         {/* Badges */}
@@ -278,14 +273,14 @@ export default function Hero() {
           </h2>
         </motion.div>
 
-        {/* Paragraph (Original Content) */}
+        {/* Paragraph (Original Clean Content - Tanpa Kotak Glass) */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           className="max-w-2xl mb-8"
         >
-          <p className="text-sm sm:text-base text-slate-200 leading-relaxed font-medium drop-shadow-md bg-slate-950/50 p-4 rounded-2xl border border-white/5 backdrop-blur-sm">
+          <p className="text-sm sm:text-base text-slate-200 leading-relaxed font-medium drop-shadow-md">
             Bachelor Applied (D4) in Environmental Sanitation specialized in systematic field risk assessment, spatial epidemiological analysis, and industrial HSE systems—dedicated to executing high-impact workplace safety and public health initiatives.
           </p>
         </motion.div>
@@ -297,10 +292,10 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="flex flex-wrap justify-center gap-y-2 gap-x-5 text-[11px] sm:text-xs font-extrabold text-slate-200 uppercase mb-10"
         >
-          <span className="flex items-center gap-1.5 bg-slate-900/70 px-3 py-1 rounded-full border border-slate-800"><CheckCircle2 className="w-4 h-4 text-emerald-400" /> ArcGIS</span>
-          <span className="flex items-center gap-1.5 bg-slate-900/70 px-3 py-1 rounded-full border border-slate-800"><CheckCircle2 className="w-4 h-4 text-emerald-400" /> SPSS</span>
-          <span className="flex items-center gap-1.5 bg-slate-900/70 px-3 py-1 rounded-full border border-slate-800"><CheckCircle2 className="w-4 h-4 text-emerald-400" /> MS Office</span>
-          <span className="flex items-center gap-1.5 bg-slate-900/70 px-3 py-1 rounded-full border border-slate-800"><CheckCircle2 className="w-4 h-4 text-emerald-400" /> Figma</span>
+          <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-400" /> ArcGIS</span>
+          <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-400" /> SPSS</span>
+          <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-400" /> MS Office</span>
+          <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-400" /> Figma</span>
         </motion.div>
 
         {/* Buttons (Fungsi Original: Modal & Scroll Anchor) */}
@@ -317,7 +312,7 @@ export default function Hero() {
             <Sparkles className="w-4 h-4" /> Generate Summary
           </button>
 
-          {/* Anchor Asli Menuju Bagian Bawah Web (#projects) */}
+          {/* Anchor Asli Menuju Bagian Bawah Web */}
           <a
             href="#projects"
             className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-slate-900/90 hover:bg-slate-800 border border-slate-700 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-sm backdrop-blur-md cursor-pointer"

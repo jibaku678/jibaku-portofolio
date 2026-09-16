@@ -6,12 +6,12 @@ import {
   Briefcase, Sparkles, X, Printer, CheckCircle2, 
   ShieldCheck, Leaf, HeartPulse, MapPin, Droplets, Activity,
   Microscope, Satellite, HardHat, Bug, FlaskConical, Radar, Globe2, Wind,
-  Camera
+  Layers
 } from 'lucide-react'
 
 export default function Hero() {
   const [isSummaryModalOpen, setIsSummaryModalOpen] = useState(false)
-  const [activeBanner, setActiveBanner] = useState<'surveillance' | 'community'>('surveillance')
+  const [activeCanvas, setActiveCanvas] = useState<1 | 2>(1)
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
 
   const currentDate = new Date().toLocaleDateString('id-ID', {
@@ -24,7 +24,7 @@ export default function Hero() {
     window.print()
   }
 
-  // --- EFEK CANVAS INTERAKTIF ---
+  // --- EFEK CANVAS INTERAKTIF (PARTIKEL GIS) ---
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
@@ -43,15 +43,15 @@ export default function Hero() {
 
     window.addEventListener('resize', handleResize)
 
-    const particlesCount = 70
+    const particlesCount = 50
     const particles: { x: number; y: number; vx: number; vy: number; radius: number }[] = []
 
     for (let i = 0; i < particlesCount; i++) {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.7,
-        vy: (Math.random() - 0.5) * 0.7,
+        vx: (Math.random() - 0.5) * 0.6,
+        vy: (Math.random() - 0.5) * 0.6,
         radius: Math.random() * 1.5 + 0.5,
       })
     }
@@ -90,7 +90,7 @@ export default function Hero() {
 
         ctx.beginPath()
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2)
-        ctx.fillStyle = 'rgba(16, 185, 129, 0.6)' 
+        ctx.fillStyle = 'rgba(16, 185, 129, 0.5)' 
         ctx.fill()
 
         for (let j = i + 1; j < particles.length; j++) {
@@ -99,11 +99,11 @@ export default function Hero() {
           const dy = p.y - p2.y
           const dist = Math.sqrt(dx * dx + dy * dy)
 
-          if (dist < 110) {
+          if (dist < 100) {
             ctx.beginPath()
             ctx.moveTo(p.x, p.y)
             ctx.lineTo(p2.x, p2.y)
-            ctx.strokeStyle = `rgba(16, 185, 129, ${0.2 * (1 - dist / 110)})`
+            ctx.strokeStyle = `rgba(16, 185, 129, ${0.15 * (1 - dist / 100)})`
             ctx.lineWidth = 1
             ctx.stroke()
           }
@@ -112,11 +112,11 @@ export default function Hero() {
         const mdx = p.x - mouseX
         const mdy = p.y - mouseY
         const mdist = Math.sqrt(mdx * mdx + mdy * mdy)
-        if (mdist < 180) {
+        if (mdist < 150) {
           ctx.beginPath()
           ctx.moveTo(p.x, p.y)
           ctx.lineTo(mouseX, mouseY)
-          ctx.strokeStyle = `rgba(52, 211, 153, ${0.35 * (1 - mdist / 180)})`
+          ctx.strokeStyle = `rgba(52, 211, 153, ${0.3 * (1 - mdist / 150)})`
           ctx.lineWidth = 1
           ctx.stroke()
         }
@@ -124,8 +124,8 @@ export default function Hero() {
 
       for (let i = clickRipples.length - 1; i >= 0; i--) {
         const ripple = clickRipples[i]
-        ripple.radius += 3 
-        ripple.alpha -= 0.012 
+        ripple.radius += 2.5 
+        ripple.alpha -= 0.015 
 
         if (ripple.alpha <= 0) {
           clickRipples.splice(i, 1)
@@ -136,12 +136,6 @@ export default function Hero() {
         ctx.arc(ripple.x, ripple.y, ripple.radius, 0, Math.PI * 2)
         ctx.strokeStyle = `rgba(52, 211, 153, ${ripple.alpha})`
         ctx.lineWidth = 2
-        ctx.stroke()
-
-        ctx.beginPath()
-        ctx.arc(ripple.x, ripple.y, ripple.radius * 0.7, 0, Math.PI * 2)
-        ctx.strokeStyle = `rgba(16, 185, 129, ${ripple.alpha * 0.5})`
-        ctx.lineWidth = 1
         ctx.stroke()
       }
 
@@ -159,211 +153,173 @@ export default function Hero() {
   }, [])
 
   const floatingIcons = [
-    { Icon: ShieldCheck, color: "text-amber-600/20 dark:text-amber-500/20", size: 56, startX: "5%", startY: "15%", duration: 25 },
-    { Icon: HardHat, color: "text-amber-700/20 dark:text-amber-500/20", size: 48, startX: "85%", startY: "80%", duration: 22 },
-    { Icon: Leaf, color: "text-emerald-600/20 dark:text-emerald-500/20", size: 72, startX: "88%", startY: "15%", duration: 30 },
-    { Icon: Wind, color: "text-teal-600/20 dark:text-teal-400/20", size: 40, startX: "15%", startY: "45%", duration: 24 },
-    { Icon: HeartPulse, color: "text-emerald-500/20 dark:text-emerald-400/20", size: 48, startX: "80%", startY: "60%", duration: 22 },
-    { Icon: Microscope, color: "text-emerald-600/20 dark:text-emerald-300/20", size: 54, startX: "25%", startY: "85%", duration: 26 },
-    { Icon: FlaskConical, color: "text-emerald-600/20 dark:text-emerald-500/20", size: 42, startX: "65%", startY: "25%", duration: 19 },
-    { Icon: MapPin, color: "text-emerald-700/20 dark:text-emerald-600/20", size: 80, startX: "12%", startY: "75%", duration: 28 },
-    { Icon: Globe2, color: "text-teal-600/20 dark:text-teal-500/20", size: 60, startX: "55%", startY: "70%", duration: 27 },
-    { Icon: Satellite, color: "text-emerald-600/20 dark:text-emerald-400/20", size: 50, startX: "40%", startY: "10%", duration: 21 },
-    { Icon: Activity, color: "text-emerald-600/20 dark:text-emerald-300/20", size: 64, startX: "50%", startY: "85%", duration: 29 },
-    { Icon: Radar, color: "text-teal-600/20 dark:text-teal-300/20", size: 55, startX: "75%", startY: "40%", duration: 23 },
-    { Icon: Droplets, color: "text-amber-600/20 dark:text-amber-400/20", size: 40, startX: "35%", startY: "50%", duration: 18 },
-    { Icon: Bug, color: "text-amber-700/20 dark:text-amber-500/20", size: 36, startX: "90%", startY: "45%", duration: 20 },
+    { Icon: ShieldCheck, color: "text-amber-600/15 dark:text-amber-500/15", size: 56, startX: "5%", startY: "15%", duration: 25 },
+    { Icon: HardHat, color: "text-amber-700/15 dark:text-amber-500/15", size: 48, startX: "85%", startY: "80%", duration: 22 },
+    { Icon: Leaf, color: "text-emerald-600/15 dark:text-emerald-500/15", size: 72, startX: "88%", startY: "15%", duration: 30 },
+    { Icon: Wind, color: "text-teal-600/15 dark:text-teal-400/15", size: 40, startX: "15%", startY: "45%", duration: 24 },
+    { Icon: HeartPulse, color: "text-emerald-500/15 dark:text-emerald-400/15", size: 48, startX: "80%", startY: "60%", duration: 22 },
+    { Icon: Microscope, color: "text-emerald-600/15 dark:text-emerald-300/15", size: 54, startX: "25%", startY: "85%", duration: 26 },
   ]
 
   return (
-    <section className="relative w-full overflow-hidden bg-slate-50 dark:bg-slate-950 py-16 md:py-24 border-b border-slate-200 dark:border-slate-800/60 transition-colors duration-300">
+    <section className="relative w-full overflow-hidden bg-slate-50 dark:bg-slate-950 py-12 md:py-20 border-b border-slate-200 dark:border-slate-800/60 transition-colors duration-300">
       
+      {/* Background Interactive Canvas */}
       <canvas
         ref={canvasRef}
-        className="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-40 dark:opacity-80"
+        className="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-40 dark:opacity-70"
       ></canvas>
 
+      {/* Floating Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
         {floatingIcons.map((item, index) => (
           <motion.div
             key={index}
             className={`absolute ${item.color}`}
             style={{ left: item.startX, top: item.startY }}
-            animate={{
-              y: [0, -40, 0],
-              x: [0, 30, 0],
-              rotate: [0, 180, 360],
-            }}
-            transition={{
-              duration: item.duration,
-              repeat: Infinity,
-              ease: "linear",
-            }}
+            animate={{ y: [0, -30, 0], x: [0, 20, 0], rotate: [0, 180, 360] }}
+            transition={{ duration: item.duration, repeat: Infinity, ease: "linear" }}
           >
-            <item.Icon size={item.size} strokeWidth={1.3} />
+            <item.Icon size={item.size} strokeWidth={1.2} />
           </motion.div>
         ))}
-        <div className="absolute -top-32 -left-32 w-[500px] h-[500px] bg-emerald-500/5 dark:bg-emerald-500/10 rounded-full blur-[100px]"></div>
-        <div className="absolute top-1/2 -right-32 w-[500px] h-[500px] bg-amber-500/5 dark:bg-amber-500/10 rounded-full blur-[100px]"></div>
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 pointer-events-none">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center pointer-events-auto">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
+        
+        {/* HERO CONTAINER UTAMA */}
+        <div className="flex flex-col gap-10">
           
-          {/* KOLOM KIRI: Informasi Profil Utama (7 Kolom) */}
-          <motion.div 
-            initial="hidden"
-            animate="visible"
-            variants={{
-              hidden: { opacity: 0 },
-              visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
-            }}
-            className="flex flex-col items-start gap-6 lg:col-span-7"
-          >
-            <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="flex flex-wrap items-center gap-3 mb-1">
-              <motion.span 
-                animate={{ scale: [1, 1.03, 1] }}
-                transition={{ repeat: Infinity, duration: 2.5 }}
-                className="px-3.5 py-1.5 bg-emerald-100 dark:bg-emerald-500/10 text-emerald-800 dark:text-emerald-400 text-xs font-bold tracking-widest border border-emerald-300 dark:border-emerald-500/30 rounded-full uppercase flex items-center gap-2 shadow-sm backdrop-blur-sm"
-              >
+          {/* TOP SECTION: Header Info */}
+          <div className="flex flex-col items-start gap-4">
+            
+            {/* Status Badges */}
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="px-3.5 py-1.5 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 text-xs font-extrabold tracking-widest border border-emerald-500/30 rounded-full uppercase flex items-center gap-2 backdrop-blur-md">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> 
                 Open to Opportunities
-              </motion.span>
-              <span className="px-3.5 py-1.5 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-300 text-xs font-bold tracking-widest border border-slate-300 dark:border-slate-700 rounded-full uppercase shadow-sm backdrop-blur-sm">
+              </span>
+              <span className="px-3.5 py-1.5 bg-slate-200/80 dark:bg-slate-800/80 text-slate-800 dark:text-slate-200 text-xs font-extrabold tracking-widest border border-slate-300 dark:border-slate-700 rounded-full uppercase backdrop-blur-md">
                 GPA 3.71 (Cum Laude)
               </span>
-            </motion.div>
+            </div>
 
-            <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="space-y-3">
-              <motion.h1 
-                animate={{ textShadow: ["0px 0px 0px rgba(16,185,129,0)", "0px 0px 25px rgba(16,185,129,0.3)", "0px 0px 0px rgba(16,185,129,0)"] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-slate-900 dark:text-white leading-tight"
-              >
+            {/* Name & Title */}
+            <div className="space-y-2 max-w-4xl">
+              <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-slate-900 dark:text-white leading-none">
                 JIBAKUDIN NUR
-              </motion.h1>
-              
-              <h2 className="text-xs sm:text-sm font-bold text-amber-700 dark:text-amber-400 flex items-center gap-2 uppercase tracking-wider">
+              </h1>
+              <p className="text-xs sm:text-sm md:text-base font-bold text-amber-600 dark:text-amber-400 uppercase tracking-widest">
                 Environmental Health • HSE • One Health & Public Health Research
-              </h2>
-            </motion.div>
-
-            <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
-              <p className="text-sm sm:text-base text-slate-700 dark:text-slate-300 max-w-2xl leading-relaxed border-l-4 border-emerald-600 dark:border-emerald-500 pl-4 py-2 bg-white dark:bg-slate-900/60 backdrop-blur-md rounded-r-xl shadow-sm font-medium border-y border-r border-slate-200/60 dark:border-slate-800/80">
-                Bachelor Applied (D4) in Environmental Sanitation specialized in systematic field risk assessment, spatial epidemiological analysis, and industrial HSE systems—dedicated to executing high-impact workplace safety and public health initiatives.
               </p>
-            </motion.div>
+            </div>
 
-            <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="flex flex-wrap gap-y-2 gap-x-4 text-[11px] sm:text-xs font-extrabold text-slate-700 dark:text-slate-300 uppercase">
-              <span className="flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-500" /> ArcGIS</span>
-              <span className="flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-500" /> SPSS</span>
-              <span className="flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-500" /> MS Office</span>
-              <span className="flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-500" /> Figma</span>
-            </motion.div>
+            {/* Description Paragraph */}
+            <p className="text-sm sm:text-base text-slate-700 dark:text-slate-300 max-w-3xl leading-relaxed border-l-4 border-emerald-500 pl-4 py-1.5 bg-white/70 dark:bg-slate-900/50 backdrop-blur-md rounded-r-xl border-y border-r border-slate-200/60 dark:border-slate-800/60 font-medium">
+              Bachelor Applied (D4) in Environmental Sanitation specialized in systematic field risk assessment, spatial epidemiological analysis, and industrial HSE systems—dedicated to executing high-impact workplace safety and public health initiatives.
+            </p>
 
-            <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="flex flex-wrap gap-4 pt-2 w-full sm:w-auto relative z-20">
+            {/* Core Tech Stack */}
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-bold text-slate-600 dark:text-slate-400 uppercase pt-1">
+              <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400"><CheckCircle2 className="w-4 h-4" /> ArcGIS</span>
+              <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400"><CheckCircle2 className="w-4 h-4" /> SPSS</span>
+              <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400"><CheckCircle2 className="w-4 h-4" /> MS Office</span>
+              <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400"><CheckCircle2 className="w-4 h-4" /> Figma</span>
+            </div>
+
+            {/* CTAs */}
+            <div className="flex flex-wrap items-center gap-4 pt-2">
               <motion.button
-                whileHover={{ scale: 1.05, boxShadow: "0px 0px 30px rgba(16, 185, 129, 0.4)" }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
                 onClick={() => setIsSummaryModalOpen(true)}
-                className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-lg shadow-emerald-600/20 cursor-pointer"
+                className="flex items-center gap-2 px-7 py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white font-bold text-xs uppercase tracking-wider shadow-lg shadow-emerald-600/20 cursor-pointer"
               >
                 <Sparkles className="w-4 h-4" /> Generate Summary
               </motion.button>
 
               <motion.a
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
                 href="#projects"
-                className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-white dark:bg-slate-900 border-2 border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 hover:border-amber-500 dark:hover:border-amber-500 text-slate-900 dark:text-slate-100 font-bold text-xs uppercase tracking-wider transition-all shadow-sm"
+                className="flex items-center gap-2 px-7 py-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 hover:border-amber-500 text-slate-900 dark:text-slate-100 font-bold text-xs uppercase tracking-wider shadow-sm transition-colors"
               >
                 <Briefcase className="w-4 h-4" /> View Portfolio
               </motion.a>
-            </motion.div>
-          </motion.div>
+            </div>
 
-          {/* KOLOM KANAN: Human-Centered Interactive Field Showcase (5 Kolom) */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8 }}
-            className="w-full lg:col-span-5 relative flex flex-col gap-3"
-          >
-            {/* Header Switcher (Sangat Figma-style & Humanized) */}
-            <div className="flex items-center justify-between bg-white dark:bg-slate-900 p-1.5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
-              <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400 pl-2 uppercase tracking-wider flex items-center gap-1.5">
-                <Camera className="w-3.5 h-3.5 text-emerald-500" /> Field Gallery
+          </div>
+
+          {/* BOTTOM SECTION: Hero Canvas Showcase (Figma Style) */}
+          <div className="relative w-full rounded-3xl overflow-hidden border border-slate-300 dark:border-slate-800 bg-slate-900 shadow-2xl group">
+            
+            {/* Top Bar Floating Control Bar */}
+            <div className="absolute top-4 right-4 z-20 flex items-center gap-2 bg-slate-950/80 backdrop-blur-md p-1.5 rounded-2xl border border-slate-800 shadow-lg">
+              <span className="text-[10px] font-mono text-slate-400 px-2 uppercase tracking-wider flex items-center gap-1.5 hidden sm:flex">
+                <Layers className="w-3.5 h-3.5 text-emerald-400" /> Canvas Stage
               </span>
-              <div className="flex items-center gap-1">
-                <button
-                  onClick={() => setActiveBanner('surveillance')}
-                  className={`px-3 py-1.5 rounded-lg text-[11px] font-bold transition-all cursor-pointer ${
-                    activeBanner === 'surveillance'
-                      ? 'bg-emerald-600 text-white shadow-sm'
-                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-                  }`}
+              <button
+                onClick={() => setActiveCanvas(1)}
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  activeCanvas === 1 
+                    ? 'bg-emerald-600 text-white shadow' 
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                View A
+              </button>
+              <button
+                onClick={() => setActiveCanvas(2)}
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  activeCanvas === 2 
+                    ? 'bg-emerald-600 text-white shadow' 
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                View B
+              </button>
+            </div>
+
+            {/* Canvas Main Image Area */}
+            <div className="relative aspect-[16/9] md:aspect-[21/9] w-full">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeCanvas}
+                  initial={{ opacity: 0, scale: 1.02 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.98 }}
+                  transition={{ duration: 0.5, ease: "easeInOut" }}
+                  className="relative w-full h-full"
                 >
-                  Set 1
-                </button>
-                <button
-                  onClick={() => setActiveBanner('community')}
-                  className={`px-3 py-1.5 rounded-lg text-[11px] font-bold transition-all cursor-pointer ${
-                    activeBanner === 'community'
-                      ? 'bg-emerald-600 text-white shadow-sm'
-                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-                  }`}
-                >
-                  Set 2
-                </button>
+                  <Image
+                    src={activeCanvas === 1 ? "/newbanner1.png" : "/newbanner2.png"}
+                    alt="Jibakudin Nur Environmental Health Field Documentation Canvas"
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out select-none"
+                    priority
+                  />
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Bottom Subtle Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
+              <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs font-mono text-slate-300 pointer-events-none">
+                <span className="bg-slate-950/70 backdrop-blur-md px-3 py-1.5 rounded-lg border border-slate-800/80 text-[11px]">
+                  // REAL FIELD OPERATIONS & RESEARCH
+                </span>
+                <span className="text-emerald-400 font-bold hidden sm:inline-block">
+                  Yogyakarta & Central Java Facilities
+                </span>
               </div>
             </div>
 
-            {/* Frame Utama (Clean Aspect Ratio 4:3) */}
-            <div className="relative aspect-[4/3] w-full rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-900 shadow-xl group">
-              <AnimatePresence mode="wait">
-                {activeBanner === 'surveillance' ? (
-                  <motion.div
-                    key="banner1"
-                    initial={{ opacity: 0, scale: 0.98 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.98 }}
-                    transition={{ duration: 0.4 }}
-                    className="relative w-full h-full"
-                  >
-                    <Image
-                      src="/newbanner1.png" 
-                      alt="Field Practice Set 1"
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                      priority
-                    />
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="banner2"
-                    initial={{ opacity: 0, scale: 0.98 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.98 }}
-                    transition={{ duration: 0.4 }}
-                    className="relative w-full h-full"
-                  >
-                    <Image
-                      src="/newbanner2.png" 
-                      alt="Field Practice Set 2"
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                    />
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-
-          </motion.div>
+          </div>
 
         </div>
+
       </div>
 
-      {/* Modal Summary */}
+      {/* Modal Executive Summary */}
       <AnimatePresence>
         {isSummaryModalOpen && (
           <motion.div

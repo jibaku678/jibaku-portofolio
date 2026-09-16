@@ -26,7 +26,7 @@ export default function Hero() {
     window.print()
   }
 
-  // --- EFEK 1: BACKGROUND SLIDESHOW OTOMATIS ---
+  // --- AUTO SLIDESHOW BACKGROUND ---
   useEffect(() => {
     const timer = setInterval(() => {
       setBgIndex((prev) => (prev + 1) % backgrounds.length)
@@ -34,7 +34,7 @@ export default function Hero() {
     return () => clearInterval(timer)
   }, [backgrounds.length])
 
-  // --- EFEK 2: HTML5 CANVAS INTERACTIVE ---
+  // --- HTML5 CANVAS INTERACTIVE ---
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
@@ -183,7 +183,7 @@ export default function Hero() {
   return (
     <section className="relative w-full min-h-[100svh] flex flex-col items-center justify-center overflow-hidden bg-slate-950">
       
-      {/* 1. IMMERSIVE EDGE-TO-EDGE BACKGROUND (FOTO FULL UTUH MENUTUPI LAYAR, DENGAN FADE & AMBIENT BLUR MERATA) */}
+      {/* 1. DUAL-LAYER CINEMATIC BLUR BACKGROUND (FOTO JELAS DI TENGAH, DUPLIKAT BLUR PENUH DI BELAKANG) */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <AnimatePresence mode="popLayout">
           <motion.div
@@ -194,23 +194,28 @@ export default function Hero() {
             transition={{ duration: 1.5, ease: "easeInOut" }}
             className="absolute inset-0 flex items-center justify-center"
           >
-            {/* Layer Ambient Blur untuk mengisi seluruh sisi utara, selatan, timur, barat secara merata */}
-            <div className="absolute inset-0 filter blur-3xl opacity-35 scale-110">
-              <Image src={backgrounds[bgIndex]} alt="Ambient Fill" fill className="object-cover" />
+            {/* LAYER 1: Duplikat Foto di Belakang (Di-blur & scale besar untuk menutupi seluruh layar secara merata tanpa ruang kosong) */}
+            <div className="absolute inset-0 filter blur-2xl opacity-30 scale-110 select-none">
+              <Image 
+                src={backgrounds[bgIndex]} 
+                alt="Blurred Ambient Background" 
+                fill 
+                className="object-cover" 
+              />
             </div>
 
-            {/* Layer Utama: Foto Full Utuh, Proporsional, Tanpa Terpotong */}
-            <div className="absolute inset-0 w-full h-full flex items-center justify-center">
+            {/* LAYER 2: Foto Asli di Depan (Tampil utuh 100%, object-contain, tidak terpotong sama sekali) */}
+            <div className="absolute inset-0 w-full h-full flex items-center justify-center p-2 sm:p-6">
               <motion.div
-                animate={{ scale: [1, 1.03, 1] }}
-                transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-                className="relative w-full h-full max-w-7xl max-h-[90vh]"
+                animate={{ scale: [1, 1.02, 1] }}
+                transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+                className="relative w-full h-full max-w-6xl max-h-[85vh] flex items-center justify-center"
               >
                 <Image
                   src={backgrounds[bgIndex]}
                   alt="Jibakudin Nur Field Canvas"
                   fill
-                  className="object-cover md:object-contain opacity-55 select-none"
+                  className="object-contain opacity-55 select-none drop-shadow-2xl"
                   priority
                 />
               </motion.div>
@@ -218,7 +223,7 @@ export default function Hero() {
           </motion.div>
         </AnimatePresence>
 
-        {/* Gradient Mask & Fade Overlay agar teks sangat nyaman dibaca tanpa kotak kaku */}
+        {/* Gradient Overlay & Vignette untuk menjaga keterbacaan teks */}
         <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950/60 to-slate-950 pointer-events-none"></div>
       </div>
 
@@ -239,7 +244,7 @@ export default function Hero() {
         ))}
       </div>
 
-      {/* 3. KONTEN UTAMA INFORMASI (100% Sesuai Asli, Tampil Bersih & Elegan di atas Background Foto Penuh) */}
+      {/* 3. KONTEN UTAMA INFORMASI (100% Sesuai Asli) */}
       <div className="relative z-[10] w-full max-w-4xl mx-auto px-4 sm:px-6 pt-24 pb-12 flex flex-col items-center text-center">
         
         {/* Badges */}
@@ -280,7 +285,7 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="max-w-2xl mb-8"
         >
-          <p className="text-sm sm:text-base text-slate-200 leading-relaxed font-medium drop-shadow-md bg-slate-950/40 p-4 rounded-2xl border border-white/5 backdrop-blur-sm">
+          <p className="text-sm sm:text-base text-slate-200 leading-relaxed font-medium drop-shadow-md bg-slate-950/50 p-4 rounded-2xl border border-white/5 backdrop-blur-sm">
             Bachelor Applied (D4) in Environmental Sanitation specialized in systematic field risk assessment, spatial epidemiological analysis, and industrial HSE systems—dedicated to executing high-impact workplace safety and public health initiatives.
           </p>
         </motion.div>
@@ -292,10 +297,10 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="flex flex-wrap justify-center gap-y-2 gap-x-5 text-[11px] sm:text-xs font-extrabold text-slate-200 uppercase mb-10"
         >
-          <span className="flex items-center gap-1.5 bg-slate-900/60 px-3 py-1 rounded-full border border-slate-800"><CheckCircle2 className="w-4 h-4 text-emerald-400" /> ArcGIS</span>
-          <span className="flex items-center gap-1.5 bg-slate-900/60 px-3 py-1 rounded-full border border-slate-800"><CheckCircle2 className="w-4 h-4 text-emerald-400" /> SPSS</span>
-          <span className="flex items-center gap-1.5 bg-slate-900/60 px-3 py-1 rounded-full border border-slate-800"><CheckCircle2 className="w-4 h-4 text-emerald-400" /> MS Office</span>
-          <span className="flex items-center gap-1.5 bg-slate-900/60 px-3 py-1 rounded-full border border-slate-800"><CheckCircle2 className="w-4 h-4 text-emerald-400" /> Figma</span>
+          <span className="flex items-center gap-1.5 bg-slate-900/70 px-3 py-1 rounded-full border border-slate-800"><CheckCircle2 className="w-4 h-4 text-emerald-400" /> ArcGIS</span>
+          <span className="flex items-center gap-1.5 bg-slate-900/70 px-3 py-1 rounded-full border border-slate-800"><CheckCircle2 className="w-4 h-4 text-emerald-400" /> SPSS</span>
+          <span className="flex items-center gap-1.5 bg-slate-900/70 px-3 py-1 rounded-full border border-slate-800"><CheckCircle2 className="w-4 h-4 text-emerald-400" /> MS Office</span>
+          <span className="flex items-center gap-1.5 bg-slate-900/70 px-3 py-1 rounded-full border border-slate-800"><CheckCircle2 className="w-4 h-4 text-emerald-400" /> Figma</span>
         </motion.div>
 
         {/* Buttons (Fungsi Original: Modal & Scroll Anchor) */}
@@ -312,7 +317,7 @@ export default function Hero() {
             <Sparkles className="w-4 h-4" /> Generate Summary
           </button>
 
-          {/* Anchor Asli Menuju Bagian Bawah Web */}
+          {/* Anchor Asli Menuju Bagian Bawah Web (#projects) */}
           <a
             href="#projects"
             className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-slate-900/90 hover:bg-slate-800 border border-slate-700 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-sm backdrop-blur-md cursor-pointer"
@@ -328,7 +333,7 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2, duration: 1 }}
-        className="absolute bottom-6 z-[10] flex flex-col items-center gap-1 text-slate-400 animate-bounce pointer-events-none"
+        className="absolute bottom-6 z-[10] flex flex-col items-center gap-1 text-slate-500 animate-bounce pointer-events-none"
       >
         <ChevronDown className="w-5 h-5 opacity-80" />
       </motion.div>

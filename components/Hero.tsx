@@ -5,11 +5,13 @@ import Image from 'next/image'
 import { 
   Briefcase, Sparkles, X, Printer, CheckCircle2, 
   ShieldCheck, Leaf, HeartPulse, MapPin, Droplets, Activity,
-  Microscope, Satellite, HardHat, Bug, FlaskConical, Radar, Globe2, Wind
+  Microscope, Satellite, HardHat, Bug, FlaskConical, Radar, Globe2, Wind,
+  Camera
 } from 'lucide-react'
 
 export default function Hero() {
   const [isSummaryModalOpen, setIsSummaryModalOpen] = useState(false)
+  const [activeBanner, setActiveBanner] = useState<'surveillance' | 'community'>('surveillance')
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
 
   const currentDate = new Date().toLocaleDateString('id-ID', {
@@ -208,7 +210,7 @@ export default function Hero() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 pointer-events-none">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center pointer-events-auto">
           
-          {/* KOLOM KIRI: Profile Information */}
+          {/* KOLOM KIRI: Informasi Profil Utama (7 Kolom) */}
           <motion.div 
             initial="hidden"
             animate="visible"
@@ -280,47 +282,82 @@ export default function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* KOLOM KANAN: Modern Overlapping Photo Showcase */}
+          {/* KOLOM KANAN: Human-Centered Interactive Field Showcase (5 Kolom) */}
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8 }}
-            className="w-full lg:col-span-5 relative pt-4 pb-6 px-2 sm:px-4"
+            className="w-full lg:col-span-5 relative flex flex-col gap-3"
           >
-            {/* Ambient Glow */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-emerald-500/20 via-teal-500/10 to-amber-500/20 blur-3xl rounded-full pointer-events-none" />
-
-            {/* Container Overlap */}
-            <div className="relative w-full flex flex-col sm:block">
-              
-              {/* Foto Belakang / Atas (newbanner1) */}
-              <motion.div 
-                whileHover={{ scale: 1.02, zIndex: 30 }}
-                className="relative sm:w-[90%] aspect-[4/3] sm:aspect-[16/11] rounded-2xl overflow-hidden border-4 border-white dark:border-slate-800 shadow-2xl z-10 sm:rotate-[-2deg] transition-all duration-300"
-              >
-                <Image
-                  src="/newbanner1.png" 
-                  alt="Field Practice 1"
-                  fill
-                  className="object-cover"
-                  priority
-                />
-              </motion.div>
-
-              {/* Foto Depan / Menumpuk (newbanner2) */}
-              <motion.div 
-                whileHover={{ scale: 1.02, zIndex: 30 }}
-                className="relative sm:w-[88%] aspect-[4/3] sm:aspect-[16/11] rounded-2xl overflow-hidden border-4 border-white dark:border-slate-800 shadow-2xl z-20 sm:ml-auto sm:-mt-24 -mt-12 sm:rotate-[3deg] transition-all duration-300"
-              >
-                <Image
-                  src="/newbanner2.png" 
-                  alt="Field Practice 2"
-                  fill
-                  className="object-cover"
-                />
-              </motion.div>
-
+            {/* Header Switcher (Sangat Figma-style & Humanized) */}
+            <div className="flex items-center justify-between bg-white dark:bg-slate-900 p-1.5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+              <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400 pl-2 uppercase tracking-wider flex items-center gap-1.5">
+                <Camera className="w-3.5 h-3.5 text-emerald-500" /> Field Gallery
+              </span>
+              <div className="flex items-center gap-1">
+                <button
+                  onClick={() => setActiveBanner('surveillance')}
+                  className={`px-3 py-1.5 rounded-lg text-[11px] font-bold transition-all cursor-pointer ${
+                    activeBanner === 'surveillance'
+                      ? 'bg-emerald-600 text-white shadow-sm'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                  }`}
+                >
+                  Set 1
+                </button>
+                <button
+                  onClick={() => setActiveBanner('community')}
+                  className={`px-3 py-1.5 rounded-lg text-[11px] font-bold transition-all cursor-pointer ${
+                    activeBanner === 'community'
+                      ? 'bg-emerald-600 text-white shadow-sm'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                  }`}
+                >
+                  Set 2
+                </button>
+              </div>
             </div>
+
+            {/* Frame Utama (Clean Aspect Ratio 4:3) */}
+            <div className="relative aspect-[4/3] w-full rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-900 shadow-xl group">
+              <AnimatePresence mode="wait">
+                {activeBanner === 'surveillance' ? (
+                  <motion.div
+                    key="banner1"
+                    initial={{ opacity: 0, scale: 0.98 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.98 }}
+                    transition={{ duration: 0.4 }}
+                    className="relative w-full h-full"
+                  >
+                    <Image
+                      src="/newbanner1.png" 
+                      alt="Field Practice Set 1"
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                      priority
+                    />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="banner2"
+                    initial={{ opacity: 0, scale: 0.98 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.98 }}
+                    transition={{ duration: 0.4 }}
+                    className="relative w-full h-full"
+                  >
+                    <Image
+                      src="/newbanner2.png" 
+                      alt="Field Practice Set 2"
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                    />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
           </motion.div>
 
         </div>

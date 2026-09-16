@@ -1,18 +1,17 @@
 'use client'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import { 
-  Briefcase, Sparkles, X, Printer, CheckCircle2, 
-  ShieldCheck, HardHat, Leaf, Wind, HeartPulse, Microscope, 
-  MapPin, Globe2, Satellite, Activity, Radar, Droplets, Bug,
-  ArrowUpRight, Image as ImageIcon
+  Briefcase, Sparkles, X, Printer, MapPin, Mail, ChevronDown 
 } from 'lucide-react'
 
 export default function Hero() {
   const [isSummaryModalOpen, setIsSummaryModalOpen] = useState(false)
-  const [activeTab, setActiveTab] = useState<'surveillance' | 'community'>('surveillance')
-  const canvasRef = useRef<HTMLCanvasElement | null>(null)
+  const [bgIndex, setBgIndex] = useState(0)
+
+  // Dua foto lapangan murni sebagai kanvas latar belakang (pemanis)
+  const backgrounds = ['/newbanner1.png', '/newbanner2.png']
 
   const currentDate = new Date().toLocaleDateString('id-ID', {
     day: 'numeric',
@@ -24,272 +23,152 @@ export default function Hero() {
     window.print()
   }
 
-  // --- BACKGROUND GIS INTERACTIVE CANVAS ---
+  // Efek Auto-Slide Background yang sangat halus setiap 6 detik
   useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-    const ctx = canvas.getContext('2d')
-    if (!ctx) return
-
-    let animationFrameId: number
-    let width = (canvas.width = canvas.offsetWidth)
-    let height = (canvas.height = canvas.offsetHeight)
-
-    const handleResize = () => {
-      if (!canvas) return
-      width = canvas.width = canvas.offsetWidth
-      height = canvas.height = canvas.offsetHeight
-    }
-
-    window.addEventListener('resize', handleResize)
-
-    const particlesCount = 45
-    const particles: { x: number; y: number; vx: number; vy: number; radius: number }[] = []
-
-    for (let i = 0; i < particlesCount; i++) {
-      particles.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: (Math.random() - 0.5) * 0.5,
-        radius: Math.random() * 1.5 + 0.5,
-      })
-    }
-
-    const clickRipples: { x: number; y: number; radius: number; alpha: number }[] = []
-    let mouseX = -1000
-    let mouseY = -1000
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = canvas.getBoundingClientRect()
-      mouseX = e.clientX - rect.left
-      mouseY = e.clientY - rect.top
-    }
-
-    const handleMouseClick = (e: MouseEvent) => {
-      const rect = canvas.getBoundingClientRect()
-      const cx = e.clientX - rect.left
-      const cy = e.clientY - rect.top
-      clickRipples.push({ x: cx, y: cy, radius: 0, alpha: 1 })
-    }
-
-    window.addEventListener('mousemove', handleMouseMove)
-    window.addEventListener('click', handleMouseClick)
-
-    const render = () => {
-      ctx.clearRect(0, 0, width, height)
-
-      for (let i = 0; i < particles.length; i++) {
-        const p = particles[i]
-        p.x += p.vx
-        p.y += p.vy
-
-        if (p.x < 0 || p.x > width) p.vx *= -1
-        if (p.y < 0 || p.y > height) p.vy *= -1
-
-        ctx.beginPath()
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2)
-        ctx.fillStyle = 'rgba(16, 185, 129, 0.4)' 
-        ctx.fill()
-
-        for (let j = i + 1; j < particles.length; j++) {
-          const p2 = particles[j]
-          const dx = p.x - p2.x
-          const dy = p.y - p2.y
-          const dist = Math.sqrt(dx * dx + dy * dy)
-
-          if (dist < 100) {
-            ctx.beginPath()
-            ctx.moveTo(p.x, p.y)
-            ctx.lineTo(p2.x, p2.y)
-            ctx.strokeStyle = `rgba(16, 185, 129, ${0.12 * (1 - dist / 100)})`
-            ctx.lineWidth = 1
-            ctx.stroke()
-          }
-        }
-      }
-
-      for (let i = clickRipples.length - 1; i >= 0; i--) {
-        const ripple = clickRipples[i]
-        ripple.radius += 2.5 
-        ripple.alpha -= 0.015 
-
-        if (ripple.alpha <= 0) {
-          clickRipples.splice(i, 1)
-          continue
-        }
-
-        ctx.beginPath()
-        ctx.arc(ripple.x, ripple.y, ripple.radius, 0, Math.PI * 2)
-        ctx.strokeStyle = `rgba(52, 211, 153, ${ripple.alpha})`
-        ctx.lineWidth = 1.5
-        ctx.stroke()
-      }
-
-      animationFrameId = requestAnimationFrame(render)
-    }
-
-    render()
-
-    return () => {
-      window.removeEventListener('resize', handleResize)
-      window.removeEventListener('mousemove', handleMouseMove)
-      window.removeEventListener('click', handleMouseClick)
-      cancelAnimationFrame(animationFrameId)
-    }
-  }, [])
+    const timer = setInterval(() => {
+      setBgIndex((prev) => (prev + 1) % backgrounds.length)
+    }, 6000)
+    return () => clearInterval(timer)
+  }, [backgrounds.length])
 
   return (
-    <section className="relative w-full overflow-hidden bg-slate-50 dark:bg-slate-950 py-12 md:py-20 border-b border-slate-200 dark:border-slate-800/60 transition-colors duration-300">
+    <section className="relative w-full h-[90vh] min-h-[600px] flex flex-col items-center justify-center overflow-hidden bg-slate-950">
       
-      {/* Interactive Background Canvas */}
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-40 dark:opacity-70"
-      ></canvas>
+      {/* 1. BACKGROUND IMAGE CROSSFADE */}
+      <AnimatePresence mode="popLayout">
+        <motion.div
+          key={bgIndex}
+          initial={{ opacity: 0, scale: 1.05 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1.5, ease: "easeInOut" }}
+          className="absolute inset-0 z-0"
+        >
+          <Image
+            src={backgrounds[bgIndex]}
+            alt="Environmental Health Background"
+            fill
+            className="object-cover object-center select-none"
+            priority
+          />
+        </motion.div>
+      </AnimatePresence>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
+      {/* 2. OVERLAY GRADIENT (Agar teks putih terbaca sempurna ala web profesional) */}
+      <div className="absolute inset-0 z-0 bg-slate-900/75 dark:bg-slate-950/80 bg-gradient-to-b from-transparent via-slate-900/50 to-slate-50 dark:to-slate-950"></div>
+
+      {/* 3. CENTERED CONTENT (Manusiawi, Bersih, & Elegan) */}
+      <div className="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 flex flex-col items-center text-center mt-10">
         
-        {/* FIGMA BENTO GRID LAYOUT */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-          
-          {/* CARD 1: MAIN PROFILE INFO (7 Kolom) */}
-          <div className="lg:col-span-7 bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 flex flex-col justify-between shadow-sm backdrop-blur-md">
-            
-            <div className="space-y-6">
-              {/* Status Badges */}
-              <div className="flex flex-wrap items-center gap-3">
-                <span className="px-3.5 py-1.5 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 text-xs font-bold tracking-widest border border-emerald-500/20 rounded-full uppercase flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> 
-                  Open to Opportunities
-                </span>
-                <span className="px-3.5 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold tracking-widest border border-slate-200 dark:border-slate-700 rounded-full uppercase">
-                  GPA 3.71 (Cum Laude)
-                </span>
-              </div>
+        {/* Status / Label Tipis */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.1 }}
+          className="flex flex-wrap justify-center items-center gap-3 mb-6"
+        >
+          <span className="px-4 py-1.5 bg-emerald-500/20 text-emerald-300 text-[10px] sm:text-xs font-bold tracking-widest border border-emerald-500/30 rounded-full uppercase flex items-center gap-2 backdrop-blur-md">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> 
+            Open to Opportunities
+          </span>
+          <span className="px-4 py-1.5 bg-white/10 text-slate-200 text-[10px] sm:text-xs font-bold tracking-widest border border-white/20 rounded-full uppercase backdrop-blur-md">
+            GPA 3.71 (Cum Laude)
+          </span>
+        </motion.div>
 
-              {/* Title & Role */}
-              <div className="space-y-2">
-                <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-slate-900 dark:text-white uppercase leading-none">
-                  JIBAKUDIN NUR
-                </h1>
-                <p className="text-xs sm:text-sm font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider">
-                  Environmental Health • HSE • One Health & Public Health Research
-                </p>
-              </div>
+        {/* Nama Utama */}
+        <motion.h1 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tight text-white uppercase leading-tight drop-shadow-lg"
+        >
+          Jibakudin Nur
+        </motion.h1>
 
-              {/* Summary Paragraph */}
-              <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
-                Bachelor Applied (D4) in Environmental Sanitation specialized in systematic field risk assessment, spatial epidemiological analysis, and industrial HSE systems—dedicated to executing high-impact workplace safety and public health initiatives.
-              </p>
-            </div>
+        {/* Divider Elegan */}
+        <motion.div 
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="w-24 h-1 bg-emerald-500 rounded-full my-6 opacity-80"
+        ></motion.div>
 
-            {/* Bottom Tech Badges & CTAs */}
-            <div className="pt-8 space-y-6 border-t border-slate-100 dark:border-slate-800/80 mt-6">
-              <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs font-bold text-slate-700 dark:text-slate-300 uppercase">
-                <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400"><CheckCircle2 className="w-4 h-4" /> ArcGIS</span>
-                <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400"><CheckCircle2 className="w-4 h-4" /> SPSS</span>
-                <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400"><CheckCircle2 className="w-4 h-4" /> MS Office</span>
-                <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400"><CheckCircle2 className="w-4 h-4" /> Figma</span>
-              </div>
+        {/* Spesialisasi */}
+        <motion.h2 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="text-sm sm:text-base md:text-lg font-semibold text-slate-300 uppercase tracking-widest mb-6 max-w-2xl"
+        >
+          Environmental Health • Industrial HSE • Public Health Research
+        </motion.h2>
 
-              <div className="flex flex-wrap items-center gap-4">
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => setIsSummaryModalOpen(true)}
-                  className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white font-bold text-xs uppercase tracking-wider shadow-lg shadow-emerald-600/20 cursor-pointer"
-                >
-                  <Sparkles className="w-4 h-4" /> Generate Summary
-                </motion.button>
+        {/* Deskripsi (Singkat & Terpusat) */}
+        <motion.p 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+          className="text-sm sm:text-base text-slate-400 leading-relaxed max-w-2xl font-light mb-10"
+        >
+          Bachelor Applied (D4) in Environmental Sanitation. Specializing in systematic field risk assessment, spatial epidemiological analysis (ArcGIS), and executing high-impact workplace safety initiatives.
+        </motion.p>
 
-                <motion.a
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  href="#projects"
-                  className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-900 dark:text-white font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer"
-                >
-                  <Briefcase className="w-4 h-4" /> View Portfolio <ArrowUpRight className="w-4 h-4 opacity-70" />
-                </motion.a>
-              </div>
-            </div>
+        {/* Lokasi & Kontak Cepat */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="flex flex-wrap items-center justify-center gap-6 text-xs font-mono text-slate-400 mb-10"
+        >
+          <span className="flex items-center gap-2"><MapPin className="w-4 h-4 text-emerald-400" /> Yogyakarta, Indonesia</span>
+          <span className="flex items-center gap-2"><Mail className="w-4 h-4 text-emerald-400" /> jibakudin.nur@example.com</span>
+        </motion.div>
 
-          </div>
+        {/* Call to Action Buttons */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.7 }}
+          className="flex flex-wrap justify-center gap-4"
+        >
+          <button
+            onClick={() => setIsSummaryModalOpen(true)}
+            className="flex items-center gap-2 px-8 py-3.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-lg hover:shadow-emerald-500/25"
+          >
+            <Sparkles className="w-4 h-4" /> Generate Summary
+          </button>
 
-          {/* CARD 2: REAL FIELD CANVAS STAGE (5 Kolom) */}
-          <div className="lg:col-span-5 bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 sm:p-5 flex flex-col justify-between shadow-sm backdrop-blur-md">
-            
-            {/* Stage Controls */}
-            <div className="flex items-center justify-between pb-3 mb-2 border-b border-slate-100 dark:border-slate-800">
-              <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-                <ImageIcon className="w-4 h-4 text-emerald-500" /> Field Documentation
-              </span>
-              <div className="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl">
-                <button
-                  onClick={() => setActiveTab('surveillance')}
-                  className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                    activeTab === 'surveillance' 
-                      ? 'bg-emerald-600 text-white shadow-sm' 
-                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-                  }`}
-                >
-                  Set 1
-                </button>
-                <button
-                  onClick={() => setActiveTab('community')}
-                  className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                    activeTab === 'community' 
-                      ? 'bg-emerald-600 text-white shadow-sm' 
-                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-                  }`}
-                >
-                  Set 2
-                </button>
-              </div>
-            </div>
-
-            {/* Display Canvas Frame */}
-            <div className="relative aspect-[4/3] w-full rounded-2xl overflow-hidden bg-slate-950 border border-slate-200 dark:border-slate-800 group">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeTab}
-                  initial={{ opacity: 0, scale: 0.98 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.98 }}
-                  transition={{ duration: 0.35 }}
-                  className="relative w-full h-full"
-                >
-                  <Image
-                    src={activeTab === 'surveillance' ? '/newbanner1.png' : '/newbanner2.png'}
-                    alt="Jibakudin Nur Field Practice Canvas"
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out select-none"
-                    priority
-                  />
-                </motion.div>
-              </AnimatePresence>
-            </div>
-
-            {/* Bottom Caption Bar */}
-            <div className="pt-3 flex items-center justify-between text-[11px] font-mono text-slate-500 dark:text-slate-400">
-              <span>// VERIFIED FIELD EXPERIENCE</span>
-              <span className="text-emerald-600 dark:text-emerald-400 font-bold">100% REAL PHOTOS</span>
-            </div>
-
-          </div>
-
-        </div>
+          <a
+            href="#projects"
+            className="flex items-center gap-2 px-8 py-3.5 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white font-bold text-xs uppercase tracking-wider transition-all"
+          >
+            <Briefcase className="w-4 h-4" /> View Portfolio
+          </a>
+        </motion.div>
 
       </div>
 
-      {/* Modal Executive Summary */}
+      {/* Scroll Down Indicator */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5, duration: 1 }}
+        className="absolute bottom-8 z-10 flex flex-col items-center gap-2 text-slate-400 animate-bounce"
+      >
+        <span className="text-[10px] uppercase tracking-widest font-bold">Scroll Down</span>
+        <ChevronDown className="w-5 h-5 opacity-70" />
+      </motion.div>
+
+
+      {/* --- MODAL EXECUTIVE SUMMARY --- */}
       <AnimatePresence>
         {isSummaryModalOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md pointer-events-auto"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md pointer-events-auto text-left"
             onClick={() => setIsSummaryModalOpen(false)}
           >
             <motion.div

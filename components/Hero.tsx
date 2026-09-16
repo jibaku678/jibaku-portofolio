@@ -5,15 +5,17 @@ import Image from 'next/image'
 import { 
   Briefcase, Sparkles, X, Printer, CheckCircle2, 
   ShieldCheck, Leaf, HeartPulse, MapPin, Droplets, Activity,
-  Microscope, Satellite, HardHat, Bug, FlaskConical, Radar, Globe2, Wind
+  Microscope, Satellite, HardHat, Bug, FlaskConical, Radar, Globe2, Wind,
+  ChevronDown
 } from 'lucide-react'
 
 export default function Hero() {
   const [isSummaryModalOpen, setIsSummaryModalOpen] = useState(false)
-  const [currentSlide, setCurrentSlide] = useState(0)
+  const [bgIndex, setBgIndex] = useState(0)
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
 
-  const banners = ['/newbanner1.png', '/newbanner2.png']
+  // Foto kolase digunakan murni sebagai kanvas latar belakang (slideshow otomatis)
+  const backgrounds = ['/newbanner1.png', '/newbanner2.png']
 
   const currentDate = new Date().toLocaleDateString('id-ID', {
     day: 'numeric',
@@ -25,15 +27,15 @@ export default function Hero() {
     window.print()
   }
 
-  // --- Auto Slideshow untuk Foto Kolase (Tanpa memotong fungsi lain) ---
+  // --- EFEK 1: BACKGROUND SLIDESHOW ---
   useEffect(() => {
-    const slideInterval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % banners.length)
-    }, 5000)
-    return () => clearInterval(slideInterval)
-  }, [banners.length])
+    const timer = setInterval(() => {
+      setBgIndex((prev) => (prev + 1) % backgrounds.length)
+    }, 6000)
+    return () => clearInterval(timer)
+  }, [backgrounds.length])
 
-  // --- EFEK 1: HTML5 CANVAS INTERACTIVE TETAP DIPERTAHANKAN 100% ---
+  // --- EFEK 2: HTML5 CANVAS INTERACTIVE (TETAP DIPERTAHANKAN 100%) ---
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
@@ -167,41 +169,55 @@ export default function Hero() {
   }, [])
 
   const floatingIcons = [
-    { Icon: ShieldCheck, color: "text-amber-600/20 dark:text-amber-500/20", size: 56, startX: "5%", startY: "15%", duration: 25 },
-    { Icon: HardHat, color: "text-amber-700/20 dark:text-amber-500/20", size: 48, startX: "85%", startY: "80%", duration: 22 },
-    { Icon: Leaf, color: "text-emerald-600/20 dark:text-emerald-500/20", size: 72, startX: "88%", startY: "15%", duration: 30 },
-    { Icon: Wind, color: "text-teal-600/20 dark:text-teal-400/20", size: 40, startX: "15%", startY: "45%", duration: 24 },
-    { Icon: HeartPulse, color: "text-emerald-500/20 dark:text-emerald-400/20", size: 48, startX: "80%", startY: "60%", duration: 22 },
-    { Icon: Microscope, color: "text-emerald-600/20 dark:text-emerald-300/20", size: 54, startX: "25%", startY: "85%", duration: 26 },
-    { Icon: FlaskConical, color: "text-emerald-600/20 dark:text-emerald-500/20", size: 42, startX: "65%", startY: "25%", duration: 19 },
-    { Icon: MapPin, color: "text-emerald-700/20 dark:text-emerald-600/20", size: 80, startX: "12%", startY: "75%", duration: 28 },
-    { Icon: Globe2, color: "text-teal-600/20 dark:text-teal-500/20", size: 60, startX: "55%", startY: "70%", duration: 27 },
-    { Icon: Satellite, color: "text-emerald-600/20 dark:text-emerald-400/20", size: 50, startX: "40%", startY: "10%", duration: 21 },
-    { Icon: Activity, color: "text-emerald-600/20 dark:text-emerald-300/20", size: 64, startX: "50%", startY: "85%", duration: 29 },
-    { Icon: Radar, color: "text-teal-600/20 dark:text-teal-300/20", size: 55, startX: "75%", startY: "40%", duration: 23 },
-    { Icon: Droplets, color: "text-amber-600/20 dark:text-amber-400/20", size: 40, startX: "35%", startY: "50%", duration: 18 },
-    { Icon: Bug, color: "text-amber-700/20 dark:text-amber-500/20", size: 36, startX: "90%", startY: "45%", duration: 20 },
+    { Icon: ShieldCheck, color: "text-amber-500/20", size: 56, startX: "5%", startY: "15%", duration: 25 },
+    { Icon: HardHat, color: "text-amber-500/20", size: 48, startX: "85%", startY: "80%", duration: 22 },
+    { Icon: Leaf, color: "text-emerald-500/20", size: 72, startX: "88%", startY: "15%", duration: 30 },
+    { Icon: Wind, color: "text-teal-400/20", size: 40, startX: "15%", startY: "45%", duration: 24 },
+    { Icon: HeartPulse, color: "text-emerald-400/20", size: 48, startX: "80%", startY: "60%", duration: 22 },
+    { Icon: Microscope, color: "text-emerald-300/20", size: 54, startX: "25%", startY: "85%", duration: 26 },
+    { Icon: FlaskConical, color: "text-emerald-500/20", size: 42, startX: "65%", startY: "25%", duration: 19 },
+    { Icon: MapPin, color: "text-emerald-600/20", size: 80, startX: "12%", startY: "75%", duration: 28 },
+    { Icon: Globe2, color: "text-teal-500/20", size: 60, startX: "55%", startY: "70%", duration: 27 },
+    { Icon: Satellite, color: "text-emerald-400/20", size: 50, startX: "40%", startY: "10%", duration: 21 },
   ]
 
   return (
-    <section className="relative w-full overflow-hidden bg-white dark:bg-slate-950 py-16 md:py-24 border-b border-slate-200 dark:border-slate-800/60 transition-colors duration-300">
+    <section className="relative w-full min-h-[100svh] flex flex-col items-center justify-center overflow-hidden bg-slate-950">
       
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-40 dark:opacity-80"
-      ></canvas>
+      {/* 1. BACKGROUND FOTO & GRADIENT OVERLAY (Rasio optimal agar tidak kepotong parah) */}
+      <div className="absolute inset-0 z-0">
+        <AnimatePresence mode="popLayout">
+          <motion.div
+            key={bgIndex}
+            initial={{ opacity: 0, scale: 1.03 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.5, ease: "easeInOut" }}
+            className="absolute inset-0"
+          >
+            <Image
+              src={backgrounds[bgIndex]}
+              alt="Jibakudin Nur Background"
+              fill
+              className="object-cover object-center sm:object-[center_30%] opacity-50 select-none mix-blend-overlay"
+              priority
+            />
+          </motion.div>
+        </AnimatePresence>
+        {/* Gradient super kuat agar foto murni jadi pemanis/canvas di belakang teks */}
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/40 via-slate-950/80 to-slate-950"></div>
+      </div>
 
-      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+      {/* 2. CANVAS INTERACTIVE & ICONS (Tetap Berfungsi) */}
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none z-[1] opacity-70"></canvas>
+      
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-[2]">
         {floatingIcons.map((item, index) => (
           <motion.div
             key={index}
             className={`absolute ${item.color}`}
             style={{ left: item.startX, top: item.startY }}
-            animate={{
-              y: [0, -40, 0],
-              x: [0, 30, 0],
-              rotate: [0, 180, 360],
-            }}
+            animate={{ y: [0, -40, 0], x: [0, 30, 0], rotate: [0, 180, 360] }}
             transition={{ duration: item.duration, repeat: Infinity, ease: "linear" }}
           >
             <item.Icon size={item.size} strokeWidth={1.3} />
@@ -209,129 +225,108 @@ export default function Hero() {
         ))}
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 pointer-events-none">
-        {/* KEMBALI KE 2 KOLOM ORIGINAL (Kiri: Teks & Info, Kanan: Gambar) */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center pointer-events-auto">
-          
-          {/* KOLOM KIRI: INTI INFORMASI (Dipertahankan 100% isinya, dirapikan visualnya) */}
-          <motion.div 
-            initial="hidden"
-            animate="visible"
-            variants={{
-              hidden: { opacity: 0 },
-              visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
-            }}
-            className="flex flex-col items-start gap-6"
+      {/* 3. KONTEN UTAMA INFORMASI (100% Sesuai Asli, Tampil Centered/Figma Style) */}
+      <div className="relative z-[10] w-full max-w-4xl mx-auto px-4 sm:px-6 pt-24 pb-12 flex flex-col items-center text-center">
+        
+        {/* Badges */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="flex flex-wrap justify-center items-center gap-3 mb-6"
+        >
+          <span className="px-4 py-1.5 bg-emerald-500/10 text-emerald-400 text-xs font-bold tracking-widest border border-emerald-500/30 rounded-full uppercase flex items-center gap-2 shadow-sm backdrop-blur-sm">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> 
+            Open to Opportunities
+          </span>
+          <span className="px-4 py-1.5 bg-slate-800/60 text-slate-300 text-xs font-bold tracking-widest border border-slate-700/60 rounded-full uppercase shadow-sm backdrop-blur-sm">
+            GPA 3.71 (Cum Laude)
+          </span>
+        </motion.div>
+
+        {/* Name & Subtitle */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="space-y-4 mb-6"
+        >
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white leading-tight drop-shadow-md">
+            JIBAKUDIN NUR
+          </h1>
+          <h2 className="text-xs sm:text-sm font-bold text-amber-400 flex items-center justify-center gap-2 uppercase tracking-widest">
+            Environmental Health • HSE • One Health & Public Health Research
+          </h2>
+        </motion.div>
+
+        {/* Paragraph (Original Content) */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="max-w-2xl mb-8"
+        >
+          <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-medium">
+            Bachelor Applied (D4) in Environmental Sanitation specialized in systematic field risk assessment, spatial epidemiological analysis, and industrial HSE systems—dedicated to executing high-impact workplace safety and public health initiatives.
+          </p>
+        </motion.div>
+
+        {/* Tech Stack / Skills (Original Content) */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="flex flex-wrap justify-center gap-y-2 gap-x-5 text-[11px] sm:text-xs font-extrabold text-slate-200 uppercase mb-10"
+        >
+          <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-500" /> ArcGIS</span>
+          <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-500" /> SPSS</span>
+          <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-500" /> MS Office</span>
+          <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-500" /> Figma</span>
+        </motion.div>
+
+        {/* Buttons (Fungsi Original: Modal & Scroll Anchor) */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="flex flex-wrap justify-center gap-4 w-full sm:w-auto"
+        >
+          <button
+            onClick={() => setIsSummaryModalOpen(true)}
+            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-lg hover:shadow-emerald-500/30 cursor-pointer"
           >
-            <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="flex flex-wrap items-center gap-3 mb-2">
-              <motion.span 
-                animate={{ scale: [1, 1.03, 1] }}
-                transition={{ repeat: Infinity, duration: 2.5 }}
-                className="px-3 py-1.5 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-400 text-xs font-bold tracking-widest border border-emerald-200 dark:border-emerald-800/50 rounded-full uppercase flex items-center gap-2 shadow-sm"
-              >
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> 
-                Open to Opportunities
-              </motion.span>
-              <span className="px-3 py-1.5 bg-slate-100 dark:bg-slate-800/50 text-slate-700 dark:text-slate-300 text-xs font-bold tracking-widest border border-slate-200 dark:border-slate-700/50 rounded-full uppercase shadow-sm">
-                GPA 3.71 (Cum Laude)
-              </span>
-            </motion.div>
+            <Sparkles className="w-4 h-4" /> Generate Summary
+          </button>
 
-            <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="space-y-3">
-              <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tight text-slate-900 dark:text-white leading-tight">
-                JIBAKUDIN NUR
-              </h1>
-              <h2 className="text-sm sm:text-base font-bold text-slate-600 dark:text-slate-400 flex items-center gap-2 uppercase tracking-wide">
-                Environmental Health • HSE • One Health & Public Health Research
-              </h2>
-            </motion.div>
-
-            <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
-              <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-xl leading-relaxed border-l-[3px] border-emerald-500 pl-4 py-1 font-medium">
-                Bachelor Applied (D4) in Environmental Sanitation specialized in systematic field risk assessment, spatial epidemiological analysis, and industrial HSE systems—dedicated to executing high-impact workplace safety and public health initiatives.
-              </p>
-            </motion.div>
-
-            <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="flex flex-wrap gap-y-2 gap-x-5 text-[11px] sm:text-xs font-extrabold text-slate-700 dark:text-slate-300 uppercase pt-2">
-              <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-500" /> ArcGIS</span>
-              <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-500" /> SPSS</span>
-              <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-500" /> MS Office</span>
-              <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-500" /> Figma</span>
-            </motion.div>
-
-            {/* FUNGSI TOMBOL ASLI DIPERTAHANKAN 100% */}
-            <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="flex flex-wrap gap-4 pt-4 w-full sm:w-auto relative z-20">
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => setIsSummaryModalOpen(true)}
-                className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-8 py-3.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md cursor-pointer"
-              >
-                <Sparkles className="w-4 h-4" /> Generate Summary
-              </motion.button>
-
-              <motion.a
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                href="#projects"
-                className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-8 py-3.5 rounded-lg bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-700 hover:border-slate-900 dark:hover:border-slate-400 text-slate-900 dark:text-white font-bold text-xs uppercase tracking-wider transition-all shadow-sm"
-              >
-                <Briefcase className="w-4 h-4" /> View Portfolio
-              </motion.a>
-            </motion.div>
-          </motion.div>
-
-          {/* KOLOM KANAN: FRAME FOTO (Sesuai proporsi agar kolase tidak terpotong) */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.98 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8 }}
-            className="w-full relative z-10"
+          {/* Anchor Asli Menuju Bagian Bawah Web */}
+          <a
+            href="#projects"
+            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-sm backdrop-blur-md cursor-pointer"
           >
-            {/* Menggunakan Aspect-[4/3] agar foto kolase tampil utuh dan maksimal */}
-            <div className="relative aspect-[4/3] w-full rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 shadow-xl group">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={currentSlide}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.8 }}
-                  className="absolute inset-0 w-full h-full"
-                >
-                  <Image
-                    src={banners[currentSlide]} 
-                    alt={`Jibakudin Nur Field Practice ${currentSlide + 1}`}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out select-none"
-                    priority={currentSlide === 0}
-                  />
-                </motion.div>
-              </AnimatePresence>
-              
-              {/* Indikator Slider Tipis di Bawah */}
-              <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-20">
-                {banners.map((_, idx) => (
-                  <div 
-                    key={idx} 
-                    className={`h-1.5 rounded-full transition-all duration-300 ${currentSlide === idx ? 'w-6 bg-emerald-500' : 'w-2 bg-white/50 backdrop-blur-sm'}`}
-                  />
-                ))}
-              </div>
-            </div>
-          </motion.div>
+            <Briefcase className="w-4 h-4" /> View Portfolio
+          </a>
+        </motion.div>
 
-        </div>
       </div>
 
-      {/* Modal Summary Tetap Sama 100% */}
+      {/* Floating Scroll Down Arrow */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.2, duration: 1 }}
+        className="absolute bottom-6 z-[10] flex flex-col items-center gap-1 text-slate-500 animate-bounce pointer-events-none"
+      >
+        <ChevronDown className="w-5 h-5 opacity-80" />
+      </motion.div>
+
+      {/* --- MODAL EXECUTIVE SUMMARY (Original 100%) --- */}
       <AnimatePresence>
         {isSummaryModalOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md pointer-events-auto"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md pointer-events-auto text-left"
             onClick={() => setIsSummaryModalOpen(false)}
           >
             <motion.div

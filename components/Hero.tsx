@@ -22,7 +22,7 @@ export default function Hero() {
     window.print()
   }
 
-  // --- EFEK 1: HTML5 CANVAS INTERACTIVE (GIS NODES & CLICK RIPPLES) ---
+  // --- EFEK CANVAS INTERAKTIF ---
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
@@ -208,7 +208,7 @@ export default function Hero() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 pointer-events-none">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center pointer-events-auto">
           
-          {/* KOLOM KIRI: Teks & Informasi Utama (7 Kolom) */}
+          {/* KOLOM KIRI: Profile Information */}
           <motion.div 
             initial="hidden"
             animate="visible"
@@ -280,50 +280,47 @@ export default function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* KOLOM KANAN: Real Field Documentation Dual Showcase (5 Kolom) */}
+          {/* KOLOM KANAN: Modern Overlapping Photo Showcase */}
           <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="w-full relative group lg:col-span-5 flex flex-col gap-4 z-10"
+            className="w-full lg:col-span-5 relative pt-4 pb-6 px-2 sm:px-4"
           >
-            <motion.div 
-              animate={{ opacity: [0.2, 0.4, 0.2], scale: [0.98, 1.02, 0.98] }}
-              transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
-              className="absolute -inset-3 bg-gradient-to-r from-emerald-500/30 via-teal-500/20 to-amber-500/20 rounded-3xl blur-2xl pointer-events-none"
-            ></motion.div>
+            {/* Ambient Glow */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-emerald-500/20 via-teal-500/10 to-amber-500/20 blur-3xl rounded-full pointer-events-none" />
 
-            {/* Banner 1 */}
-            <div className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden border-2 border-emerald-500/40 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-xl group/card">
-              <Image
-                src="/newbanner1.png" 
-                alt="Jibakudin Nur Field Practice & Environmental Health Operation 1"
-                fill
-                className="object-cover group-hover/card:scale-105 transition-transform duration-700 ease-out"
-                priority
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
-              <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-[11px] text-emerald-300 font-mono bg-slate-950/70 backdrop-blur-md px-3 py-1.5 rounded-lg border border-slate-800">
-                <span className="flex items-center gap-1.5 font-bold"><span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> FIELD SURVEILLANCE & INSPECTION</span>
-                <span className="text-slate-300 font-sans text-[10px]">Real Documentation</span>
-              </div>
+            {/* Container Overlap */}
+            <div className="relative w-full flex flex-col sm:block">
+              
+              {/* Foto Belakang / Atas (newbanner1) */}
+              <motion.div 
+                whileHover={{ scale: 1.02, zIndex: 30 }}
+                className="relative sm:w-[90%] aspect-[4/3] sm:aspect-[16/11] rounded-2xl overflow-hidden border-4 border-white dark:border-slate-800 shadow-2xl z-10 sm:rotate-[-2deg] transition-all duration-300"
+              >
+                <Image
+                  src="/newbanner1.png" 
+                  alt="Field Practice 1"
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </motion.div>
+
+              {/* Foto Depan / Menumpuk (newbanner2) */}
+              <motion.div 
+                whileHover={{ scale: 1.02, zIndex: 30 }}
+                className="relative sm:w-[88%] aspect-[4/3] sm:aspect-[16/11] rounded-2xl overflow-hidden border-4 border-white dark:border-slate-800 shadow-2xl z-20 sm:ml-auto sm:-mt-24 -mt-12 sm:rotate-[3deg] transition-all duration-300"
+              >
+                <Image
+                  src="/newbanner2.png" 
+                  alt="Field Practice 2"
+                  fill
+                  className="object-cover"
+                />
+              </motion.div>
+
             </div>
-
-            {/* Banner 2 */}
-            <div className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden border-2 border-amber-500/40 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-xl group/card">
-              <Image
-                src="/newbanner2.png" 
-                alt="Jibakudin Nur Field Practice & Environmental Health Operation 2"
-                fill
-                className="object-cover group-hover/card:scale-105 transition-transform duration-700 ease-out"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
-              <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-[11px] text-amber-300 font-mono bg-slate-950/70 backdrop-blur-md px-3 py-1.5 rounded-lg border border-slate-800">
-                <span className="flex items-center gap-1.5 font-bold"><span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span> PUBLIC HEALTH & COMMUNITY INTERVENTION</span>
-                <span className="text-slate-300 font-sans text-[10px]">Real Documentation</span>
-              </div>
-            </div>
-
           </motion.div>
 
         </div>

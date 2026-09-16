@@ -27,11 +27,11 @@ export default function Hero() {
     window.print()
   }
 
-  // --- EFEK 1: BACKGROUND SLIDESHOW ---
+  // --- EFEK 1: BACKGROUND SLIDESHOW (Waktu diperlambat agar foto bisa dinikmati) ---
   useEffect(() => {
     const timer = setInterval(() => {
       setBgIndex((prev) => (prev + 1) % backgrounds.length)
-    }, 6000)
+    }, 8000)
     return () => clearInterval(timer)
   }, [backgrounds.length])
 
@@ -184,31 +184,48 @@ export default function Hero() {
   return (
     <section className="relative w-full min-h-[100svh] flex flex-col items-center justify-center overflow-hidden bg-slate-950">
       
-      {/* 1. BACKGROUND FOTO & GRADIENT OVERLAY (Rasio optimal agar tidak kepotong parah) */}
-      <div className="absolute inset-0 z-0">
+      {/* 1. CINEMATIC DUAL-LAYER BACKGROUND (100% FOTO TERLIHAT TANPA TERPOTONG) */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
         <AnimatePresence mode="popLayout">
           <motion.div
             key={bgIndex}
-            initial={{ opacity: 0, scale: 1.03 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 1.5, ease: "easeInOut" }}
             className="absolute inset-0"
           >
+            {/* LAYER BAWAH: Blur Estetik untuk mengisi ruang kosong HP/Desktop */}
             <Image
               src={backgrounds[bgIndex]}
-              alt="Jibakudin Nur Background"
+              alt="Blurred Immersive Background"
               fill
-              className="object-cover object-center sm:object-[center_30%] opacity-50 select-none mix-blend-overlay"
-              priority
+              className="object-cover opacity-20 blur-3xl scale-125 select-none"
             />
+            
+            {/* LAYER UTAMA: Foto asli, 100% utuh tidak terpotong (object-contain), dengan animasi cinematic */}
+            <motion.div
+              animate={{ scale: [1, 1.04, 1], y: [0, -10, 0] }}
+              transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute inset-0"
+            >
+              <Image
+                src={backgrounds[bgIndex]}
+                alt="Jibakudin Nur Real Field Canvas"
+                fill
+                className="object-contain opacity-50 select-none p-0 md:p-8"
+                priority
+              />
+            </motion.div>
           </motion.div>
         </AnimatePresence>
-        {/* Gradient super kuat agar foto murni jadi pemanis/canvas di belakang teks */}
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/40 via-slate-950/80 to-slate-950"></div>
+
+        {/* LAYER VIGNETTE: Gradasi gelap di pinggir agar foto fokus di tengah & teks tetap terbaca */}
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-transparent to-slate-950/90 pointer-events-none"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_10%,_rgba(2,6,23,0.85)_100%)] pointer-events-none"></div>
       </div>
 
-      {/* 2. CANVAS INTERACTIVE & ICONS (Tetap Berfungsi) */}
+      {/* 2. CANVAS INTERACTIVE & ICONS */}
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none z-[1] opacity-70"></canvas>
       
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-[2]">
@@ -225,7 +242,7 @@ export default function Hero() {
         ))}
       </div>
 
-      {/* 3. KONTEN UTAMA INFORMASI (100% Sesuai Asli, Tampil Centered/Figma Style) */}
+      {/* 3. KONTEN UTAMA INFORMASI (100% Sesuai Asli) */}
       <div className="relative z-[10] w-full max-w-4xl mx-auto px-4 sm:px-6 pt-24 pb-12 flex flex-col items-center text-center">
         
         {/* Badges */}
@@ -251,10 +268,10 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="space-y-4 mb-6"
         >
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white leading-tight drop-shadow-md">
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white leading-tight drop-shadow-lg">
             JIBAKUDIN NUR
           </h1>
-          <h2 className="text-xs sm:text-sm font-bold text-amber-400 flex items-center justify-center gap-2 uppercase tracking-widest">
+          <h2 className="text-xs sm:text-sm font-bold text-amber-400 flex items-center justify-center gap-2 uppercase tracking-widest drop-shadow-md">
             Environmental Health • HSE • One Health & Public Health Research
           </h2>
         </motion.div>
@@ -266,7 +283,7 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="max-w-2xl mb-8"
         >
-          <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-medium">
+          <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-medium drop-shadow-md">
             Bachelor Applied (D4) in Environmental Sanitation specialized in systematic field risk assessment, spatial epidemiological analysis, and industrial HSE systems—dedicated to executing high-impact workplace safety and public health initiatives.
           </p>
         </motion.div>
@@ -293,7 +310,7 @@ export default function Hero() {
         >
           <button
             onClick={() => setIsSummaryModalOpen(true)}
-            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-lg hover:shadow-emerald-500/30 cursor-pointer"
+            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] cursor-pointer"
           >
             <Sparkles className="w-4 h-4" /> Generate Summary
           </button>

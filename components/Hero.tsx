@@ -4,14 +4,14 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import { 
   Briefcase, Sparkles, X, Printer, CheckCircle2, 
-  ShieldCheck, Leaf, HeartPulse, MapPin, Droplets, Activity,
-  Microscope, Satellite, HardHat, Bug, FlaskConical, Radar, Globe2, Wind,
-  Layers
+  ShieldCheck, HardHat, Leaf, Wind, HeartPulse, Microscope, 
+  MapPin, Globe2, Satellite, Activity, Radar, Droplets, Bug,
+  ArrowUpRight, Image as ImageIcon
 } from 'lucide-react'
 
 export default function Hero() {
   const [isSummaryModalOpen, setIsSummaryModalOpen] = useState(false)
-  const [activeCanvas, setActiveCanvas] = useState<1 | 2>(1)
+  const [activeTab, setActiveTab] = useState<'surveillance' | 'community'>('surveillance')
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
 
   const currentDate = new Date().toLocaleDateString('id-ID', {
@@ -24,7 +24,7 @@ export default function Hero() {
     window.print()
   }
 
-  // --- EFEK CANVAS INTERAKTIF (PARTIKEL GIS) ---
+  // --- BACKGROUND GIS INTERACTIVE CANVAS ---
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
@@ -43,21 +43,20 @@ export default function Hero() {
 
     window.addEventListener('resize', handleResize)
 
-    const particlesCount = 50
+    const particlesCount = 45
     const particles: { x: number; y: number; vx: number; vy: number; radius: number }[] = []
 
     for (let i = 0; i < particlesCount; i++) {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.6,
-        vy: (Math.random() - 0.5) * 0.6,
+        vx: (Math.random() - 0.5) * 0.5,
+        vy: (Math.random() - 0.5) * 0.5,
         radius: Math.random() * 1.5 + 0.5,
       })
     }
 
     const clickRipples: { x: number; y: number; radius: number; alpha: number }[] = []
-
     let mouseX = -1000
     let mouseY = -1000
 
@@ -90,7 +89,7 @@ export default function Hero() {
 
         ctx.beginPath()
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2)
-        ctx.fillStyle = 'rgba(16, 185, 129, 0.5)' 
+        ctx.fillStyle = 'rgba(16, 185, 129, 0.4)' 
         ctx.fill()
 
         for (let j = i + 1; j < particles.length; j++) {
@@ -103,22 +102,10 @@ export default function Hero() {
             ctx.beginPath()
             ctx.moveTo(p.x, p.y)
             ctx.lineTo(p2.x, p2.y)
-            ctx.strokeStyle = `rgba(16, 185, 129, ${0.15 * (1 - dist / 100)})`
+            ctx.strokeStyle = `rgba(16, 185, 129, ${0.12 * (1 - dist / 100)})`
             ctx.lineWidth = 1
             ctx.stroke()
           }
-        }
-
-        const mdx = p.x - mouseX
-        const mdy = p.y - mouseY
-        const mdist = Math.sqrt(mdx * mdx + mdy * mdy)
-        if (mdist < 150) {
-          ctx.beginPath()
-          ctx.moveTo(p.x, p.y)
-          ctx.lineTo(mouseX, mouseY)
-          ctx.strokeStyle = `rgba(52, 211, 153, ${0.3 * (1 - mdist / 150)})`
-          ctx.lineWidth = 1
-          ctx.stroke()
         }
       }
 
@@ -135,7 +122,7 @@ export default function Hero() {
         ctx.beginPath()
         ctx.arc(ripple.x, ripple.y, ripple.radius, 0, Math.PI * 2)
         ctx.strokeStyle = `rgba(52, 211, 153, ${ripple.alpha})`
-        ctx.lineWidth = 2
+        ctx.lineWidth = 1.5
         ctx.stroke()
       }
 
@@ -152,165 +139,141 @@ export default function Hero() {
     }
   }, [])
 
-  const floatingIcons = [
-    { Icon: ShieldCheck, color: "text-amber-600/15 dark:text-amber-500/15", size: 56, startX: "5%", startY: "15%", duration: 25 },
-    { Icon: HardHat, color: "text-amber-700/15 dark:text-amber-500/15", size: 48, startX: "85%", startY: "80%", duration: 22 },
-    { Icon: Leaf, color: "text-emerald-600/15 dark:text-emerald-500/15", size: 72, startX: "88%", startY: "15%", duration: 30 },
-    { Icon: Wind, color: "text-teal-600/15 dark:text-teal-400/15", size: 40, startX: "15%", startY: "45%", duration: 24 },
-    { Icon: HeartPulse, color: "text-emerald-500/15 dark:text-emerald-400/15", size: 48, startX: "80%", startY: "60%", duration: 22 },
-    { Icon: Microscope, color: "text-emerald-600/15 dark:text-emerald-300/15", size: 54, startX: "25%", startY: "85%", duration: 26 },
-  ]
-
   return (
     <section className="relative w-full overflow-hidden bg-slate-50 dark:bg-slate-950 py-12 md:py-20 border-b border-slate-200 dark:border-slate-800/60 transition-colors duration-300">
       
-      {/* Background Interactive Canvas */}
+      {/* Interactive Background Canvas */}
       <canvas
         ref={canvasRef}
         className="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-40 dark:opacity-70"
       ></canvas>
 
-      {/* Floating Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-        {floatingIcons.map((item, index) => (
-          <motion.div
-            key={index}
-            className={`absolute ${item.color}`}
-            style={{ left: item.startX, top: item.startY }}
-            animate={{ y: [0, -30, 0], x: [0, 20, 0], rotate: [0, 180, 360] }}
-            transition={{ duration: item.duration, repeat: Infinity, ease: "linear" }}
-          >
-            <item.Icon size={item.size} strokeWidth={1.2} />
-          </motion.div>
-        ))}
-      </div>
-
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
         
-        {/* HERO CONTAINER UTAMA */}
-        <div className="flex flex-col gap-10">
+        {/* FIGMA BENTO GRID LAYOUT */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
           
-          {/* TOP SECTION: Header Info */}
-          <div className="flex flex-col items-start gap-4">
+          {/* CARD 1: MAIN PROFILE INFO (7 Kolom) */}
+          <div className="lg:col-span-7 bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 flex flex-col justify-between shadow-sm backdrop-blur-md">
             
-            {/* Status Badges */}
-            <div className="flex flex-wrap items-center gap-3">
-              <span className="px-3.5 py-1.5 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 text-xs font-extrabold tracking-widest border border-emerald-500/30 rounded-full uppercase flex items-center gap-2 backdrop-blur-md">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> 
-                Open to Opportunities
-              </span>
-              <span className="px-3.5 py-1.5 bg-slate-200/80 dark:bg-slate-800/80 text-slate-800 dark:text-slate-200 text-xs font-extrabold tracking-widest border border-slate-300 dark:border-slate-700 rounded-full uppercase backdrop-blur-md">
-                GPA 3.71 (Cum Laude)
-              </span>
-            </div>
+            <div className="space-y-6">
+              {/* Status Badges */}
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="px-3.5 py-1.5 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 text-xs font-bold tracking-widest border border-emerald-500/20 rounded-full uppercase flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> 
+                  Open to Opportunities
+                </span>
+                <span className="px-3.5 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold tracking-widest border border-slate-200 dark:border-slate-700 rounded-full uppercase">
+                  GPA 3.71 (Cum Laude)
+                </span>
+              </div>
 
-            {/* Name & Title */}
-            <div className="space-y-2 max-w-4xl">
-              <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-slate-900 dark:text-white leading-none">
-                JIBAKUDIN NUR
-              </h1>
-              <p className="text-xs sm:text-sm md:text-base font-bold text-amber-600 dark:text-amber-400 uppercase tracking-widest">
-                Environmental Health • HSE • One Health & Public Health Research
+              {/* Title & Role */}
+              <div className="space-y-2">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-slate-900 dark:text-white uppercase leading-none">
+                  JIBAKUDIN NUR
+                </h1>
+                <p className="text-xs sm:text-sm font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider">
+                  Environmental Health • HSE • One Health & Public Health Research
+                </p>
+              </div>
+
+              {/* Summary Paragraph */}
+              <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
+                Bachelor Applied (D4) in Environmental Sanitation specialized in systematic field risk assessment, spatial epidemiological analysis, and industrial HSE systems—dedicated to executing high-impact workplace safety and public health initiatives.
               </p>
             </div>
 
-            {/* Description Paragraph */}
-            <p className="text-sm sm:text-base text-slate-700 dark:text-slate-300 max-w-3xl leading-relaxed border-l-4 border-emerald-500 pl-4 py-1.5 bg-white/70 dark:bg-slate-900/50 backdrop-blur-md rounded-r-xl border-y border-r border-slate-200/60 dark:border-slate-800/60 font-medium">
-              Bachelor Applied (D4) in Environmental Sanitation specialized in systematic field risk assessment, spatial epidemiological analysis, and industrial HSE systems—dedicated to executing high-impact workplace safety and public health initiatives.
-            </p>
+            {/* Bottom Tech Badges & CTAs */}
+            <div className="pt-8 space-y-6 border-t border-slate-100 dark:border-slate-800/80 mt-6">
+              <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs font-bold text-slate-700 dark:text-slate-300 uppercase">
+                <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400"><CheckCircle2 className="w-4 h-4" /> ArcGIS</span>
+                <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400"><CheckCircle2 className="w-4 h-4" /> SPSS</span>
+                <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400"><CheckCircle2 className="w-4 h-4" /> MS Office</span>
+                <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400"><CheckCircle2 className="w-4 h-4" /> Figma</span>
+              </div>
 
-            {/* Core Tech Stack */}
-            <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-bold text-slate-600 dark:text-slate-400 uppercase pt-1">
-              <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400"><CheckCircle2 className="w-4 h-4" /> ArcGIS</span>
-              <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400"><CheckCircle2 className="w-4 h-4" /> SPSS</span>
-              <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400"><CheckCircle2 className="w-4 h-4" /> MS Office</span>
-              <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400"><CheckCircle2 className="w-4 h-4" /> Figma</span>
-            </div>
+              <div className="flex flex-wrap items-center gap-4">
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => setIsSummaryModalOpen(true)}
+                  className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white font-bold text-xs uppercase tracking-wider shadow-lg shadow-emerald-600/20 cursor-pointer"
+                >
+                  <Sparkles className="w-4 h-4" /> Generate Summary
+                </motion.button>
 
-            {/* CTAs */}
-            <div className="flex flex-wrap items-center gap-4 pt-2">
-              <motion.button
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                onClick={() => setIsSummaryModalOpen(true)}
-                className="flex items-center gap-2 px-7 py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white font-bold text-xs uppercase tracking-wider shadow-lg shadow-emerald-600/20 cursor-pointer"
-              >
-                <Sparkles className="w-4 h-4" /> Generate Summary
-              </motion.button>
-
-              <motion.a
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                href="#projects"
-                className="flex items-center gap-2 px-7 py-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 hover:border-amber-500 text-slate-900 dark:text-slate-100 font-bold text-xs uppercase tracking-wider shadow-sm transition-colors"
-              >
-                <Briefcase className="w-4 h-4" /> View Portfolio
-              </motion.a>
+                <motion.a
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  href="#projects"
+                  className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-900 dark:text-white font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer"
+                >
+                  <Briefcase className="w-4 h-4" /> View Portfolio <ArrowUpRight className="w-4 h-4 opacity-70" />
+                </motion.a>
+              </div>
             </div>
 
           </div>
 
-          {/* BOTTOM SECTION: Hero Canvas Showcase (Figma Style) */}
-          <div className="relative w-full rounded-3xl overflow-hidden border border-slate-300 dark:border-slate-800 bg-slate-900 shadow-2xl group">
+          {/* CARD 2: REAL FIELD CANVAS STAGE (5 Kolom) */}
+          <div className="lg:col-span-5 bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 sm:p-5 flex flex-col justify-between shadow-sm backdrop-blur-md">
             
-            {/* Top Bar Floating Control Bar */}
-            <div className="absolute top-4 right-4 z-20 flex items-center gap-2 bg-slate-950/80 backdrop-blur-md p-1.5 rounded-2xl border border-slate-800 shadow-lg">
-              <span className="text-[10px] font-mono text-slate-400 px-2 uppercase tracking-wider flex items-center gap-1.5 hidden sm:flex">
-                <Layers className="w-3.5 h-3.5 text-emerald-400" /> Canvas Stage
+            {/* Stage Controls */}
+            <div className="flex items-center justify-between pb-3 mb-2 border-b border-slate-100 dark:border-slate-800">
+              <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                <ImageIcon className="w-4 h-4 text-emerald-500" /> Field Documentation
               </span>
-              <button
-                onClick={() => setActiveCanvas(1)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                  activeCanvas === 1 
-                    ? 'bg-emerald-600 text-white shadow' 
-                    : 'text-slate-400 hover:text-white'
-                }`}
-              >
-                View A
-              </button>
-              <button
-                onClick={() => setActiveCanvas(2)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                  activeCanvas === 2 
-                    ? 'bg-emerald-600 text-white shadow' 
-                    : 'text-slate-400 hover:text-white'
-                }`}
-              >
-                View B
-              </button>
+              <div className="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl">
+                <button
+                  onClick={() => setActiveTab('surveillance')}
+                  className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                    activeTab === 'surveillance' 
+                      ? 'bg-emerald-600 text-white shadow-sm' 
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                  }`}
+                >
+                  Set 1
+                </button>
+                <button
+                  onClick={() => setActiveTab('community')}
+                  className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                    activeTab === 'community' 
+                      ? 'bg-emerald-600 text-white shadow-sm' 
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                  }`}
+                >
+                  Set 2
+                </button>
+              </div>
             </div>
 
-            {/* Canvas Main Image Area */}
-            <div className="relative aspect-[16/9] md:aspect-[21/9] w-full">
+            {/* Display Canvas Frame */}
+            <div className="relative aspect-[4/3] w-full rounded-2xl overflow-hidden bg-slate-950 border border-slate-200 dark:border-slate-800 group">
               <AnimatePresence mode="wait">
                 <motion.div
-                  key={activeCanvas}
-                  initial={{ opacity: 0, scale: 1.02 }}
+                  key={activeTab}
+                  initial={{ opacity: 0, scale: 0.98 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.98 }}
-                  transition={{ duration: 0.5, ease: "easeInOut" }}
+                  transition={{ duration: 0.35 }}
                   className="relative w-full h-full"
                 >
                   <Image
-                    src={activeCanvas === 1 ? "/newbanner1.png" : "/newbanner2.png"}
-                    alt="Jibakudin Nur Environmental Health Field Documentation Canvas"
+                    src={activeTab === 'surveillance' ? '/newbanner1.png' : '/newbanner2.png'}
+                    alt="Jibakudin Nur Field Practice Canvas"
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out select-none"
+                    className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out select-none"
                     priority
                   />
                 </motion.div>
               </AnimatePresence>
+            </div>
 
-              {/* Bottom Subtle Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
-              <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs font-mono text-slate-300 pointer-events-none">
-                <span className="bg-slate-950/70 backdrop-blur-md px-3 py-1.5 rounded-lg border border-slate-800/80 text-[11px]">
-                  // REAL FIELD OPERATIONS & RESEARCH
-                </span>
-                <span className="text-emerald-400 font-bold hidden sm:inline-block">
-                  Yogyakarta & Central Java Facilities
-                </span>
-              </div>
+            {/* Bottom Caption Bar */}
+            <div className="pt-3 flex items-center justify-between text-[11px] font-mono text-slate-500 dark:text-slate-400">
+              <span>// VERIFIED FIELD EXPERIENCE</span>
+              <span className="text-emerald-600 dark:text-emerald-400 font-bold">100% REAL PHOTOS</span>
             </div>
 
           </div>

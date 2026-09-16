@@ -1,17 +1,19 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import { 
-  Briefcase, Sparkles, X, Printer, MapPin, Mail, ChevronDown 
+  Briefcase, Sparkles, X, Printer, CheckCircle2, 
+  ShieldCheck, Leaf, HeartPulse, MapPin, Droplets, Activity,
+  Microscope, Satellite, HardHat, Bug, FlaskConical, Radar, Globe2, Wind
 } from 'lucide-react'
 
 export default function Hero() {
   const [isSummaryModalOpen, setIsSummaryModalOpen] = useState(false)
-  const [bgIndex, setBgIndex] = useState(0)
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const canvasRef = useRef<HTMLCanvasElement | null>(null)
 
-  // Dua foto lapangan murni sebagai kanvas latar belakang (pemanis)
-  const backgrounds = ['/newbanner1.png', '/newbanner2.png']
+  const banners = ['/newbanner1.png', '/newbanner2.png']
 
   const currentDate = new Date().toLocaleDateString('id-ID', {
     day: 'numeric',
@@ -23,152 +25,313 @@ export default function Hero() {
     window.print()
   }
 
-  // Efek Auto-Slide Background yang sangat halus setiap 6 detik
+  // --- Auto Slideshow untuk Foto Kolase (Tanpa memotong fungsi lain) ---
   useEffect(() => {
-    const timer = setInterval(() => {
-      setBgIndex((prev) => (prev + 1) % backgrounds.length)
-    }, 6000)
-    return () => clearInterval(timer)
-  }, [backgrounds.length])
+    const slideInterval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % banners.length)
+    }, 5000)
+    return () => clearInterval(slideInterval)
+  }, [banners.length])
+
+  // --- EFEK 1: HTML5 CANVAS INTERACTIVE TETAP DIPERTAHANKAN 100% ---
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+
+    let animationFrameId: number
+    let width = (canvas.width = canvas.offsetWidth)
+    let height = (canvas.height = canvas.offsetHeight)
+
+    const handleResize = () => {
+      if (!canvas) return
+      width = canvas.width = canvas.offsetWidth
+      height = canvas.height = canvas.offsetHeight
+    }
+
+    window.addEventListener('resize', handleResize)
+
+    const particlesCount = 70
+    const particles: { x: number; y: number; vx: number; vy: number; radius: number }[] = []
+
+    for (let i = 0; i < particlesCount; i++) {
+      particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.7,
+        vy: (Math.random() - 0.5) * 0.7,
+        radius: Math.random() * 1.5 + 0.5,
+      })
+    }
+
+    const clickRipples: { x: number; y: number; radius: number; alpha: number }[] = []
+    let mouseX = -1000
+    let mouseY = -1000
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect()
+      mouseX = e.clientX - rect.left
+      mouseY = e.clientY - rect.top
+    }
+
+    const handleMouseClick = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect()
+      const cx = e.clientX - rect.left
+      const cy = e.clientY - rect.top
+      clickRipples.push({ x: cx, y: cy, radius: 0, alpha: 1 })
+    }
+
+    window.addEventListener('mousemove', handleMouseMove)
+    window.addEventListener('click', handleMouseClick)
+
+    const render = () => {
+      ctx.clearRect(0, 0, width, height)
+
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i]
+        p.x += p.vx
+        p.y += p.vy
+
+        if (p.x < 0 || p.x > width) p.vx *= -1
+        if (p.y < 0 || p.y > height) p.vy *= -1
+
+        ctx.beginPath()
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2)
+        ctx.fillStyle = 'rgba(16, 185, 129, 0.6)' 
+        ctx.fill()
+
+        for (let j = i + 1; j < particles.length; j++) {
+          const p2 = particles[j]
+          const dx = p.x - p2.x
+          const dy = p.y - p2.y
+          const dist = Math.sqrt(dx * dx + dy * dy)
+
+          if (dist < 110) {
+            ctx.beginPath()
+            ctx.moveTo(p.x, p.y)
+            ctx.lineTo(p2.x, p2.y)
+            ctx.strokeStyle = `rgba(16, 185, 129, ${0.2 * (1 - dist / 110)})`
+            ctx.lineWidth = 1
+            ctx.stroke()
+          }
+        }
+
+        const mdx = p.x - mouseX
+        const mdy = p.y - mouseY
+        const mdist = Math.sqrt(mdx * mdx + mdy * mdy)
+        if (mdist < 180) {
+          ctx.beginPath()
+          ctx.moveTo(p.x, p.y)
+          ctx.lineTo(mouseX, mouseY)
+          ctx.strokeStyle = `rgba(52, 211, 153, ${0.35 * (1 - mdist / 180)})`
+          ctx.lineWidth = 1
+          ctx.stroke()
+        }
+      }
+
+      for (let i = clickRipples.length - 1; i >= 0; i--) {
+        const ripple = clickRipples[i]
+        ripple.radius += 3 
+        ripple.alpha -= 0.012 
+
+        if (ripple.alpha <= 0) {
+          clickRipples.splice(i, 1)
+          continue
+        }
+
+        ctx.beginPath()
+        ctx.arc(ripple.x, ripple.y, ripple.radius, 0, Math.PI * 2)
+        ctx.strokeStyle = `rgba(52, 211, 153, ${ripple.alpha})`
+        ctx.lineWidth = 2
+        ctx.stroke()
+
+        ctx.beginPath()
+        ctx.arc(ripple.x, ripple.y, ripple.radius * 0.7, 0, Math.PI * 2)
+        ctx.strokeStyle = `rgba(16, 185, 129, ${ripple.alpha * 0.5})`
+        ctx.lineWidth = 1
+        ctx.stroke()
+      }
+
+      animationFrameId = requestAnimationFrame(render)
+    }
+
+    render()
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+      window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('click', handleMouseClick)
+      cancelAnimationFrame(animationFrameId)
+    }
+  }, [])
+
+  const floatingIcons = [
+    { Icon: ShieldCheck, color: "text-amber-600/20 dark:text-amber-500/20", size: 56, startX: "5%", startY: "15%", duration: 25 },
+    { Icon: HardHat, color: "text-amber-700/20 dark:text-amber-500/20", size: 48, startX: "85%", startY: "80%", duration: 22 },
+    { Icon: Leaf, color: "text-emerald-600/20 dark:text-emerald-500/20", size: 72, startX: "88%", startY: "15%", duration: 30 },
+    { Icon: Wind, color: "text-teal-600/20 dark:text-teal-400/20", size: 40, startX: "15%", startY: "45%", duration: 24 },
+    { Icon: HeartPulse, color: "text-emerald-500/20 dark:text-emerald-400/20", size: 48, startX: "80%", startY: "60%", duration: 22 },
+    { Icon: Microscope, color: "text-emerald-600/20 dark:text-emerald-300/20", size: 54, startX: "25%", startY: "85%", duration: 26 },
+    { Icon: FlaskConical, color: "text-emerald-600/20 dark:text-emerald-500/20", size: 42, startX: "65%", startY: "25%", duration: 19 },
+    { Icon: MapPin, color: "text-emerald-700/20 dark:text-emerald-600/20", size: 80, startX: "12%", startY: "75%", duration: 28 },
+    { Icon: Globe2, color: "text-teal-600/20 dark:text-teal-500/20", size: 60, startX: "55%", startY: "70%", duration: 27 },
+    { Icon: Satellite, color: "text-emerald-600/20 dark:text-emerald-400/20", size: 50, startX: "40%", startY: "10%", duration: 21 },
+    { Icon: Activity, color: "text-emerald-600/20 dark:text-emerald-300/20", size: 64, startX: "50%", startY: "85%", duration: 29 },
+    { Icon: Radar, color: "text-teal-600/20 dark:text-teal-300/20", size: 55, startX: "75%", startY: "40%", duration: 23 },
+    { Icon: Droplets, color: "text-amber-600/20 dark:text-amber-400/20", size: 40, startX: "35%", startY: "50%", duration: 18 },
+    { Icon: Bug, color: "text-amber-700/20 dark:text-amber-500/20", size: 36, startX: "90%", startY: "45%", duration: 20 },
+  ]
 
   return (
-    <section className="relative w-full h-[90vh] min-h-[600px] flex flex-col items-center justify-center overflow-hidden bg-slate-950">
+    <section className="relative w-full overflow-hidden bg-white dark:bg-slate-950 py-16 md:py-24 border-b border-slate-200 dark:border-slate-800/60 transition-colors duration-300">
       
-      {/* 1. BACKGROUND IMAGE CROSSFADE */}
-      <AnimatePresence mode="popLayout">
-        <motion.div
-          key={bgIndex}
-          initial={{ opacity: 0, scale: 1.05 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 1.5, ease: "easeInOut" }}
-          className="absolute inset-0 z-0"
-        >
-          <Image
-            src={backgrounds[bgIndex]}
-            alt="Environmental Health Background"
-            fill
-            className="object-cover object-center select-none"
-            priority
-          />
-        </motion.div>
-      </AnimatePresence>
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-40 dark:opacity-80"
+      ></canvas>
 
-      {/* 2. OVERLAY GRADIENT (Agar teks putih terbaca sempurna ala web profesional) */}
-      <div className="absolute inset-0 z-0 bg-slate-900/75 dark:bg-slate-950/80 bg-gradient-to-b from-transparent via-slate-900/50 to-slate-50 dark:to-slate-950"></div>
-
-      {/* 3. CENTERED CONTENT (Manusiawi, Bersih, & Elegan) */}
-      <div className="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 flex flex-col items-center text-center mt-10">
-        
-        {/* Status / Label Tipis */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
-          className="flex flex-wrap justify-center items-center gap-3 mb-6"
-        >
-          <span className="px-4 py-1.5 bg-emerald-500/20 text-emerald-300 text-[10px] sm:text-xs font-bold tracking-widest border border-emerald-500/30 rounded-full uppercase flex items-center gap-2 backdrop-blur-md">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> 
-            Open to Opportunities
-          </span>
-          <span className="px-4 py-1.5 bg-white/10 text-slate-200 text-[10px] sm:text-xs font-bold tracking-widest border border-white/20 rounded-full uppercase backdrop-blur-md">
-            GPA 3.71 (Cum Laude)
-          </span>
-        </motion.div>
-
-        {/* Nama Utama */}
-        <motion.h1 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tight text-white uppercase leading-tight drop-shadow-lg"
-        >
-          Jibakudin Nur
-        </motion.h1>
-
-        {/* Divider Elegan */}
-        <motion.div 
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="w-24 h-1 bg-emerald-500 rounded-full my-6 opacity-80"
-        ></motion.div>
-
-        {/* Spesialisasi */}
-        <motion.h2 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-sm sm:text-base md:text-lg font-semibold text-slate-300 uppercase tracking-widest mb-6 max-w-2xl"
-        >
-          Environmental Health • Industrial HSE • Public Health Research
-        </motion.h2>
-
-        {/* Deskripsi (Singkat & Terpusat) */}
-        <motion.p 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="text-sm sm:text-base text-slate-400 leading-relaxed max-w-2xl font-light mb-10"
-        >
-          Bachelor Applied (D4) in Environmental Sanitation. Specializing in systematic field risk assessment, spatial epidemiological analysis (ArcGIS), and executing high-impact workplace safety initiatives.
-        </motion.p>
-
-        {/* Lokasi & Kontak Cepat */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="flex flex-wrap items-center justify-center gap-6 text-xs font-mono text-slate-400 mb-10"
-        >
-          <span className="flex items-center gap-2"><MapPin className="w-4 h-4 text-emerald-400" /> Yogyakarta, Indonesia</span>
-          <span className="flex items-center gap-2"><Mail className="w-4 h-4 text-emerald-400" /> jibakudin.nur@example.com</span>
-        </motion.div>
-
-        {/* Call to Action Buttons */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.7 }}
-          className="flex flex-wrap justify-center gap-4"
-        >
-          <button
-            onClick={() => setIsSummaryModalOpen(true)}
-            className="flex items-center gap-2 px-8 py-3.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-lg hover:shadow-emerald-500/25"
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        {floatingIcons.map((item, index) => (
+          <motion.div
+            key={index}
+            className={`absolute ${item.color}`}
+            style={{ left: item.startX, top: item.startY }}
+            animate={{
+              y: [0, -40, 0],
+              x: [0, 30, 0],
+              rotate: [0, 180, 360],
+            }}
+            transition={{ duration: item.duration, repeat: Infinity, ease: "linear" }}
           >
-            <Sparkles className="w-4 h-4" /> Generate Summary
-          </button>
-
-          <a
-            href="#projects"
-            className="flex items-center gap-2 px-8 py-3.5 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white font-bold text-xs uppercase tracking-wider transition-all"
-          >
-            <Briefcase className="w-4 h-4" /> View Portfolio
-          </a>
-        </motion.div>
-
+            <item.Icon size={item.size} strokeWidth={1.3} />
+          </motion.div>
+        ))}
       </div>
 
-      {/* Scroll Down Indicator */}
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 1 }}
-        className="absolute bottom-8 z-10 flex flex-col items-center gap-2 text-slate-400 animate-bounce"
-      >
-        <span className="text-[10px] uppercase tracking-widest font-bold">Scroll Down</span>
-        <ChevronDown className="w-5 h-5 opacity-70" />
-      </motion.div>
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 pointer-events-none">
+        {/* KEMBALI KE 2 KOLOM ORIGINAL (Kiri: Teks & Info, Kanan: Gambar) */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center pointer-events-auto">
+          
+          {/* KOLOM KIRI: INTI INFORMASI (Dipertahankan 100% isinya, dirapikan visualnya) */}
+          <motion.div 
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: { opacity: 0 },
+              visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
+            }}
+            className="flex flex-col items-start gap-6"
+          >
+            <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="flex flex-wrap items-center gap-3 mb-2">
+              <motion.span 
+                animate={{ scale: [1, 1.03, 1] }}
+                transition={{ repeat: Infinity, duration: 2.5 }}
+                className="px-3 py-1.5 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-400 text-xs font-bold tracking-widest border border-emerald-200 dark:border-emerald-800/50 rounded-full uppercase flex items-center gap-2 shadow-sm"
+              >
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> 
+                Open to Opportunities
+              </motion.span>
+              <span className="px-3 py-1.5 bg-slate-100 dark:bg-slate-800/50 text-slate-700 dark:text-slate-300 text-xs font-bold tracking-widest border border-slate-200 dark:border-slate-700/50 rounded-full uppercase shadow-sm">
+                GPA 3.71 (Cum Laude)
+              </span>
+            </motion.div>
 
+            <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="space-y-3">
+              <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tight text-slate-900 dark:text-white leading-tight">
+                JIBAKUDIN NUR
+              </h1>
+              <h2 className="text-sm sm:text-base font-bold text-slate-600 dark:text-slate-400 flex items-center gap-2 uppercase tracking-wide">
+                Environmental Health • HSE • One Health & Public Health Research
+              </h2>
+            </motion.div>
 
-      {/* --- MODAL EXECUTIVE SUMMARY --- */}
+            <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
+              <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-xl leading-relaxed border-l-[3px] border-emerald-500 pl-4 py-1 font-medium">
+                Bachelor Applied (D4) in Environmental Sanitation specialized in systematic field risk assessment, spatial epidemiological analysis, and industrial HSE systems—dedicated to executing high-impact workplace safety and public health initiatives.
+              </p>
+            </motion.div>
+
+            <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="flex flex-wrap gap-y-2 gap-x-5 text-[11px] sm:text-xs font-extrabold text-slate-700 dark:text-slate-300 uppercase pt-2">
+              <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-500" /> ArcGIS</span>
+              <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-500" /> SPSS</span>
+              <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-500" /> MS Office</span>
+              <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-500" /> Figma</span>
+            </motion.div>
+
+            {/* FUNGSI TOMBOL ASLI DIPERTAHANKAN 100% */}
+            <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="flex flex-wrap gap-4 pt-4 w-full sm:w-auto relative z-20">
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => setIsSummaryModalOpen(true)}
+                className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-8 py-3.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md cursor-pointer"
+              >
+                <Sparkles className="w-4 h-4" /> Generate Summary
+              </motion.button>
+
+              <motion.a
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                href="#projects"
+                className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-8 py-3.5 rounded-lg bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-700 hover:border-slate-900 dark:hover:border-slate-400 text-slate-900 dark:text-white font-bold text-xs uppercase tracking-wider transition-all shadow-sm"
+              >
+                <Briefcase className="w-4 h-4" /> View Portfolio
+              </motion.a>
+            </motion.div>
+          </motion.div>
+
+          {/* KOLOM KANAN: FRAME FOTO (Sesuai proporsi agar kolase tidak terpotong) */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+            className="w-full relative z-10"
+          >
+            {/* Menggunakan Aspect-[4/3] agar foto kolase tampil utuh dan maksimal */}
+            <div className="relative aspect-[4/3] w-full rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 shadow-xl group">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentSlide}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.8 }}
+                  className="absolute inset-0 w-full h-full"
+                >
+                  <Image
+                    src={banners[currentSlide]} 
+                    alt={`Jibakudin Nur Field Practice ${currentSlide + 1}`}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out select-none"
+                    priority={currentSlide === 0}
+                  />
+                </motion.div>
+              </AnimatePresence>
+              
+              {/* Indikator Slider Tipis di Bawah */}
+              <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-20">
+                {banners.map((_, idx) => (
+                  <div 
+                    key={idx} 
+                    className={`h-1.5 rounded-full transition-all duration-300 ${currentSlide === idx ? 'w-6 bg-emerald-500' : 'w-2 bg-white/50 backdrop-blur-sm'}`}
+                  />
+                ))}
+              </div>
+            </div>
+          </motion.div>
+
+        </div>
+      </div>
+
+      {/* Modal Summary Tetap Sama 100% */}
       <AnimatePresence>
         {isSummaryModalOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md pointer-events-auto text-left"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md pointer-events-auto"
             onClick={() => setIsSummaryModalOpen(false)}
           >
             <motion.div

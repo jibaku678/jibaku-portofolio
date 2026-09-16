@@ -11,11 +11,11 @@ import {
 
 export default function Hero() {
   const [isSummaryModalOpen, setIsSummaryModalOpen] = useState(false)
-  const [bgIndex, setBgIndex] = useState(0)
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
 
-  // Foto kolase digunakan murni sebagai kanvas latar belakang (slideshow otomatis)
-  const backgrounds = ['/newbanner1.png', '/newbanner2.png']
+  // Kita gunakan kedua banner secara bersamaan untuk mengisi space
+  const banner1 = '/newbanner1.png'
+  const banner2 = '/newbanner2.png'
 
   const currentDate = new Date().toLocaleDateString('id-ID', {
     day: 'numeric',
@@ -27,15 +27,7 @@ export default function Hero() {
     window.print()
   }
 
-  // --- EFEK 1: BACKGROUND SLIDESHOW (Waktu diperlambat agar foto bisa dinikmati) ---
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setBgIndex((prev) => (prev + 1) % backgrounds.length)
-    }, 8000)
-    return () => clearInterval(timer)
-  }, [backgrounds.length])
-
-  // --- EFEK 2: HTML5 CANVAS INTERACTIVE (TETAP DIPERTAHANKAN 100%) ---
+  // --- EFEK: HTML5 CANVAS INTERACTIVE (TETAP DIPERTAHANKAN 100%) ---
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
@@ -184,45 +176,73 @@ export default function Hero() {
   return (
     <section className="relative w-full min-h-[100svh] flex flex-col items-center justify-center overflow-hidden bg-slate-950">
       
-      {/* 1. CINEMATIC DUAL-LAYER BACKGROUND (100% FOTO TERLIHAT TANPA TERPOTONG) */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
-        <AnimatePresence mode="popLayout">
-          <motion.div
-            key={bgIndex}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1.5, ease: "easeInOut" }}
-            className="absolute inset-0"
-          >
-            {/* LAYER BAWAH: Blur Estetik untuk mengisi ruang kosong HP/Desktop */}
-            <Image
-              src={backgrounds[bgIndex]}
-              alt="Blurred Immersive Background"
-              fill
-              className="object-cover opacity-20 blur-3xl scale-125 select-none"
-            />
-            
-            {/* LAYER UTAMA: Foto asli, 100% utuh tidak terpotong (object-contain), dengan animasi cinematic */}
-            <motion.div
-              animate={{ scale: [1, 1.04, 1], y: [0, -10, 0] }}
-              transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute inset-0"
-            >
-              <Image
-                src={backgrounds[bgIndex]}
-                alt="Jibakudin Nur Real Field Canvas"
-                fill
-                className="object-contain opacity-50 select-none p-0 md:p-8"
-                priority
-              />
-            </motion.div>
-          </motion.div>
-        </AnimatePresence>
+      {/* 1. BACKGROUND FADE MOSAIC (Mengisi ruang kosong) */}
+      <div className="absolute inset-0 z-0 overflow-hidden bg-slate-950">
+        
+        {/* Mosaic Kiri Atas (Banner 1) */}
+        <motion.div
+          animate={{ scale: [1, 1.05, 1], x: [0, 10, 0], y: [0, 10, 0] }}
+          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute -top-[10%] -left-[10%] w-[60%] h-[60%] sm:w-[50%] sm:h-[60%] opacity-25"
+        >
+          <Image
+            src={banner1}
+            alt="Decoration Left"
+            fill
+            className="object-contain sm:object-cover mix-blend-screen mask-image-radial select-none"
+            style={{ maskImage: 'radial-gradient(ellipse at center, black 10%, transparent 70%)', WebkitMaskImage: 'radial-gradient(ellipse at center, black 10%, transparent 70%)' }}
+            priority
+          />
+        </motion.div>
 
-        {/* LAYER VIGNETTE: Gradasi gelap di pinggir agar foto fokus di tengah & teks tetap terbaca */}
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-transparent to-slate-950/90 pointer-events-none"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_10%,_rgba(2,6,23,0.85)_100%)] pointer-events-none"></div>
+        {/* Mosaic Kanan Bawah (Banner 2) */}
+        <motion.div
+          animate={{ scale: [1, 1.05, 1], x: [0, -10, 0], y: [0, -10, 0] }}
+          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          className="absolute -bottom-[10%] -right-[10%] w-[70%] h-[60%] sm:w-[50%] sm:h-[60%] opacity-25"
+        >
+          <Image
+            src={banner2}
+            alt="Decoration Right"
+            fill
+            className="object-contain sm:object-cover mix-blend-screen mask-image-radial select-none"
+            style={{ maskImage: 'radial-gradient(ellipse at center, black 10%, transparent 70%)', WebkitMaskImage: 'radial-gradient(ellipse at center, black 10%, transparent 70%)' }}
+          />
+        </motion.div>
+
+        {/* Mosaic Kiri Bawah (Banner 2) - untuk layar lebar */}
+        <motion.div
+          animate={{ opacity: [0.1, 0.2, 0.1] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute -bottom-[10%] -left-[5%] w-[40%] h-[40%] hidden sm:block"
+        >
+          <Image
+            src={banner2}
+            alt="Decoration Bottom Left"
+            fill
+            className="object-cover mix-blend-overlay mask-image-radial select-none grayscale"
+            style={{ maskImage: 'radial-gradient(ellipse at center, black 10%, transparent 60%)', WebkitMaskImage: 'radial-gradient(ellipse at center, black 10%, transparent 60%)' }}
+          />
+        </motion.div>
+
+        {/* Mosaic Kanan Atas (Banner 1) - untuk layar lebar */}
+        <motion.div
+          animate={{ opacity: [0.1, 0.2, 0.1] }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          className="absolute -top-[5%] -right-[5%] w-[40%] h-[40%] hidden sm:block"
+        >
+          <Image
+            src={banner1}
+            alt="Decoration Top Right"
+            fill
+            className="object-cover mix-blend-overlay mask-image-radial select-none grayscale"
+            style={{ maskImage: 'radial-gradient(ellipse at center, black 10%, transparent 60%)', WebkitMaskImage: 'radial-gradient(ellipse at center, black 10%, transparent 60%)' }}
+          />
+        </motion.div>
+
+        {/* Gradient Utama (Agar Tengah Gelap & Teks Terbaca) */}
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/40 via-slate-950/80 to-slate-950 pointer-events-none"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_rgba(2,6,23,0.9)_80%)] pointer-events-none"></div>
       </div>
 
       {/* 2. CANVAS INTERACTIVE & ICONS */}

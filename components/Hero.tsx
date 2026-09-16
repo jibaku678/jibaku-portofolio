@@ -181,9 +181,9 @@ export default function Hero() {
   ]
 
   return (
-    <section className="relative w-full min-h-[100svh] flex flex-col items-center justify-center overflow-hidden bg-slate-950">
+    <section className="relative w-full min-h-[100svh] flex flex-col items-center justify-center overflow-hidden bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
       
-      {/* 1. BACKGROUND DENGAN BLUR TIPIS & ELEGAN (MENUTUPI LAYAR MERATA TANPA RUANG KOSONG) */}
+      {/* 1. BACKGROUND DENGAN BLUR SANGAT TIPIS & LIGHT/DARK MODE SUPPORT */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <AnimatePresence mode="popLayout">
           <motion.div
@@ -194,8 +194,8 @@ export default function Hero() {
             transition={{ duration: 1.5, ease: "easeInOut" }}
             className="absolute inset-0 flex items-center justify-center"
           >
-            {/* Blur tipis elegan di belakang untuk mengisi ruang */}
-            <div className="absolute inset-0 filter blur-md opacity-25 scale-105 select-none">
+            {/* Blur sangat tipis (blur-sm) agar foto tetap tajam & mengisi ruang merata */}
+            <div className="absolute inset-0 filter blur-sm opacity-20 dark:opacity-25 scale-105 select-none">
               <Image src={backgrounds[bgIndex]} alt="Ambient Fill" fill className="object-cover" />
             </div>
 
@@ -210,7 +210,7 @@ export default function Hero() {
                   src={backgrounds[bgIndex]}
                   alt="Jibakudin Nur Field Canvas"
                   fill
-                  className="object-contain opacity-45 select-none"
+                  className="object-contain opacity-40 dark:opacity-45 select-none"
                   priority
                 />
               </motion.div>
@@ -218,12 +218,12 @@ export default function Hero() {
           </motion.div>
         </AnimatePresence>
 
-        {/* Gradient Overlay Bersih */}
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/85 via-slate-950/70 to-slate-950 pointer-events-none"></div>
+        {/* Dynamic Gradient Mask untuk Light & Dark Mode */}
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-50/80 via-slate-50/70 to-slate-50 dark:from-slate-950/85 dark:via-slate-950/70 dark:to-slate-950 pointer-events-none"></div>
       </div>
 
       {/* 2. CANVAS INTERACTIVE & FLOATING ICONS */}
-      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none z-[1] opacity-70"></canvas>
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none z-[1] opacity-50 dark:opacity-70"></canvas>
       
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-[2]">
         {floatingIcons.map((item, index) => (
@@ -239,22 +239,19 @@ export default function Hero() {
         ))}
       </div>
 
-      {/* 3. KONTEN UTAMA INFORMASI (BERSIH TANPA KOTAK KACA/GLASS DI PARAGRAF) */}
+      {/* 3. KONTEN UTAMA INFORMASI (Hanya Open to Opportunities, GPA Dihapus) */}
       <div className="relative z-[10] w-full max-w-4xl mx-auto px-4 sm:px-6 pt-24 pb-12 flex flex-col items-center text-center">
         
-        {/* Badges */}
+        {/* Badge (Open to Opportunities saja) */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           className="flex flex-wrap justify-center items-center gap-3 mb-6"
         >
-          <span className="px-4 py-1.5 bg-emerald-500/15 text-emerald-300 text-xs font-bold tracking-widest border border-emerald-500/30 rounded-full uppercase flex items-center gap-2 shadow-sm backdrop-blur-md">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> 
+          <span className="px-4 py-1.5 bg-emerald-100 dark:bg-emerald-500/15 text-emerald-800 dark:text-emerald-300 text-xs font-bold tracking-widest border border-emerald-300 dark:border-emerald-500/30 rounded-full uppercase flex items-center gap-2 shadow-sm backdrop-blur-md">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> 
             Open to Opportunities
-          </span>
-          <span className="px-4 py-1.5 bg-slate-900/80 text-slate-200 text-xs font-bold tracking-widest border border-slate-700/80 rounded-full uppercase shadow-sm backdrop-blur-md">
-            GPA 3.71 (Cum Laude)
           </span>
         </motion.div>
 
@@ -265,10 +262,10 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="space-y-4 mb-6"
         >
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white leading-tight drop-shadow-xl">
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-slate-900 dark:text-white leading-tight drop-shadow-md">
             JIBAKUDIN NUR
           </h1>
-          <h2 className="text-xs sm:text-sm font-bold text-amber-400 flex items-center justify-center gap-2 uppercase tracking-widest drop-shadow-md">
+          <h2 className="text-xs sm:text-sm font-bold text-amber-700 dark:text-amber-400 flex items-center justify-center gap-2 uppercase tracking-widest drop-shadow-sm">
             Environmental Health • HSE • One Health & Public Health Research
           </h2>
         </motion.div>
@@ -280,7 +277,7 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="max-w-2xl mb-8"
         >
-          <p className="text-sm sm:text-base text-slate-200 leading-relaxed font-medium drop-shadow-md">
+          <p className="text-sm sm:text-base text-slate-700 dark:text-slate-200 leading-relaxed font-medium">
             Bachelor Applied (D4) in Environmental Sanitation specialized in systematic field risk assessment, spatial epidemiological analysis, and industrial HSE systems—dedicated to executing high-impact workplace safety and public health initiatives.
           </p>
         </motion.div>
@@ -290,12 +287,12 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="flex flex-wrap justify-center gap-y-2 gap-x-5 text-[11px] sm:text-xs font-extrabold text-slate-200 uppercase mb-10"
+          className="flex flex-wrap justify-center gap-y-2 gap-x-5 text-[11px] sm:text-xs font-extrabold text-slate-700 dark:text-slate-200 uppercase mb-10"
         >
-          <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-400" /> ArcGIS</span>
-          <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-400" /> SPSS</span>
-          <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-400" /> MS Office</span>
-          <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-400" /> Figma</span>
+          <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" /> ArcGIS</span>
+          <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" /> SPSS</span>
+          <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" /> MS Office</span>
+          <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" /> Figma</span>
         </motion.div>
 
         {/* Buttons (Fungsi Original: Modal & Scroll Anchor) */}
@@ -307,7 +304,7 @@ export default function Hero() {
         >
           <button
             onClick={() => setIsSummaryModalOpen(true)}
-            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] cursor-pointer"
+            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-lg shadow-emerald-600/20 cursor-pointer"
           >
             <Sparkles className="w-4 h-4" /> Generate Summary
           </button>
@@ -315,7 +312,7 @@ export default function Hero() {
           {/* Anchor Asli Menuju Bagian Bawah Web */}
           <a
             href="#projects"
-            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-slate-900/90 hover:bg-slate-800 border border-slate-700 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-sm backdrop-blur-md cursor-pointer"
+            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-white dark:bg-slate-900 border-2 border-slate-300 dark:border-slate-700 hover:border-amber-500 text-slate-900 dark:text-white font-bold text-xs uppercase tracking-wider transition-all shadow-sm cursor-pointer"
           >
             <Briefcase className="w-4 h-4" /> View Portfolio
           </a>
@@ -328,7 +325,7 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2, duration: 1 }}
-        className="absolute bottom-6 z-[10] flex flex-col items-center gap-1 text-slate-500 animate-bounce pointer-events-none"
+        className="absolute bottom-6 z-[10] flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500 animate-bounce pointer-events-none"
       >
         <ChevronDown className="w-5 h-5 opacity-80" />
       </motion.div>

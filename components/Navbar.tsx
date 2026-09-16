@@ -40,7 +40,7 @@ export default function Navbar() {
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 px-4 sm:px-6 lg:px-8 py-4 ${
         scrolled 
-          ? 'bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl border-b border-slate-200/80 dark:border-emerald-500/20 shadow-sm dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)] py-3' 
+          ? 'bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl border-b border-slate-200/80 dark:border-slate-800/80 shadow-sm dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)] py-3' 
           : 'bg-transparent'
       }`}
     >
@@ -51,14 +51,14 @@ export default function Navbar() {
           href="#" 
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
-          className="text-xs sm:text-sm font-black text-slate-900 dark:text-white tracking-wider uppercase flex items-center gap-2.5 bg-slate-100/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800/80 px-4 py-2 rounded-xl backdrop-blur-md group"
+          className="text-xs sm:text-sm font-black text-slate-900 dark:text-white tracking-wider uppercase flex items-center gap-2.5 bg-white/70 dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800/80 px-4 py-2 rounded-xl backdrop-blur-md group shadow-sm"
         >
           <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981] animate-pulse"></span>
           <span className="group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">Jibakudin Nur</span>
         </motion.a>
 
         {/* Menu Desktop */}
-        <nav className="hidden md:flex items-center gap-1 bg-slate-100/70 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800/90 px-3.5 py-1.5 rounded-full shadow-xs backdrop-blur-xl">
+        <nav className="hidden md:flex items-center gap-1 bg-white/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/90 px-3.5 py-1.5 rounded-full shadow-sm backdrop-blur-xl">
           {navLinks.map((link, idx) => (
             <motion.a
               key={idx}
@@ -72,8 +72,8 @@ export default function Navbar() {
           ))}
         </nav>
 
-        {/* Tombol Kanan (CV & Theme Toggle) */}
-        <div className="hidden md:flex items-center gap-3">
+        {/* Tombol Kanan (CV & Theme Toggle Terintegrasi Rapi) */}
+        <div className="hidden md:flex items-center gap-2.5">
           <motion.a
             href="/CV_JIBAKUDIN_NUR_fix_1.pdf"
             target="_blank"
@@ -85,39 +85,33 @@ export default function Navbar() {
             <FileText className="w-3.5 h-3.5" /> CV
           </motion.a>
 
-          {/* Tombol Theme dengan Keterangan Kecil */}
-          <div className="flex flex-col items-center">
-            <motion.button
-              onClick={toggleDarkMode}
-              whileHover={{ scale: 1.1, rotate: 15 }}
-              whileTap={{ scale: 0.9 }}
-              className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-white transition-all cursor-pointer shadow-xs"
-              aria-label="Toggle Theme"
-            >
-              {isDarkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-700" />}
-            </motion.button>
-            <span className="text-[9px] font-mono text-slate-500 dark:text-slate-400 uppercase tracking-tighter mt-0.5 select-none">
-              {isDarkMode ? 'Dark' : 'Light'}
-            </span>
-          </div>
+          {/* Tombol Theme Toggle */}
+          <motion.button
+            onClick={toggleDarkMode}
+            whileHover={{ scale: 1.05, rotate: 15 }}
+            whileTap={{ scale: 0.95 }}
+            className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/80 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-white transition-all cursor-pointer shadow-sm text-xs font-bold uppercase tracking-wider"
+            aria-label="Toggle Theme"
+          >
+            {isDarkMode ? <Sun className="w-3.5 h-3.5 text-amber-400" /> : <Moon className="w-3.5 h-3.5 text-slate-700" />}
+            <span className="text-[10px] font-mono">{isDarkMode ? 'Dark' : 'Light'}</span>
+          </motion.button>
         </div>
 
         {/* Tombol Mobile */}
-        <div className="flex items-center gap-3 md:hidden">
-          <div className="flex flex-col items-center">
-            <button
-              onClick={toggleDarkMode}
-              className="p-2 rounded-lg bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300"
-              aria-label="Toggle Theme"
-            >
-              {isDarkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-700" />}
-            </button>
-            <span className="text-[8px] font-mono text-slate-500 dark:text-slate-400 uppercase">{isDarkMode ? 'Dark' : 'Light'}</span>
-          </div>
+        <div className="flex items-center gap-2 md:hidden">
+          <button
+            onClick={toggleDarkMode}
+            className="flex items-center gap-1 px-3 py-2 rounded-xl bg-white/80 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-[10px] font-mono uppercase font-bold shadow-sm"
+            aria-label="Toggle Theme"
+          >
+            {isDarkMode ? <Sun className="w-3.5 h-3.5 text-amber-400" /> : <Moon className="w-3.5 h-3.5 text-slate-700" />}
+            <span>{isDarkMode ? 'Dark' : 'Light'}</span>
+          </button>
 
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 transition-colors"
+            className="p-2.5 rounded-xl bg-white/80 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 transition-colors shadow-sm"
           >
             {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>

@@ -154,7 +154,7 @@ export default function About() {
         {/* Grid Utama Desktop & Mobile Friendly */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
-          {/* Kolom Kiri: Foto & Deskripsi (Sticky/Normal teratur di Desktop) */}
+          {/* Kolom Kiri: Foto & Deskripsi */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -175,7 +175,7 @@ export default function About() {
             </p>
           </motion.div>
 
-          {/* Kolom Kanan: Pendidikan, Coursework, Base, & Sertifikasi */}
+          {/* Kolom Kanan: Pendidikan, Coursework (Bentuk Teks), Base, & Sertifikasi */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -184,7 +184,7 @@ export default function About() {
             className="lg:col-span-7 space-y-6"
           >
             
-            {/* Pendidikan & Coursework Card */}
+            {/* Pendidikan & Coursework Text Card */}
             <div className="flex flex-col gap-6 p-6 sm:p-8 rounded-3xl bg-white/95 dark:bg-[#1C2541]/90 backdrop-blur-xl border border-slate-200/80 dark:border-slate-700/60 shadow-sm">
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                 <div className="w-16 h-16 rounded-2xl bg-slate-50 dark:bg-slate-900 flex items-center justify-center shrink-0 border border-slate-200 dark:border-slate-700 overflow-hidden p-2 shadow-inner">
@@ -208,23 +208,13 @@ export default function About() {
                 </div>
               </div>
               
-              <div className="pt-4 border-t border-slate-100 dark:border-slate-700/60">
-                <p className="text-[11px] font-bold text-[#64748B] dark:text-[#94A3B8] uppercase tracking-wider mb-3">
+              <div className="pt-4 border-t border-slate-100 dark:border-slate-700/60 space-y-2">
+                <p className="text-[11px] font-bold text-[#64748B] dark:text-[#94A3B8] uppercase tracking-wider">
                   Core Coursework & Focus Areas
                 </p>
-                <div className="flex flex-wrap gap-2">
-                  {[
-                    "Public Health", "Community Service", "Occupational Health & Safety (OHS)",
-                    "Environmental Management", "Water, Air & Soil Sanitation", "Solid & Hazardous Waste Management",
-                    "Vector & Pest Control", "Industrial & Hospital Sanitation", "Food Hygiene & Sanitation",
-                    "HACCP", "SMK3 & ISO 45001", "AMDAL / EIA", "Environmental Epidemiology",
-                    "Data Analysis & Research Methodology", "GIS & Remote Sensing"
-                  ].map((subject, i) => (
-                    <span key={i} className="text-[11px] font-semibold px-3 py-1.5 rounded-xl bg-[#F8FAFC] dark:bg-[#0B1329] text-[#334155] dark:text-[#E2E8F0] border border-slate-200 dark:border-slate-700/60 shadow-2xs">
-                      {subject}
-                    </span>
-                  ))}
-                </div>
+                <p className="text-xs sm:text-sm text-[#334155] dark:text-[#94A3B8] leading-relaxed font-medium text-justify">
+                  Comprehensive academic curriculum covering <strong className="text-[#1E293B] dark:text-[#F8FAFC]">Public Health, Occupational Health & Safety (OHS), Environmental Management, Water/Air/Soil Sanitation, Solid & Hazardous Waste Management, Vector & Pest Control, Industrial & Hospital Sanitation, Food Hygiene & Sanitation, HACCP, SMK3 & ISO 45001, AMDAL / EIA, Environmental Epidemiology, Data Analysis, and GIS & Remote Sensing</strong>.
+                </p>
               </div>
             </div>
 

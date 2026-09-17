@@ -10,7 +10,7 @@ export default function Experience() {
   const [puskesIdx, setPuskesIdx] = useState(0)
   const [bethesdaIdx, setBethesdaIdx] = useState(0)
 
-  // 1. PT Dua Kelinci Gallery Files
+  // 1. PT Dua Kelinci Gallery Files (ditambah kelincinew1.jpg dan kelincinew2.jpg)
   const kelinciImages = [
     "/PKL/kelinci (1).jpeg",
     "/PKL/kelinci (2).jpeg",
@@ -21,10 +21,12 @@ export default function Experience() {
     "/PKL/kelinci (7).jpeg",
     "/PKL/kelinci (8).jpeg",
     "/PKL/kelinci2.JPG",
-    "/PKL/kelinci2.png"
+    "/PKL/kelinci2.png",
+    "/PKL/kelincinew1.jpg",
+    "/PKL/kelincinew2.jpg"
   ]
 
-  // 2. Puskesmas Godean (Video tidak autoplay, menggunakan controls)
+  // 2. Puskesmas Godean (Video dengan controls)
   const puskesItems = [
     { type: "image", src: "/PKL/puskes.jpeg" },
     { type: "video", src: "/PKL/puskes1.mp4" },
@@ -54,7 +56,7 @@ export default function Experience() {
     "/PKL/betesda3.jpeg"
   ]
 
-  // Autoslide effect (khusus foto, galeri puskesmas digeser manual/atau slide foto saja yang otomatis)
+  // Autoslide effect
   useEffect(() => {
     const t1 = setInterval(() => setKelinciIdx(p => (p === kelinciImages.length - 1 ? 0 : p + 1)), 4000)
     const t3 = setInterval(() => setBethesdaIdx(p => (p === bethesdaImages.length - 1 ? 0 : p + 1)), 4000)
@@ -331,7 +333,7 @@ export default function Experience() {
                       </div>
                     )}
 
-                    {/* PUSKESMAS GALLERY (NON-AUTOPLAY / DENGAN CONTROLS) */}
+                    {/* PUSKESMAS GALLERY */}
                     {exp.galleryType === 'puskes' && (
                       <div className="relative w-full h-full flex items-center justify-center">
                         <AnimatePresence mode="wait">
@@ -391,7 +393,7 @@ export default function Experience() {
                       </div>
                     )}
 
-                    {/* DINKES MAGELANG (dinkesmagelang.jpg) */}
+                    {/* DINKES MAGELANG */}
                     {exp.galleryType === 'dinkes' && (
                       <div className="relative w-full h-full flex items-center justify-center">
                         <img src="/PKL/dinkesmagelang.jpg" alt="Magelang Health Office Documentation" className="max-h-full max-w-full object-contain select-none" />

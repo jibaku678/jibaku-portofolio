@@ -87,7 +87,6 @@ export default function Hero() {
     const render = () => {
       ctx.clearRect(0, 0, width, height)
 
-      // Deteksi light/dark mode untuk opasitas canvas
       const isDark = document.documentElement.classList.contains('dark')
       const baseAlpha = isDark ? 0.4 : 0.15 
 
@@ -174,10 +173,11 @@ export default function Hero() {
     { Icon: Globe2, color: "text-sky-500/15", size: 60, startX: "55%", startY: "70%", duration: 27 },
   ]
 
+  // Update Ekstensi Gambar MS Office menjadi .png sesuai file terbaru
   const toolStack = [
     { name: 'ArcGIS', img: '/arcgis_logo.png' },
     { name: 'SPSS', img: '/spss_logo.png' },
-    { name: 'MS Office', img: '/office_logo.jpg' },
+    { name: 'MS Office', img: '/office_logo.png' }, 
   ]
 
   return (
@@ -194,28 +194,28 @@ export default function Hero() {
             transition={{ duration: 1.5, ease: "easeInOut" }}
             className="absolute inset-0 flex items-center justify-center"
           >
-            {/* LAYER 1: Background Blur (Ambient glow 50%) */}
+            {/* LAYER 1: Background Ambient (Blur dikurangi menjadi blur-xl agar lebih kalem/tidak ekstrem) */}
             <div className="absolute inset-0">
               <Image 
                 src={backgrounds[bgIndex]} 
                 alt="Background Ambient" 
                 fill 
-                className="object-cover filter blur-3xl opacity-30 dark:opacity-40 scale-110 select-none" 
+                className="object-cover filter blur-xl opacity-20 dark:opacity-30 scale-105 select-none" 
               />
             </div>
 
-            {/* LAYER 2: Foto Asli (Tajam) */}
+            {/* LAYER 2: Foto Asli (Tajam) + Fading Edges (Biar pinggirannya membaur halus, bukan kotak kaku) */}
             <div className="absolute inset-0 w-full h-full flex items-center justify-center p-4">
               <motion.div
                 animate={{ scale: [1, 1.01, 1] }}
                 transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-                className="relative w-full h-full max-w-6xl"
+                className="relative w-full h-full max-w-6xl [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_75%)]"
               >
                 <Image
                   src={backgrounds[bgIndex]}
                   alt="Jibakudin Nur Field Work"
                   fill
-                  className="object-contain opacity-50 dark:opacity-60 select-none"
+                  className="object-contain opacity-60 dark:opacity-75 select-none"
                   priority
                 />
               </motion.div>
@@ -223,8 +223,8 @@ export default function Hero() {
           </motion.div>
         </AnimatePresence>
 
-        {/* LAYER 3: Gradient Mask (Mulus agar foto jelas tapi teks 100% terbaca) */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#F8FAFC]/95 via-[#F8FAFC]/60 to-[#F8FAFC]/95 dark:from-[#0B1329]/95 dark:via-[#0B1329]/70 dark:to-[#0B1329]/95 pointer-events-none"></div>
+        {/* LAYER 3: Gradient Overlay (Agar area teks tetap nyaman dibaca) */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#F8FAFC]/95 via-[#F8FAFC]/50 to-[#F8FAFC]/95 dark:from-[#0B1329]/95 dark:via-[#0B1329]/60 dark:to-[#0B1329]/95 pointer-events-none"></div>
       </div>
 
       {/* 2. CANVAS INTERACTIVE */}
@@ -287,7 +287,7 @@ export default function Hero() {
           </p>
         </motion.div>
 
-        {/* Tech Stack / Skills (Simple Rounded Clean Logo) */}
+        {/* Tech Stack / Skills */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

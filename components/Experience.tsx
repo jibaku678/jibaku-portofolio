@@ -8,16 +8,27 @@ export default function Experience() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const backgroundBanner = '/newbanner1.png'
 
-  const [duaKelinciIdx, setDuaKelinciIdx] = useState(0)
+  const [kelinciIdx, setKelinciIdx] = useState(0)
   const [puskesIdx, setPuskesIdx] = useState(0)
+  const [bethesdaIdx, setBethesdaIdx] = useState(0)
 
-  const duaKelinciImages = [
-    "/PKL/DK_1.JPG"
+  // 1. PT Dua Kelinci Gallery Files
+  const kelinciImages = [
+    "/PKL/kelinci (1).jpeg",
+    "/PKL/kelinci (2).jpeg",
+    "/PKL/kelinci (3).jpeg",
+    "/PKL/kelinci (4).jpeg",
+    "/PKL/kelinci (5).jpeg",
+    "/PKL/kelinci (6).jpeg",
+    "/PKL/kelinci (7).jpeg",
+    "/PKL/kelinci (8).jpeg",
+    "/PKL/kelinci2.JPG",
+    "/PKL/kelinci2.png"
   ]
 
-  // Daftar item Puskesmas Godean dengan penanganan error video aman
+  // 2. Puskesmas Godean Gallery Files
   const puskesItems = [
-    { type: "image", src: "/PKL/puskes.jpg" },
+    { type: "image", src: "/PKL/puskes.jpeg" },
     { type: "video", src: "/PKL/puskes1.MOV" },
     { type: "video", src: "/PKL/puskes2.MOV" },
     { type: "video", src: "/PKL/puskes3.MOV" },
@@ -26,21 +37,37 @@ export default function Experience() {
     { type: "video", src: "/PKL/puskes6.MOV" },
   ]
 
-  useEffect(() => {
-    if (duaKelinciImages.length <= 1) return
-    const timer = setInterval(() => {
-      setDuaKelinciIdx((prev) => (prev === duaKelinciImages.length - 1 ? 0 : prev + 1))
-    }, 4000)
-    return () => clearInterval(timer)
-  }, [duaKelinciImages.length])
+  // 3. Bethesda Hospital Gallery Files (Lengkap dari betesda 1 s.d. 12 + betesda1-3)
+  const bethesdaImages = [
+    "/PKL/betesda (1).jpeg",
+    "/PKL/betesda (2).jpeg",
+    "/PKL/betesda (3).jpeg",
+    "/PKL/betesda (4).jpeg",
+    "/PKL/betesda (5).jpeg",
+    "/PKL/betesda (6).jpeg",
+    "/PKL/betesda (7).jpeg",
+    "/PKL/betesda (8).jpeg",
+    "/PKL/betesda (9).jpeg",
+    "/PKL/betesda (10).jpeg",
+    "/PKL/betesda (11).jpeg",
+    "/PKL/betesda (12).jpeg",
+    "/PKL/betesda1.jpeg",
+    "/PKL/betesda2.jpeg",
+    "/PKL/betesda3.jpeg"
+  ]
 
+  // 4. Dinkes Magelang Gallery File
+  const dinkesImages = [
+    "/PKL/dinkesmagelang.JPG"
+  ]
+
+  // Autoslide effect
   useEffect(() => {
-    if (puskesItems.length <= 1) return
-    const timer = setInterval(() => {
-      setPuskesIdx((prev) => (prev === puskesItems.length - 1 ? 0 : prev + 1))
-    }, 4500)
-    return () => clearInterval(timer)
-  }, [puskesItems.length])
+    const t1 = setInterval(() => setKelinciIdx(p => (p === kelinciImages.length - 1 ? 0 : p + 1)), 4000)
+    const t2 = setInterval(() => setPuskesIdx(p => (p === puskesItems.length - 1 ? 0 : p + 1)), 5000)
+    const t3 = setInterval(() => setBethesdaIdx(p => (p === bethesdaImages.length - 1 ? 0 : p + 1)), 4000)
+    return () => { clearInterval(t1); clearInterval(t2); clearInterval(t3); }
+  }, [kelinciImages.length, puskesItems.length, bethesdaImages.length])
 
   // --- HTML5 CANVAS INTERACTIVE ---
   useEffect(() => {
@@ -87,7 +114,6 @@ export default function Experience() {
 
     const render = () => {
       ctx.clearRect(0, 0, width, height)
-
       const isDark = document.documentElement.classList.contains('dark')
       const baseAlpha = isDark ? 0.3 : 0.12 
 
@@ -152,7 +178,7 @@ export default function Experience() {
       location: "PT Dua Kelinci, Pati",
       description: "Supported industrial environmental health and OHS operational activities.",
       hasGallery: true,
-      galleryType: "duaKelinci",
+      galleryType: "kelinci",
       highlights: [
         "Supported K3/HSE activities through hazard identification and risk assessment using HIRADC and JSA, work permits, safety patrols, and safe work practices.",
         "Studied fire emergency preparedness through evacuation route planning and placement of fire alarms, hydrants, and fire extinguishers, including hands-on APAR and hydrant practice.",
@@ -184,7 +210,8 @@ export default function Experience() {
       role: "Hospital Field Practice | Environmental Health Installation",
       location: "Bethesda Hospital, Yogyakarta",
       description: "Completed clinical rotations across hospital environmental management units.",
-      hasGallery: false,
+      hasGallery: true,
+      galleryType: "bethesda",
       highlights: [
         "Participated in the Environmental Health Installation through rotation across several hospital environmental management units.",
         "Gained exposure to medical B3 and non-B3 solid waste management, sanitation and pest control, and clean and drinking water management.",
@@ -197,7 +224,8 @@ export default function Experience() {
       role: "Institutional Field Practice | Environmental Health",
       location: "Magelang District Health Office, Magelang",
       description: "Applied environmental sanitation principles within a government institutional setting.",
-      hasGallery: false,
+      hasGallery: true,
+      galleryType: "dinkes",
       highlights: [
         "Gained exposure to environmental health management within a government institution supporting community health.",
         "Participated in activities related to environmental health management, health risk management, coordination, administration, and activity reporting.",
@@ -229,16 +257,9 @@ export default function Experience() {
         <div className="absolute inset-0 filter blur-2xl opacity-15 dark:opacity-25 scale-105 select-none">
           <Image src={backgroundBanner} alt="Experience Ambient Fill" fill className="object-cover" />
         </div>
-
         <div className="absolute inset-0 w-full h-full flex items-center justify-center [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_80%)]">
-          <Image
-            src={backgroundBanner}
-            alt="Experience Field Backdrop"
-            fill
-            className="object-cover opacity-25 dark:opacity-35 select-none"
-          />
+          <Image src={backgroundBanner} alt="Experience Field Backdrop" fill className="object-cover opacity-25 dark:opacity-35 select-none" />
         </div>
-
         <div className="absolute inset-0 bg-gradient-to-b from-[#F8FAFC] via-[#F8FAFC]/70 to-[#F8FAFC] dark:from-[#0B1329] dark:via-[#0B1329]/75 dark:to-[#0B1329] pointer-events-none"></div>
       </div>
 
@@ -280,9 +301,9 @@ export default function Experience() {
                 </div>
               </div>
 
-              <div className={`grid grid-cols-1 ${exp.hasGallery ? 'lg:grid-cols-3' : 'grid-cols-1'} gap-6 items-start`}>
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
                 
-                <div className={`${exp.hasGallery ? 'lg:col-span-2' : 'col-span-1'} space-y-4`}>
+                <div className="lg:col-span-2 space-y-4">
                   <p className="text-sm text-[#334155] dark:text-[#94A3B8] font-medium leading-relaxed">
                     {exp.description}
                   </p>
@@ -297,105 +318,113 @@ export default function Experience() {
                   </ul>
                 </div>
 
-                {exp.hasGallery && (
-                  <div className="flex flex-col gap-3">
-                    <div className="relative w-full h-[240px] sm:h-[280px] bg-slate-950/60 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700/60 shadow-md flex items-center justify-center">
-                      
-                      {exp.galleryType === 'duaKelinci' && (
-                        <div className="relative w-full h-full flex items-center justify-center">
-                          <AnimatePresence mode="wait">
-                            <motion.img
-                              key={duaKelinciIdx}
-                              src={duaKelinciImages[duaKelinciIdx]}
-                              alt="PT Dua Kelinci Documentation"
+                <div className="flex flex-col gap-3">
+                  <div className="relative w-full h-[240px] sm:h-[280px] bg-slate-950/60 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700/60 shadow-md flex items-center justify-center">
+                    
+                    {/* KELINCI GALLERY */}
+                    {exp.galleryType === 'kelinci' && (
+                      <div className="relative w-full h-full flex items-center justify-center">
+                        <AnimatePresence mode="wait">
+                          <motion.img
+                            key={kelinciIdx}
+                            src={kelinciImages[kelinciIdx]}
+                            alt="PT Dua Kelinci Documentation"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.4 }}
+                            className="w-full h-full object-cover select-none"
+                          />
+                        </AnimatePresence>
+                        <button onClick={() => setKelinciIdx(p => p === 0 ? kelinciImages.length - 1 : p - 1)} className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/60 text-white hover:bg-black cursor-pointer z-10"><ChevronLeft className="w-4 h-4" /></button>
+                        <button onClick={() => setKelinciIdx(p => p === kelinciImages.length - 1 ? 0 : p + 1)} className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/60 text-white hover:bg-black cursor-pointer z-10"><ChevronRight className="w-4 h-4" /></button>
+                      </div>
+                    )}
+
+                    {/* PUSKESMAS GALLERY */}
+                    {exp.galleryType === 'puskes' && (
+                      <div className="relative w-full h-full flex items-center justify-center">
+                        <AnimatePresence mode="wait">
+                          {puskesItems[puskesIdx].type === 'video' ? (
+                            <motion.video
+                              key={`vid-${puskesIdx}`}
+                              src={puskesItems[puskesIdx].src}
+                              autoPlay
+                              loop
+                              muted
+                              playsInline
                               initial={{ opacity: 0 }}
                               animate={{ opacity: 1 }}
                               exit={{ opacity: 0 }}
                               transition={{ duration: 0.4 }}
                               className="w-full h-full object-cover select-none"
                             />
-                          </AnimatePresence>
-                        </div>
-                      )}
+                          ) : (
+                            <motion.img
+                              key={`img-${puskesIdx}`}
+                              src={puskesItems[puskesIdx].src}
+                              alt="Puskesmas Godean Documentation"
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              exit={{ opacity: 0 }}
+                              transition={{ duration: 0.4 }}
+                              className="w-full h-full object-cover select-none"
+                            />
+                          )}
+                        </AnimatePresence>
+                        <button onClick={() => setPuskesIdx(p => p === 0 ? puskesItems.length - 1 : p - 1)} className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/60 text-white hover:bg-black cursor-pointer z-10"><ChevronLeft className="w-4 h-4" /></button>
+                        <button onClick={() => setPuskesIdx(p => p === puskesItems.length - 1 ? 0 : p + 1)} className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/60 text-white hover:bg-black cursor-pointer z-10"><ChevronRight className="w-4 h-4" /></button>
+                      </div>
+                    )}
 
-                      {exp.galleryType === 'puskes' && (
-                        <div className="relative w-full h-full flex items-center justify-center">
-                          <AnimatePresence mode="wait">
-                            {puskesItems[puskesIdx].type === 'video' ? (
-                              <motion.video
-                                key={`vid-${puskesIdx}`}
-                                src={puskesItems[puskesIdx].src}
-                                autoPlay
-                                loop
-                                muted
-                                playsInline
-                                onError={(e) => {
-                                  // Fallback otomatis ke placeholder gambar jika format .MOV tidak didukung browser
-                                  console.warn("Video failed to load, replacing with fallback");
-                                  const target = e.currentTarget as HTMLVideoElement;
-                                  target.style.display = 'none';
-                                }}
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                exit={{ opacity: 0 }}
-                                transition={{ duration: 0.4 }}
-                                className="w-full h-full object-cover select-none"
-                              />
-                            ) : (
-                              <motion.img
-                                key={`img-${puskesIdx}`}
-                                src={puskesItems[puskesIdx].src}
-                                alt="Puskesmas Godean Documentation"
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                exit={{ opacity: 0 }}
-                                transition={{ duration: 0.4 }}
-                                className="w-full h-full object-cover select-none"
-                              />
-                            )}
-                          </AnimatePresence>
-                          <button 
-                            onClick={() => setPuskesIdx(prev => prev === 0 ? puskesItems.length - 1 : prev - 1)}
-                            className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/60 text-white hover:bg-black transition-all cursor-pointer z-10"
-                          >
-                            <ChevronLeft className="w-4 h-4" />
-                          </button>
-                          <button 
-                            onClick={() => setPuskesIdx(prev => prev === puskesItems.length - 1 ? 0 : prev + 1)}
-                            className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/60 text-white hover:bg-black transition-all cursor-pointer z-10"
-                          >
-                            <ChevronRight className="w-4 h-4" />
-                          </button>
-                          <div className="absolute bottom-2 px-2.5 py-0.5 bg-black/70 rounded-full text-[10px] text-white font-mono z-10">
-                            {puskesIdx + 1} / {puskesItems.length}
-                          </div>
-                        </div>
-                      )}
-
-                      {exp.galleryType === 'ngentak' && (
-                        <div className="relative w-full h-full flex items-center justify-center">
-                          <img
-                            src="/PKL/komunitas.JPEG"
-                            alt="Ngentak Hamlet Community Documentation"
+                    {/* BETHESDA GALLERY */}
+                    {exp.galleryType === 'bethesda' && (
+                      <div className="relative w-full h-full flex items-center justify-center">
+                        <AnimatePresence mode="wait">
+                          <motion.img
+                            key={bethesdaIdx}
+                            src={bethesdaImages[bethesdaIdx]}
+                            alt="Bethesda Hospital Documentation"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.4 }}
                             className="w-full h-full object-cover select-none"
                           />
-                        </div>
-                      )}
-
-                    </div>
-
-                    {exp.galleryType === 'ngentak' && (
-                      <a
-                        href="https://www.instagram.com/ngentakngantuk_13?stkn=eTl1OXhoeWh6eHBu"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 hover:opacity-90 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md cursor-pointer"
-                      >
-                        <Instagram className="w-4 h-4" /> Visit IG <ExternalLink className="w-3.5 h-3.5" />
-                      </a>
+                        </AnimatePresence>
+                        <button onClick={() => setBethesdaIdx(p => p === 0 ? bethesdaImages.length - 1 : p - 1)} className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/60 text-white hover:bg-black cursor-pointer z-10"><ChevronLeft className="w-4 h-4" /></button>
+                        <button onClick={() => setBethesdaIdx(p => p === bethesdaImages.length - 1 ? 0 : p + 1)} className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/60 text-white hover:bg-black cursor-pointer z-10"><ChevronRight className="w-4 h-4" /></button>
+                      </div>
                     )}
+
+                    {/* DINKES MAGELANG */}
+                    {exp.galleryType === 'dinkes' && (
+                      <div className="relative w-full h-full flex items-center justify-center">
+                        <img src="/PKL/dinkesmagelang.JPG" alt="Magelang Health Office Documentation" className="w-full h-full object-cover select-none" />
+                      </div>
+                    )}
+
+                    {/* NGENTAK HAMLET */}
+                    {exp.galleryType === 'ngentak' && (
+                      <div className="relative w-full h-full flex items-center justify-center">
+                        <img src="/PKL/komunitas.jpeg" alt="Ngentak Hamlet Documentation" className="w-full h-full object-cover select-none" />
+                      </div>
+                    )}
+
                   </div>
-                )}
+
+                  {/* Tombol Visit IG khusus Ngentak Hamlet */}
+                  {exp.galleryType === 'ngentak' && (
+                    <a
+                      href="https://www.instagram.com/ngentakngantuk_13?stkn=eTl1OXhoeWh6eHBu"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 hover:opacity-90 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md cursor-pointer"
+                    >
+                      <Instagram className="w-4 h-4" /> Visit IG <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  )}
+                </div>
 
               </div>
             </motion.div>

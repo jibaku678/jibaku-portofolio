@@ -8,29 +8,24 @@ export default function Experience() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const backgroundBanner = '/newbanner1.png'
 
-  // State untuk autoslide masing-masing card PKL yang punya galeri multiple
   const [duaKelinciIdx, setDuaKelinciIdx] = useState(0)
   const [puskesIdx, setPuskesIdx] = useState(0)
 
-  // Data gambar dokumentasi
+  // Array file sesuai dengan nama & ekstensi aslinya di folder public/PKL
   const duaKelinciImages = [
-    "/PKL/DK_1.JPG" // Sesuaikan jika ada DK_2, dll. (Cek ekstensi apakah .jpg/.JPG/.jpeg)
+    "/PKL/DK_1.JPG" 
   ]
 
-  const puskesImages = [
-    "/PKL/puskes.jpg",
-    "/PKL/puskes1.mp4", // Jika berupa video, nanti bisa ditangani atau diasumsikan gambar/video
-    "/PKL/puskes2.mp4",
-    "/PKL/puskes3.mp4",
-    "/PKL/puskes4.mp4",
-    "/PKL/puskes5.mp4",
-    "/PKL/puskes6.mp4"
+  const puskesItems = [
+    { type: "image", src: "/PKL/puskes.jpg" },
+    { type: "video", src: "/PKL/puskes1.MOV" },
+    { type: "video", src: "/PKL/puskes2.MOV" },
+    { type: "video", src: "/PKL/puskes3.MOV" },
+    { type: "video", src: "/PKL/puskes4.MOV" },
+    { type: "video", src: "/PKL/puskes5.MOV" },
+    { type: "video", src: "/PKL/puskes6.MOV" },
   ]
 
-  // Catatan: Karena beberapa file puskes adalah .mp4 (video), kita buat helper render media aman (gambar atau video autoplay loop)
-  // Atau jika file-file tersebut berupa gambar, bisa langsung img tag. Mari kita buat komponen render media cerdas di bawah.
-
-  // Autoslide effect untuk PT Dua Kelinci (jika > 1 foto)
   useEffect(() => {
     if (duaKelinciImages.length <= 1) return
     const timer = setInterval(() => {
@@ -39,14 +34,13 @@ export default function Experience() {
     return () => clearInterval(timer)
   }, [duaKelinciImages.length])
 
-  // Autoslide effect untuk Puskesmas Godean
   useEffect(() => {
-    if (puskesImages.length <= 1) return
+    if (puskesItems.length <= 1) return
     const timer = setInterval(() => {
-      setPuskesIdx((prev) => (prev === puskesImages.length - 1 ? 0 : prev + 1))
-    }, 4000)
+      setPuskesIdx((prev) => (prev === puskesItems.length - 1 ? 0 : prev + 1))
+    }, 5000) // Durasi 5 detik per slide karena berupa video/foto
     return () => clearInterval(timer)
-  }, [puskesImages.length])
+  }, [puskesItems.length])
 
   // --- HTML5 CANVAS INTERACTIVE ---
   useEffect(() => {
@@ -291,7 +285,7 @@ export default function Experience() {
                 </div>
               </div>
 
-              {/* Grid Layout: Kiri Deskripsi & Highlights, Kanan Autoslide Dokumentasi */}
+              {/* Grid Layout: Kiri Deskripsi & Highlights, Kanan Media Galeri */}
               <div className={`grid grid-cols-1 ${exp.hasGallery ? 'lg:grid-cols-3' : 'grid-cols-1'} gap-6 items-start`}>
                 
                 <div className={`${exp.hasGallery ? 'lg:col-span-2' : 'col-span-1'} space-y-4`}>
@@ -307,120 +301,104 @@ export default function Experience() {
                       </li>
                     ))}
                   </ul>
+                </div>
 
-                  {/* Khusus Ngentak Hamlet, tambahkan link Instagram */}
-                  {exp.galleryType === 'ngentak' && (
-                    <div className="pt-3">
+                {/* Kolom Kanan: Media Dokumentasi / Galeri */}
+                {exp.hasGallery && (
+                  <div className="flex flex-col gap-3">
+                    <div className="relative w-full h-[240px] sm:h-[280px] bg-slate-950/60 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700/60 shadow-md flex items-center justify-center">
+                      
+                      {/* GALERI DUA KELINCI */}
+                      {exp.galleryType === 'duaKelinci' && (
+                        <div className="relative w-full h-full flex items-center justify-center">
+                          <AnimatePresence mode="wait">
+                            <motion.img
+                              key={duaKelinciIdx}
+                              src={duaKelinciImages[duaKelinciIdx]}
+                              alt="PT Dua Kelinci Documentation"
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              exit={{ opacity: 0 }}
+                              transition={{ duration: 0.4 }}
+                              className="w-full h-full object-cover select-none"
+                            />
+                          </AnimatePresence>
+                        </div>
+                      )}
+
+                      {/* GALERI PUSKESMAS GODEAN (SUPPORT FOTO & VIDEO .MOV) */}
+                      {exp.galleryType === 'puskes' && (
+                        <div className="relative w-full h-full flex items-center justify-center">
+                          <AnimatePresence mode="wait">
+                            {puskesItems[puskesIdx].type === 'video' ? (
+                              <motion.video
+                                key={`vid-${puskesIdx}`}
+                                src={puskesItems[puskesIdx].src}
+                                autoPlay
+                                loop
+                                muted
+                                playsInline
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                transition={{ duration: 0.4 }}
+                                className="w-full h-full object-cover select-none pointer-events-none"
+                              />
+                            ) : (
+                              <motion.img
+                                key={`img-${puskesIdx}`}
+                                src={puskesItems[puskesIdx].src}
+                                alt="Puskesmas Godean Documentation"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                transition={{ duration: 0.4 }}
+                                className="w-full h-full object-cover select-none"
+                              />
+                            )}
+                          </AnimatePresence>
+                          <button 
+                            onClick={() => setPuskesIdx(prev => prev === 0 ? puskesItems.length - 1 : prev - 1)}
+                            className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/60 text-white hover:bg-black transition-all cursor-pointer z-10"
+                          >
+                            <ChevronLeft className="w-4 h-4" />
+                          </button>
+                          <button 
+                            onClick={() => setPuskesIdx(prev => prev === puskesItems.length - 1 ? 0 : prev + 1)}
+                            className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/60 text-white hover:bg-black transition-all cursor-pointer z-10"
+                          >
+                            <ChevronRight className="w-4 h-4" />
+                          </button>
+                          <div className="absolute bottom-2 px-2.5 py-0.5 bg-black/70 rounded-full text-[10px] text-white font-mono z-10">
+                            {puskesIdx + 1} / {puskesItems.length}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* GALERI NGENTAK HAMLET (1 FOTO FULL COVER) */}
+                      {exp.galleryType === 'ngentak' && (
+                        <div className="relative w-full h-full flex items-center justify-center">
+                          <img
+                            src="/PKL/komunitas.JPEG"
+                            alt="Ngentak Hamlet Community Documentation"
+                            className="w-full h-full object-cover select-none"
+                          />
+                        </div>
+                      )}
+
+                    </div>
+
+                    {/* Tombol Visit IG ditaruh di bawah foto khusus Ngentak Hamlet */}
+                    {exp.galleryType === 'ngentak' && (
                       <a
                         href="https://www.instagram.com/ngentakngantuk_13?stkn=eTl1OXhoeWh6eHBu"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 hover:opacity-90 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md"
+                        className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 hover:opacity-90 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md cursor-pointer"
                       >
-                        <Instagram className="w-4 h-4" /> Visit Ngentak Hamlet IG <ExternalLink className="w-3.5 h-3.5" />
+                        <Instagram className="w-4 h-4" /> Visit IG <ExternalLink className="w-3.5 h-3.5" />
                       </a>
-                    </div>
-                  )}
-                </div>
-
-                {/* Bagian Autoslide Dokumentasi Langsung Muncul Tanpa Tombol View */}
-                {exp.hasGallery && (
-                  <div className="relative w-full h-[240px] sm:h-[280px] bg-slate-950/60 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700/60 shadow-md flex items-center justify-center">
-                    
-                    {/* GALERI DUA KELINCI */}
-                    {exp.galleryType === 'duaKelinci' && (
-                      <div className="relative w-full h-full flex items-center justify-center">
-                        <AnimatePresence mode="wait">
-                          <motion.img
-                            key={duaKelinciIdx}
-                            src={duaKelinciImages[duaKelinciIdx]}
-                            alt="PT Dua Kelinci Documentation"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.4 }}
-                            className="max-h-full max-w-full object-contain select-none"
-                          />
-                        </AnimatePresence>
-                        {duaKelinciImages.length > 1 && (
-                          <>
-                            <button 
-                              onClick={() => setDuaKelinciIdx(prev => prev === 0 ? duaKelinciImages.length - 1 : prev - 1)}
-                              className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/60 text-white hover:bg-black transition-all"
-                            >
-                              <ChevronLeft className="w-4 h-4" />
-                            </button>
-                            <button 
-                              onClick={() => setDuaKelinciIdx(prev => prev === duaKelinciImages.length - 1 ? 0 : prev + 1)}
-                              className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/60 text-white hover:bg-black transition-all"
-                            >
-                              <ChevronRight className="w-4 h-4" />
-                            </button>
-                          </>
-                        )}
-                      </div>
                     )}
-
-                    {/* GALERI PUSKESMAS GODEAN */}
-                    {exp.galleryType === 'puskes' && (
-                      <div className="relative w-full h-full flex items-center justify-center">
-                        <AnimatePresence mode="wait">
-                          {puskesImages[puskesIdx].endsWith('.mp4') ? (
-                            <motion.video
-                              key={puskesIdx}
-                              src={puskesImages[puskesIdx]}
-                              autoPlay
-                              loop
-                              muted
-                              playsInline
-                              initial={{ opacity: 0 }}
-                              animate={{ opacity: 1 }}
-                              exit={{ opacity: 0 }}
-                              transition={{ duration: 0.4 }}
-                              className="max-h-full max-w-full object-contain select-none"
-                            />
-                          ) : (
-                            <motion.img
-                              key={puskesIdx}
-                              src={puskesImages[puskesIdx]}
-                              alt="Puskesmas Godean Documentation"
-                              initial={{ opacity: 0 }}
-                              animate={{ opacity: 1 }}
-                              exit={{ opacity: 0 }}
-                              transition={{ duration: 0.4 }}
-                              className="max-h-full max-w-full object-contain select-none"
-                            />
-                          )}
-                        </AnimatePresence>
-                        <button 
-                          onClick={() => setPuskesIdx(prev => prev === 0 ? puskesImages.length - 1 : prev - 1)}
-                          className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/60 text-white hover:bg-black transition-all cursor-pointer"
-                        >
-                          <ChevronLeft className="w-4 h-4" />
-                        </button>
-                        <button 
-                          onClick={() => setPuskesIdx(prev => prev === puskesImages.length - 1 ? 0 : prev + 1)}
-                          className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/60 text-white hover:bg-black transition-all cursor-pointer"
-                        >
-                          <ChevronRight className="w-4 h-4" />
-                        </button>
-                        <div className="absolute bottom-2 px-2.5 py-0.5 bg-black/70 rounded-full text-[10px] text-white font-mono">
-                          {puskesIdx + 1} / {puskesImages.length}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* GALERI NGENTAK HAMLET (1 FOTO) */}
-                    {exp.galleryType === 'ngentak' && (
-                      <div className="relative w-full h-full flex items-center justify-center">
-                        <img
-                          src="/PKL/komunitas.jpeg"
-                          alt="Ngentak Hamlet Community Documentation"
-                          className="max-h-full max-w-full object-contain select-none"
-                        />
-                      </div>
-                    )}
-
                   </div>
                 )}
 

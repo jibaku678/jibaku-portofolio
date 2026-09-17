@@ -184,14 +184,15 @@ export default function About() {
             className="lg:col-span-7 space-y-5 sm:space-y-6"
           >
             
-            {/* Pendidikan & Coursework Card */}
+            {/* Pendidikan & Coursework Card (Logo Tanpa Kotak Background Kaku) */}
             <div className="flex flex-col gap-5 sm:gap-6 p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-white/95 dark:bg-[#1C2541]/90 backdrop-blur-xl border border-slate-200/80 dark:border-slate-700/60 shadow-sm">
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-slate-50 dark:bg-slate-900 flex items-center justify-center shrink-0 border border-slate-200 dark:border-slate-700 overflow-hidden p-2 shadow-inner">
+              <div className="flex items-start gap-4">
+                {/* Logo Poltekkes Polos Tanpa Kotak Container */}
+                <div className="w-12 h-12 sm:w-14 sm:h-14 shrink-0 relative flex items-center justify-center mt-0.5">
                   <img 
                     src="/logo.polkesyo.png" 
                     alt="Poltekkes Kemenkes Yogyakarta Logo" 
-                    className="w-10 h-10 sm:w-12 sm:h-12 object-contain aspect-square"
+                    className="w-full h-full object-contain"
                   />
                 </div>
                 <div>

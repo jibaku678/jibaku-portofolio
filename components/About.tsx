@@ -11,7 +11,7 @@ export default function About() {
 
   const backgroundBanner = '/newbanner1.png'
 
-  // --- HTML5 CANVAS INTERACTIVE (Konsisten dengan Hero) ---
+  // --- HTML5 CANVAS INTERACTIVE ---
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
@@ -117,7 +117,7 @@ export default function About() {
   return (
     <section id="about" className="relative py-28 sm:py-32 w-full bg-[#F8FAFC] dark:bg-[#0B1329] transition-colors duration-300 overflow-hidden">
       
-      {/* 1. BACKGROUND LAYERING (Konsisten dengan Hero: Ambient Blur + Fade Radial Mask) */}
+      {/* 1. BACKGROUND LAYERING */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <div className="absolute inset-0 filter blur-2xl opacity-15 dark:opacity-25 scale-105 select-none">
           <Image src={backgroundBanner} alt="About Ambient Fill" fill className="object-cover" />
@@ -132,14 +132,13 @@ export default function About() {
           />
         </div>
 
-        {/* Gradient Transition ke Atas & Bawah agar Seamless */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#F8FAFC] via-[#F8FAFC]/70 to-[#F8FAFC] dark:from-[#0B1329] dark:via-[#0B1329]/75 dark:to-[#0B1329] pointer-events-none"></div>
       </div>
 
       {/* 2. HTML5 CANVAS INTERACTIVE */}
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none z-[1] opacity-60"></canvas>
 
-      {/* 3. KONTEN UTAMA DENGAN KONTAINER STANDAR GLOBAL (max-w-7xl) */}
+      {/* 3. KONTEN UTAMA */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header Section */}
@@ -152,18 +151,18 @@ export default function About() {
           </h2>
         </div>
 
-        {/* Grid Utama (Simetris & Breathable Spacing) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        {/* Grid Utama Desktop & Mobile Friendly */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
-          {/* Kolom Kiri: Foto & Deskripsi Singkat */}
+          {/* Kolom Kiri: Foto & Deskripsi (Sticky/Normal teratur di Desktop) */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="lg:col-span-5 bg-white/95 dark:bg-[#1C2541]/90 backdrop-blur-xl border border-slate-200/80 dark:border-slate-700/60 rounded-3xl p-6 sm:p-8 shadow-sm flex flex-col items-center text-center justify-between space-y-6"
+            className="lg:col-span-5 bg-white/95 dark:bg-[#1C2541]/90 backdrop-blur-xl border border-slate-200/80 dark:border-slate-700/60 rounded-3xl p-6 sm:p-8 shadow-sm flex flex-col items-center text-center space-y-6"
           >
-            <div className="rounded-2xl overflow-hidden shadow-md border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 p-2 w-48 sm:w-56 shrink-0">
+            <div className="rounded-2xl overflow-hidden shadow-md border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 p-2 w-44 sm:w-52 shrink-0">
               <img
                 src="/foto.profil.jpeg"
                 alt="Jibakudin Nur"
@@ -182,12 +181,12 @@ export default function About() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="lg:col-span-7 flex flex-col justify-between space-y-6"
+            className="lg:col-span-7 space-y-6"
           >
             
             {/* Pendidikan & Coursework Card */}
-            <div className="flex flex-col gap-6 p-6 sm:p-8 rounded-3xl bg-white/95 dark:bg-[#1C2541]/90 backdrop-blur-xl border border-slate-200/80 dark:border-slate-700/60 shadow-sm flex-1">
-              <div className="flex items-start sm:items-center gap-4">
+            <div className="flex flex-col gap-6 p-6 sm:p-8 rounded-3xl bg-white/95 dark:bg-[#1C2541]/90 backdrop-blur-xl border border-slate-200/80 dark:border-slate-700/60 shadow-sm">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                 <div className="w-16 h-16 rounded-2xl bg-slate-50 dark:bg-slate-900 flex items-center justify-center shrink-0 border border-slate-200 dark:border-slate-700 overflow-hidden p-2 shadow-inner">
                   <img 
                     src="/logo.polkesyo.png" 

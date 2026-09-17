@@ -11,7 +11,7 @@ export default function About() {
 
   const backgroundBanner = '/newbanner1.png'
 
-  // --- HTML5 CANVAS INTERACTIVE ---
+  // --- HTML5 CANVAS INTERACTIVE (Konsisten dengan Hero) ---
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
@@ -115,16 +115,14 @@ export default function About() {
   }, [])
 
   return (
-    <section id="about" className="relative py-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-slate-200/80 dark:border-slate-800/60 overflow-hidden bg-[#F8FAFC] dark:bg-[#0B1329] transition-colors duration-300">
+    <section id="about" className="relative py-28 sm:py-32 w-full bg-[#F8FAFC] dark:bg-[#0B1329] transition-colors duration-300 overflow-hidden">
       
-      {/* 1. BACKGROUND LAYERING DENGAN BLUR & FADE EFFECT */}
+      {/* 1. BACKGROUND LAYERING (Konsisten dengan Hero: Ambient Blur + Fade Radial Mask) */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        {/* Layer Ambient Blur Lembut */}
         <div className="absolute inset-0 filter blur-2xl opacity-15 dark:opacity-25 scale-105 select-none">
           <Image src={backgroundBanner} alt="About Ambient Fill" fill className="object-cover" />
         </div>
 
-        {/* Layer Foto dengan Smooth Fade (Radial Gradient Mask) */}
         <div className="absolute inset-0 w-full h-full flex items-center justify-center [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_80%)]">
           <Image
             src={backgroundBanner}
@@ -134,14 +132,17 @@ export default function About() {
           />
         </div>
 
-        {/* Gradient Overlay Transisi Mulus */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#F8FAFC]/90 via-[#F8FAFC]/60 to-[#F8FAFC]/90 dark:from-[#0B1329]/95 dark:via-[#0B1329]/70 dark:to-[#0B1329]/95 pointer-events-none"></div>
+        {/* Gradient Transition ke Atas & Bawah agar Seamless */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#F8FAFC] via-[#F8FAFC]/70 to-[#F8FAFC] dark:from-[#0B1329] dark:via-[#0B1329]/75 dark:to-[#0B1329] pointer-events-none"></div>
       </div>
 
       {/* 2. HTML5 CANVAS INTERACTIVE */}
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none z-[1] opacity-60"></canvas>
 
-      <div className="relative z-10">
+      {/* 3. KONTEN UTAMA DENGAN KONTAINER STANDAR GLOBAL (max-w-7xl) */}
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Header Section */}
         <div className="flex flex-col items-start gap-2 mb-12">
           <span className="text-xs font-bold text-[#0284C7] dark:text-[#38BDF8] uppercase tracking-widest font-mono">
             // Profile Overview
@@ -151,6 +152,7 @@ export default function About() {
           </h2>
         </div>
 
+        {/* Grid Utama (Simetris & Breathable Spacing) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           
           {/* Kolom Kiri: Foto & Deskripsi Singkat */}

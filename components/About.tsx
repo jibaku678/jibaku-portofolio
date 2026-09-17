@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import Image from 'next/image'
 import { MapPin, ShieldCheck, ExternalLink, X, CheckCircle2, Maximize2, Minimize2 } from 'lucide-react'
 
 export default function About() {
@@ -8,7 +9,9 @@ export default function About() {
   const [isFullScreen, setIsFullScreen] = useState(false)
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
 
-  // --- HTML5 CANVAS INTERACTIVE (Disamakan persis dengan Hero tapi lebih halus) ---
+  const backgroundBanner = '/newbanner1.png'
+
+  // --- HTML5 CANVAS INTERACTIVE ---
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
@@ -27,15 +30,15 @@ export default function About() {
 
     window.addEventListener('resize', handleResize)
 
-    const particlesCount = 50
+    const particlesCount = 45
     const particles: { x: number; y: number; vx: number; vy: number; radius: number }[] = []
 
     for (let i = 0; i < particlesCount; i++) {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.6,
-        vy: (Math.random() - 0.5) * 0.6,
+        vx: (Math.random() - 0.5) * 0.5,
+        vy: (Math.random() - 0.5) * 0.5,
         radius: Math.random() * 1.5 + 0.5,
       })
     }
@@ -55,7 +58,7 @@ export default function About() {
       ctx.clearRect(0, 0, width, height)
 
       const isDark = document.documentElement.classList.contains('dark')
-      const baseAlpha = isDark ? 0.35 : 0.15 
+      const baseAlpha = isDark ? 0.3 : 0.12 
 
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i]
@@ -80,7 +83,7 @@ export default function About() {
             ctx.beginPath()
             ctx.moveTo(p.x, p.y)
             ctx.lineTo(p2.x, p2.y)
-            ctx.strokeStyle = `rgba(22, 163, 74, ${0.18 * (1 - dist / 110) * (isDark ? 1 : 0.5)})`
+            ctx.strokeStyle = `rgba(22, 163, 74, ${0.15 * (1 - dist / 110) * (isDark ? 1 : 0.4)})`
             ctx.lineWidth = 1
             ctx.stroke()
           }
@@ -93,7 +96,7 @@ export default function About() {
           ctx.beginPath()
           ctx.moveTo(p.x, p.y)
           ctx.lineTo(mouseX, mouseY)
-          ctx.strokeStyle = `rgba(56, 189, 248, ${0.3 * (1 - mdist / 160)})`
+          ctx.strokeStyle = `rgba(56, 189, 248, ${0.25 * (1 - mdist / 160)})`
           ctx.lineWidth = 1
           ctx.stroke()
         }
@@ -114,12 +117,29 @@ export default function About() {
   return (
     <section id="about" className="relative py-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-slate-200/80 dark:border-slate-800/60 overflow-hidden bg-[#F8FAFC] dark:bg-[#0B1329] transition-colors duration-300">
       
-      {/* Background Tekstur Grid Halus & Soft Blur */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#0284c708_1px,transparent_1px),linear-gradient(to_bottom,#0284c708_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none"></div>
-      <div className="absolute inset-0 filter blur-2xl opacity-30 dark:opacity-20 bg-gradient-to-tr from-sky-500/10 via-transparent to-emerald-500/10 pointer-events-none"></div>
+      {/* 1. BACKGROUND LAYERING DENGAN BLUR & FADE EFFECT */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        {/* Layer Ambient Blur Lembut */}
+        <div className="absolute inset-0 filter blur-2xl opacity-15 dark:opacity-25 scale-105 select-none">
+          <Image src={backgroundBanner} alt="About Ambient Fill" fill className="object-cover" />
+        </div>
 
-      {/* HTML5 Canvas Interaktif (Sama seperti Hero) */}
-      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none z-[0] opacity-70"></canvas>
+        {/* Layer Foto dengan Smooth Fade (Radial Gradient Mask) */}
+        <div className="absolute inset-0 w-full h-full flex items-center justify-center [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_80%)]">
+          <Image
+            src={backgroundBanner}
+            alt="About Field Backdrop"
+            fill
+            className="object-cover opacity-25 dark:opacity-35 select-none"
+          />
+        </div>
+
+        {/* Gradient Overlay Transisi Mulus */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#F8FAFC]/90 via-[#F8FAFC]/60 to-[#F8FAFC]/90 dark:from-[#0B1329]/95 dark:via-[#0B1329]/70 dark:to-[#0B1329]/95 pointer-events-none"></div>
+      </div>
+
+      {/* 2. HTML5 CANVAS INTERACTIVE */}
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none z-[1] opacity-60"></canvas>
 
       <div className="relative z-10">
         <div className="flex flex-col items-start gap-2 mb-12">

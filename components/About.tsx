@@ -1,34 +1,109 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Award, MapPin, ShieldCheck, ExternalLink, X, CheckCircle2, Maximize2, Minimize2 } from 'lucide-react'
+import { MapPin, ShieldCheck, ExternalLink, X, CheckCircle2, Maximize2, Minimize2 } from 'lucide-react'
 
 export default function About() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isFullScreen, setIsFullScreen] = useState(false)
+  const canvasRef = useRef<HTMLCanvasElement | null>(null)
+
+  // --- HTML5 CANVAS INTERACTIVE (Ringan & Selaras dengan Hero) ---
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+
+    let animationFrameId: number
+    let width = (canvas.width = canvas.offsetWidth)
+    let height = (canvas.height = canvas.offsetHeight)
+
+    const handleResize = () => {
+      if (!canvas) return
+      width = canvas.width = canvas.offsetWidth
+      height = canvas.height = canvas.offsetHeight
+    }
+
+    window.addEventListener('resize', handleResize)
+
+    const particlesCount = 35 // Jumlah dibatasi agar sangat ringan dan tidak membebani browser
+    const particles: { x: number; y: number; vx: number; vy: number; radius: number }[] = []
+
+    for (let i = 0; i < particlesCount; i++) {
+      particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.5,
+        vy: (Math.random() - 0.5) * 0.5,
+        radius: Math.random() * 1.2 + 0.4,
+      })
+    }
+
+    let mouseX = -1000
+    let mouseY = -1000
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect()
+      mouseX = e.clientX - rect.left
+      mouseY = e.clientY - rect.top
+    }
+
+    window.addEventListener('mousemove', handleMouseMove)
+
+    const render = () => {
+      ctx.clearRect(0, 0, width, height)
+
+      const isDark = document.documentElement.classList.contains('dark')
+      const baseAlpha = isDark ? 0.3 : 0.12 
+
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i]
+        p.x += p.vx
+        p.y += p.vy
+
+        if (p.x < 0 || p.x > width) p.vx *= -1
+        if (p.y < 0 || p.y > height) p.vy *= -1
+
+        ctx.beginPath()
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2)
+        ctx.fillStyle = `rgba(2, 132, 199, ${baseAlpha})` 
+        ctx.fill()
+
+        for (let j = i + 1; j < particles.length; j++) {
+          const p2 = particles[j]
+          const dx = p.x - p2.x
+          const dy = p.y - p2.y
+          const dist = Math.sqrt(dx * dx + dy * dy)
+
+          if (dist < 90) {
+            ctx.beginPath()
+            ctx.moveTo(p.x, p.y)
+            ctx.lineTo(p2.x, p2.y)
+            ctx.strokeStyle = `rgba(22, 163, 74, ${0.1 * (1 - dist / 90) * (isDark ? 1 : 0.4)})`
+            ctx.lineWidth = 0.8
+            ctx.stroke()
+          }
+        }
+      }
+
+      animationFrameId = requestAnimationFrame(render)
+    }
+
+    render()
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+      window.removeEventListener('mousemove', handleMouseMove)
+      cancelAnimationFrame(animationFrameId)
+    }
+  }, [])
 
   return (
     <section id="about" className="relative py-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-slate-200/80 dark:border-slate-800/60 overflow-hidden bg-[#F8FAFC] dark:bg-[#0B1329] transition-colors duration-300">
       
-      {/* 1. ANIMASI LATAR BELAKANG RINGAN (AMBIENT GLOW & GRID) */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#0284c70a_1px,transparent_1px),linear-gradient(to_bottom,#0284c70a_1px,transparent_1px)] bg-[size:36px_36px] pointer-events-none"></div>
-      
-      <motion.div 
-        animate={{ 
-          scale: [1, 1.15, 1],
-          opacity: [0.15, 0.25, 0.15] 
-        }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-1/4 left-10 w-96 h-96 bg-sky-500/10 dark:bg-sky-500/10 rounded-full blur-3xl pointer-events-none"
-      />
-      <motion.div 
-        animate={{ 
-          scale: [1, 1.2, 1],
-          opacity: [0.1, 0.2, 0.1] 
-        }}
-        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-10 right-10 w-96 h-96 bg-emerald-500/10 dark:bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"
-      />
+      {/* HTML5 Canvas Background */}
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none z-[0] opacity-60"></canvas>
 
       <div className="relative z-10">
         <div className="flex flex-col items-start gap-2 mb-12">
@@ -48,7 +123,7 @@ export default function About() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="lg:col-span-5 bg-white dark:bg-[#1C2541] border border-slate-200/80 dark:border-slate-700/60 rounded-2xl p-6 sm:p-8 shadow-sm flex flex-col items-center text-center space-y-6"
+            className="lg:col-span-5 bg-white/90 dark:bg-[#1C2541]/90 backdrop-blur-md border border-slate-200/80 dark:border-slate-700/60 rounded-2xl p-6 sm:p-8 shadow-sm flex flex-col items-center text-center space-y-6"
           >
             <div className="rounded-2xl overflow-hidden shadow-md border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 p-1.5 w-48 sm:w-52">
               <img
@@ -63,7 +138,7 @@ export default function About() {
             </p>
           </motion.div>
 
-          {/* Kolom Kanan: Pendidikan, Core Coursework, & Sertifikasi */}
+          {/* Kolom Kanan: Pendidikan, Coursework, Base, & Sertifikasi */}
           <motion.div 
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -73,7 +148,7 @@ export default function About() {
           >
             
             {/* Pendidikan & Coursework Card */}
-            <div className="flex flex-col gap-5 p-6 sm:p-8 rounded-2xl bg-white dark:bg-[#1C2541] border border-slate-200/80 dark:border-slate-700/60 shadow-sm">
+            <div className="flex flex-col gap-5 p-6 sm:p-8 rounded-2xl bg-white/90 dark:bg-[#1C2541]/90 backdrop-blur-md border border-slate-200/80 dark:border-slate-700/60 shadow-sm">
               <div className="flex items-start sm:items-center gap-4">
                 <div className="w-16 h-16 rounded-2xl bg-slate-50 dark:bg-slate-900 flex items-center justify-center shrink-0 border border-slate-200 dark:border-slate-700 overflow-hidden p-2 shadow-inner">
                   <img 
@@ -116,22 +191,12 @@ export default function About() {
               </div>
             </div>
 
-            {/* Statistik Ringkas (GPA & Base) */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="p-5 rounded-2xl bg-white dark:bg-[#1C2541] border border-slate-200/80 dark:border-slate-700/60 flex items-center gap-4 shadow-sm">
-                <div className="p-3 rounded-xl bg-emerald-500/10 text-[#16A34A] dark:text-[#4ADE80]"><Award className="w-6 h-6" /></div>
-                <div>
-                  <div className="text-[10px] font-mono text-[#64748B] dark:text-[#94A3B8] uppercase tracking-wider font-semibold">Academic Record</div>
-                  <div className="text-sm sm:text-base font-bold text-[#1E293B] dark:text-[#F8FAFC]">GPA 3.71 / Cum Laude</div>
-                </div>
-              </div>
-
-              <div className="p-5 rounded-2xl bg-white dark:bg-[#1C2541] border border-slate-200/80 dark:border-slate-700/60 flex items-center gap-4 shadow-sm">
-                <div className="p-3 rounded-xl bg-sky-500/10 text-[#0284C7] dark:text-[#38BDF8]"><MapPin className="w-6 h-6" /></div>
-                <div>
-                  <div className="text-[10px] font-mono text-[#64748B] dark:text-[#94A3B8] uppercase tracking-wider font-semibold">Base / Mobility</div>
-                  <div className="text-sm sm:text-base font-bold text-[#1E293B] dark:text-[#F8FAFC]">Magelang & Yogyakarta (Ready)</div>
-                </div>
+            {/* Base / Mobility Card (Full Width setelah Academic Record dihapus) */}
+            <div className="p-5 rounded-2xl bg-white/90 dark:bg-[#1C2541]/90 backdrop-blur-md border border-slate-200/80 dark:border-slate-700/60 flex items-center gap-4 shadow-sm">
+              <div className="p-3 rounded-xl bg-sky-500/10 text-[#0284C7] dark:text-[#38BDF8]"><MapPin className="w-6 h-6" /></div>
+              <div>
+                <div className="text-[10px] font-mono text-[#64748B] dark:text-[#94A3B8] uppercase tracking-wider font-semibold">Base / Mobility Location</div>
+                <div className="text-sm sm:text-base font-bold text-[#1E293B] dark:text-[#F8FAFC]">Magelang & Yogyakarta (Relocation Ready)</div>
               </div>
             </div>
 

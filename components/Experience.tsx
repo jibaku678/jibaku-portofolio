@@ -24,7 +24,7 @@ export default function Experience() {
     "/PKL/kelinci2.png"
   ]
 
-  // 2. Puskesmas Godean Gallery Files (Format MP4 baru)
+  // 2. Puskesmas Godean (Video tidak autoplay, menggunakan controls)
   const puskesItems = [
     { type: "image", src: "/PKL/puskes.jpeg" },
     { type: "video", src: "/PKL/puskes1.mp4" },
@@ -54,13 +54,12 @@ export default function Experience() {
     "/PKL/betesda3.jpeg"
   ]
 
-  // Autoslide effect
+  // Autoslide effect (khusus foto, galeri puskesmas digeser manual/atau slide foto saja yang otomatis)
   useEffect(() => {
     const t1 = setInterval(() => setKelinciIdx(p => (p === kelinciImages.length - 1 ? 0 : p + 1)), 4000)
-    const t2 = setInterval(() => setPuskesIdx(p => (p === puskesItems.length - 1 ? 0 : p + 1)), 5000)
     const t3 = setInterval(() => setBethesdaIdx(p => (p === bethesdaImages.length - 1 ? 0 : p + 1)), 4000)
-    return () => { clearInterval(t1); clearInterval(t2); clearInterval(t3); }
-  }, [kelinciImages.length, puskesItems.length, bethesdaImages.length])
+    return () => { clearInterval(t1); clearInterval(t3); }
+  }, [kelinciImages.length, bethesdaImages.length])
 
   // --- HTML5 CANVAS INTERACTIVE ---
   useEffect(() => {
@@ -246,7 +245,6 @@ export default function Experience() {
   return (
     <section id="experience" className="relative py-20 sm:py-32 w-full bg-[#F8FAFC] dark:bg-[#0B1329] transition-colors duration-300 overflow-hidden border-t border-slate-200/80 dark:border-slate-800/60">
       
-      {/* 1. LIGHTWEIGHT BLUR GRADIENT & CANVAS BACKGROUND (Tanpa banner foto berat) */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -left-40 w-96 h-96 bg-sky-400/10 dark:bg-sky-600/10 rounded-full blur-3xl"></div>
         <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-emerald-400/10 dark:bg-emerald-600/10 rounded-full blur-3xl"></div>
@@ -333,7 +331,7 @@ export default function Experience() {
                       </div>
                     )}
 
-                    {/* PUSKESMAS GALLERY (MP4 SUPPORTED) */}
+                    {/* PUSKESMAS GALLERY (NON-AUTOPLAY / DENGAN CONTROLS) */}
                     {exp.galleryType === 'puskes' && (
                       <div className="relative w-full h-full flex items-center justify-center">
                         <AnimatePresence mode="wait">
@@ -341,9 +339,7 @@ export default function Experience() {
                             <motion.video
                               key={`vid-${puskesIdx}`}
                               src={puskesItems[puskesIdx].src}
-                              autoPlay
-                              loop
-                              muted
+                              controls
                               playsInline
                               initial={{ opacity: 0 }}
                               animate={{ opacity: 1 }}
@@ -395,10 +391,10 @@ export default function Experience() {
                       </div>
                     )}
 
-                    {/* DINKES MAGELANG */}
+                    {/* DINKES MAGELANG (dinkesmagelang.jpg) */}
                     {exp.galleryType === 'dinkes' && (
                       <div className="relative w-full h-full flex items-center justify-center">
-                        <img src="/PKL/dinkesmagelang.JPG" alt="Magelang Health Office Documentation" className="max-h-full max-w-full object-contain select-none" />
+                        <img src="/PKL/dinkesmagelang.jpg" alt="Magelang Health Office Documentation" className="max-h-full max-w-full object-contain select-none" />
                       </div>
                     )}
 

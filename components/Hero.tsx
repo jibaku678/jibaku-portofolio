@@ -173,7 +173,6 @@ export default function Hero() {
     { Icon: Globe2, color: "text-sky-500/15", size: 60, startX: "55%", startY: "70%", duration: 27 },
   ]
 
-  // Update Ekstensi Gambar MS Office menjadi .png sesuai file terbaru
   const toolStack = [
     { name: 'ArcGIS', img: '/arcgis_logo.png' },
     { name: 'SPSS', img: '/spss_logo.png' },
@@ -194,17 +193,17 @@ export default function Hero() {
             transition={{ duration: 1.5, ease: "easeInOut" }}
             className="absolute inset-0 flex items-center justify-center"
           >
-            {/* LAYER 1: Background Ambient (Blur dikurangi menjadi blur-xl agar lebih kalem/tidak ekstrem) */}
+            {/* LAYER 1: Background Ambient (Blur dikurangi menjadi blur-sm agar tipis dan lebih jelas konteks lapangannya) */}
             <div className="absolute inset-0">
               <Image 
                 src={backgrounds[bgIndex]} 
                 alt="Background Ambient" 
                 fill 
-                className="object-cover filter blur-xl opacity-20 dark:opacity-30 scale-105 select-none" 
+                className="object-cover filter blur-sm opacity-20 dark:opacity-30 scale-105 select-none" 
               />
             </div>
 
-            {/* LAYER 2: Foto Asli (Tajam) + Fading Edges (Biar pinggirannya membaur halus, bukan kotak kaku) */}
+            {/* LAYER 2: Foto Asli (Tajam) + Fading Edges */}
             <div className="absolute inset-0 w-full h-full flex items-center justify-center p-4">
               <motion.div
                 animate={{ scale: [1, 1.01, 1] }}
@@ -223,7 +222,7 @@ export default function Hero() {
           </motion.div>
         </AnimatePresence>
 
-        {/* LAYER 3: Gradient Overlay (Agar area teks tetap nyaman dibaca) */}
+        {/* LAYER 3: Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#F8FAFC]/95 via-[#F8FAFC]/50 to-[#F8FAFC]/95 dark:from-[#0B1329]/95 dark:via-[#0B1329]/60 dark:to-[#0B1329]/95 pointer-events-none"></div>
       </div>
 
@@ -287,7 +286,7 @@ export default function Hero() {
           </p>
         </motion.div>
 
-        {/* Tech Stack / Skills */}
+        {/* Tech Stack / Skills (Logo Full Cover tanpa margin/space putih) */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -296,9 +295,9 @@ export default function Hero() {
         >
           {toolStack.map((tool, idx) => (
             <div key={idx} className="flex items-center gap-2.5 group">
-              {/* Lingkaran Logo Bulat Minimalis */}
-              <div className="relative w-8 h-8 bg-white rounded-full shadow-sm border border-slate-200 dark:border-slate-700/60 p-1 flex items-center justify-center transition-transform group-hover:scale-105">
-                <Image src={tool.img} alt={tool.name} fill className="object-contain p-1.5" />
+              {/* Container overflow-hidden agar logo memenuhi batas lingkaran tanpa menyisakan padding putih */}
+              <div className="relative w-8 h-8 rounded-full overflow-hidden shadow-sm border border-slate-200 dark:border-slate-700/60 transition-transform group-hover:scale-105 bg-white">
+                <Image src={tool.img} alt={tool.name} fill className="object-cover" />
               </div>
               <span className="text-[11px] font-bold text-[#334155] dark:text-[#E2E8F0] uppercase tracking-wide">
                 {tool.name}

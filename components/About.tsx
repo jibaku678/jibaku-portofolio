@@ -184,16 +184,16 @@ export default function About() {
             className="lg:col-span-7 space-y-5 sm:space-y-6"
           >
             
-            {/* Pendidikan & Coursework Card (Logo Presisi Terkunci) */}
+            {/* Pendidikan & Coursework Card */}
             <div className="flex flex-col gap-5 sm:gap-6 p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-white/95 dark:bg-[#1C2541]/90 backdrop-blur-xl border border-slate-200/80 dark:border-slate-700/60 shadow-sm">
               
-              {/* Header Pendidikan dengan Logo Terkunci Presisi */}
-              <div className="flex items-start gap-4">
+              {/* Header Pendidikan dengan Proporsi Logo Presisi */}
+              <div className="flex items-center gap-4">
                 <div className="w-12 h-12 sm:w-14 sm:h-14 shrink-0 flex items-center justify-center">
                   <img 
                     src="/logo.polkesyo.png" 
                     alt="Poltekkes Kemenkes Yogyakarta Logo" 
-                    className="w-full h-full object-contain"
+                    className="w-full h-full object-contain drop-shadow-sm"
                   />
                 </div>
                 <div className="flex-1 min-w-0">

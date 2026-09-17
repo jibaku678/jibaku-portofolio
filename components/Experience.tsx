@@ -12,7 +12,7 @@ export default function Experience() {
   const [puskesIdx, setPuskesIdx] = useState(0)
   const [bethesdaIdx, setBethesdaIdx] = useState(0)
 
-  // 1. PT Dua Kelinci Gallery Files
+  // 1. PT Dua Kelinci (Mencakup kelinci 1-8, kelinci2.JPG, kelinci2.png)
   const kelinciImages = [
     "/PKL/kelinci (1).jpeg",
     "/PKL/kelinci (2).jpeg",
@@ -26,7 +26,7 @@ export default function Experience() {
     "/PKL/kelinci2.png"
   ]
 
-  // 2. Puskesmas Godean Gallery Files
+  // 2. Puskesmas Godean (puskes.jpeg + puskes1.MOV s.d puskes6.MOV)
   const puskesItems = [
     { type: "image", src: "/PKL/puskes.jpeg" },
     { type: "video", src: "/PKL/puskes1.MOV" },
@@ -37,7 +37,7 @@ export default function Experience() {
     { type: "video", src: "/PKL/puskes6.MOV" },
   ]
 
-  // 3. Bethesda Hospital Gallery Files (Lengkap dari betesda 1 s.d. 12 + betesda1-3)
+  // 3. Bethesda Hospital (betesda 1 s.d 12 + betesda1, betesda2, betesda3)
   const bethesdaImages = [
     "/PKL/betesda (1).jpeg",
     "/PKL/betesda (2).jpeg",
@@ -54,11 +54,6 @@ export default function Experience() {
     "/PKL/betesda1.jpeg",
     "/PKL/betesda2.jpeg",
     "/PKL/betesda3.jpeg"
-  ]
-
-  // 4. Dinkes Magelang Gallery File
-  const dinkesImages = [
-    "/PKL/dinkesmagelang.JPG"
   ]
 
   // Autoslide effect
@@ -319,7 +314,8 @@ export default function Experience() {
                 </div>
 
                 <div className="flex flex-col gap-3">
-                  <div className="relative w-full h-[240px] sm:h-[280px] bg-slate-950/60 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700/60 shadow-md flex items-center justify-center">
+                  {/* Bingkai foto menggunakan object-contain agar foto/video tampil utuh tanpa terpotong */}
+                  <div className="relative w-full h-[260px] sm:h-[300px] bg-slate-950/90 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700/60 shadow-md flex items-center justify-center p-2">
                     
                     {/* KELINCI GALLERY */}
                     {exp.galleryType === 'kelinci' && (
@@ -332,12 +328,15 @@ export default function Experience() {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            transition={{ duration: 0.4 }}
-                            className="w-full h-full object-cover select-none"
+                            transition={{ duration: 0.3 }}
+                            className="max-h-full max-w-full object-contain select-none"
                           />
                         </AnimatePresence>
                         <button onClick={() => setKelinciIdx(p => p === 0 ? kelinciImages.length - 1 : p - 1)} className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/60 text-white hover:bg-black cursor-pointer z-10"><ChevronLeft className="w-4 h-4" /></button>
                         <button onClick={() => setKelinciIdx(p => p === kelinciImages.length - 1 ? 0 : p + 1)} className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/60 text-white hover:bg-black cursor-pointer z-10"><ChevronRight className="w-4 h-4" /></button>
+                        <div className="absolute bottom-2 px-2 py-0.5 bg-black/70 rounded-full text-[10px] text-white font-mono z-10">
+                          {kelinciIdx + 1} / {kelinciImages.length}
+                        </div>
                       </div>
                     )}
 
@@ -356,8 +355,8 @@ export default function Experience() {
                               initial={{ opacity: 0 }}
                               animate={{ opacity: 1 }}
                               exit={{ opacity: 0 }}
-                              transition={{ duration: 0.4 }}
-                              className="w-full h-full object-cover select-none"
+                              transition={{ duration: 0.3 }}
+                              className="max-h-full max-w-full object-contain select-none"
                             />
                           ) : (
                             <motion.img
@@ -367,13 +366,16 @@ export default function Experience() {
                               initial={{ opacity: 0 }}
                               animate={{ opacity: 1 }}
                               exit={{ opacity: 0 }}
-                              transition={{ duration: 0.4 }}
-                              className="w-full h-full object-cover select-none"
+                              transition={{ duration: 0.3 }}
+                              className="max-h-full max-w-full object-contain select-none"
                             />
                           )}
                         </AnimatePresence>
                         <button onClick={() => setPuskesIdx(p => p === 0 ? puskesItems.length - 1 : p - 1)} className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/60 text-white hover:bg-black cursor-pointer z-10"><ChevronLeft className="w-4 h-4" /></button>
                         <button onClick={() => setPuskesIdx(p => p === puskesItems.length - 1 ? 0 : p + 1)} className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/60 text-white hover:bg-black cursor-pointer z-10"><ChevronRight className="w-4 h-4" /></button>
+                        <div className="absolute bottom-2 px-2 py-0.5 bg-black/70 rounded-full text-[10px] text-white font-mono z-10">
+                          {puskesIdx + 1} / {puskesItems.length}
+                        </div>
                       </div>
                     )}
 
@@ -388,26 +390,29 @@ export default function Experience() {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            transition={{ duration: 0.4 }}
-                            className="w-full h-full object-cover select-none"
+                            transition={{ duration: 0.3 }}
+                            className="max-h-full max-w-full object-contain select-none"
                           />
                         </AnimatePresence>
                         <button onClick={() => setBethesdaIdx(p => p === 0 ? bethesdaImages.length - 1 : p - 1)} className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/60 text-white hover:bg-black cursor-pointer z-10"><ChevronLeft className="w-4 h-4" /></button>
                         <button onClick={() => setBethesdaIdx(p => p === bethesdaImages.length - 1 ? 0 : p + 1)} className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/60 text-white hover:bg-black cursor-pointer z-10"><ChevronRight className="w-4 h-4" /></button>
+                        <div className="absolute bottom-2 px-2 py-0.5 bg-black/70 rounded-full text-[10px] text-white font-mono z-10">
+                          {bethesdaIdx + 1} / {bethesdaImages.length}
+                        </div>
                       </div>
                     )}
 
                     {/* DINKES MAGELANG */}
                     {exp.galleryType === 'dinkes' && (
                       <div className="relative w-full h-full flex items-center justify-center">
-                        <img src="/PKL/dinkesmagelang.JPG" alt="Magelang Health Office Documentation" className="w-full h-full object-cover select-none" />
+                        <img src="/PKL/dinkesmagelang.JPG" alt="Magelang Health Office Documentation" className="max-h-full max-w-full object-contain select-none" />
                       </div>
                     )}
 
                     {/* NGENTAK HAMLET */}
                     {exp.galleryType === 'ngentak' && (
                       <div className="relative w-full h-full flex items-center justify-center">
-                        <img src="/PKL/komunitas.jpeg" alt="Ngentak Hamlet Documentation" className="w-full h-full object-cover select-none" />
+                        <img src="/PKL/komunitas.jpeg" alt="Ngentak Hamlet Documentation" className="max-h-full max-w-full object-contain select-none" />
                       </div>
                     )}
 

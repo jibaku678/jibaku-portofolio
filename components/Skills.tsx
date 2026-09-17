@@ -11,7 +11,7 @@ export default function Skills() {
 
   const backgroundBanner = '/newbanner1.png'
 
-  // --- HTML5 CANVAS INTERACTIVE (Konsisten dengan Hero & About) ---
+  // --- HTML5 CANVAS INTERACTIVE ---
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
@@ -114,7 +114,7 @@ export default function Skills() {
     }
   }, [])
 
-  // Data skills yang sudah diperbarui sesuai permintaan
+  // Data skills dengan Web Deployment yang sudah digabung ke Engineering, Design & Productivity
   const technicalSkills = [
     { 
       category: "Occupational Health & Safety (HSE)", 
@@ -156,12 +156,7 @@ export default function Skills() {
         "Creative Design (Canva, Figma, CorelDRAW, Adobe Express)",
         "OBS Studio (Media & Broadcasting)",
         "Event Coordination & Tech Operations",
-        "Nitro PDF & Barcode Systems"
-      ] 
-    },
-    { 
-      category: "Vibe Coding & Web Deployment", 
-      items: [
+        "Nitro PDF & Barcode Systems",
         "Google Apps Script (GAS)", 
         "VS Code (Environment)", 
         "GitHub (Version Control)", 
@@ -173,7 +168,7 @@ export default function Skills() {
   return (
     <section id="skills" className="relative py-20 sm:py-32 w-full bg-[#F8FAFC] dark:bg-[#0B1329] transition-colors duration-300 overflow-hidden border-t border-slate-200/80 dark:border-slate-800/60">
       
-      {/* 1. BACKGROUND LAYERING (Konsisten dengan Hero & About) */}
+      {/* 1. BACKGROUND LAYERING */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <div className="absolute inset-0 filter blur-2xl opacity-15 dark:opacity-25 scale-105 select-none">
           <Image src={backgroundBanner} alt="Skills Ambient Fill" fill className="object-cover" />
@@ -220,7 +215,7 @@ export default function Skills() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: idx * 0.1 }}
                   className={`bg-white/95 dark:bg-[#1C2541]/90 backdrop-blur-xl border border-slate-200/80 dark:border-slate-700/60 rounded-2xl sm:rounded-3xl p-6 shadow-sm flex flex-col ${
-                    idx === 4 ? 'sm:col-span-2' : ''
+                    idx === 3 ? 'sm:col-span-2' : ''
                   }`}
                 >
                   <h3 className="text-sm font-bold text-[#1E293B] dark:text-[#F8FAFC] uppercase tracking-wider mb-4 pb-2 border-b border-slate-100 dark:border-slate-700/60">

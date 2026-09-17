@@ -30,7 +30,7 @@ export default function About() {
 
     window.addEventListener('resize', handleResize)
 
-    const particlesCount = 45
+    const particlesCount = 40
     const particles: { x: number; y: number; vx: number; vy: number; radius: number }[] = []
 
     for (let i = 0; i < particlesCount; i++) {
@@ -115,7 +115,7 @@ export default function About() {
   }, [])
 
   return (
-    <section id="about" className="relative py-28 sm:py-32 w-full bg-[#F8FAFC] dark:bg-[#0B1329] transition-colors duration-300 overflow-hidden">
+    <section id="about" className="relative py-20 sm:py-32 w-full bg-[#F8FAFC] dark:bg-[#0B1329] transition-colors duration-300 overflow-hidden">
       
       {/* 1. BACKGROUND LAYERING */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
@@ -142,7 +142,7 @@ export default function About() {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header Section */}
-        <div className="flex flex-col items-start gap-2 mb-12">
+        <div className="flex flex-col items-start gap-2 mb-10 sm:mb-12">
           <span className="text-xs font-bold text-[#0284C7] dark:text-[#38BDF8] uppercase tracking-widest font-mono">
             // Profile Overview
           </span>
@@ -151,55 +151,55 @@ export default function About() {
           </h2>
         </div>
 
-        {/* Grid Utama Desktop & Mobile Friendly */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        {/* Grid Utama: Flexibel untuk Mobile & Desktop */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
           
-          {/* Kolom Kiri: Foto & Deskripsi */}
+          {/* Kolom Kiri: Foto & Deskripsi Singkat */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="lg:col-span-5 bg-white/95 dark:bg-[#1C2541]/90 backdrop-blur-xl border border-slate-200/80 dark:border-slate-700/60 rounded-3xl p-6 sm:p-8 shadow-sm flex flex-col items-center text-center space-y-6"
+            className="lg:col-span-5 bg-white/95 dark:bg-[#1C2541]/90 backdrop-blur-xl border border-slate-200/80 dark:border-slate-700/60 rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-sm flex flex-col items-center text-center space-y-5 sm:space-y-6"
           >
-            <div className="rounded-2xl overflow-hidden shadow-md border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 p-2 w-44 sm:w-52 shrink-0">
+            <div className="rounded-xl sm:rounded-2xl overflow-hidden shadow-md border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 p-1.5 sm:p-2 w-40 sm:w-52 shrink-0">
               <img
                 src="/foto.profil.jpeg"
                 alt="Jibakudin Nur"
-                className="w-full rounded-xl block object-cover aspect-[4/5]"
+                className="w-full rounded-lg sm:rounded-xl block object-cover aspect-[4/5]"
               />
             </div>
 
-            <p className="text-[#334155] dark:text-[#94A3B8] text-sm sm:text-base leading-relaxed text-justify font-medium">
+            <p className="text-[#334155] dark:text-[#94A3B8] text-xs sm:text-base leading-relaxed text-justify font-medium">
               I am an <strong className="text-[#1E293B] dark:text-[#F8FAFC] font-semibold">Applied Environmental Sanitation graduate</strong> from Poltekkes Kemenkes Yogyakarta, completing my study with a <strong className="text-[#16A34A] dark:text-[#4ADE80] font-semibold">Cum Laude predicate (GPA 3.71)</strong>. Through practical field experiences across industrial facilities, hospitals, public health centers, and community programs, I have developed strong competencies in environmental health inspections, waste management systems, and safety compliance.
             </p>
           </motion.div>
 
-          {/* Kolom Kanan: Pendidikan, Coursework (Bentuk Teks), Base, & Sertifikasi */}
+          {/* Kolom Kanan: Pendidikan, Coursework Text, Base, & Sertifikasi */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="lg:col-span-7 space-y-6"
+            className="lg:col-span-7 space-y-5 sm:space-y-6"
           >
             
-            {/* Pendidikan & Coursework Text Card */}
-            <div className="flex flex-col gap-6 p-6 sm:p-8 rounded-3xl bg-white/95 dark:bg-[#1C2541]/90 backdrop-blur-xl border border-slate-200/80 dark:border-slate-700/60 shadow-sm">
+            {/* Pendidikan & Coursework Card */}
+            <div className="flex flex-col gap-5 sm:gap-6 p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-white/95 dark:bg-[#1C2541]/90 backdrop-blur-xl border border-slate-200/80 dark:border-slate-700/60 shadow-sm">
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                <div className="w-16 h-16 rounded-2xl bg-slate-50 dark:bg-slate-900 flex items-center justify-center shrink-0 border border-slate-200 dark:border-slate-700 overflow-hidden p-2 shadow-inner">
+                <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-slate-50 dark:bg-slate-900 flex items-center justify-center shrink-0 border border-slate-200 dark:border-slate-700 overflow-hidden p-2 shadow-inner">
                   <img 
                     src="/logo.polkesyo.png" 
                     alt="Poltekkes Kemenkes Yogyakarta Logo" 
-                    className="w-12 h-12 object-contain aspect-square"
+                    className="w-10 h-10 sm:w-12 sm:h-12 object-contain aspect-square"
                   />
                 </div>
                 <div>
-                  <div className="flex flex-wrap items-center gap-2 mb-1.5">
+                  <div className="flex flex-wrap items-center gap-2 mb-1">
                     <span className="text-[10px] font-mono text-[#0284C7] dark:text-[#38BDF8] uppercase tracking-widest font-bold">Education Background</span>
-                    <span className="text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-[#334155] dark:text-[#E2E8F0]">2022 – 2026</span>
+                    <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-[#334155] dark:text-[#E2E8F0]">2022 – 2026</span>
                   </div>
-                  <h4 className="text-base sm:text-lg font-bold text-[#1E293B] dark:text-[#F8FAFC] leading-tight mb-1">
+                  <h4 className="text-sm sm:text-lg font-bold text-[#1E293B] dark:text-[#F8FAFC] leading-tight mb-1">
                     Applied Bachelor (D4) in Environmental Sanitation
                   </h4>
                   <p className="text-xs sm:text-sm text-[#475569] dark:text-[#94A3B8] font-medium">
@@ -209,7 +209,7 @@ export default function About() {
               </div>
               
               <div className="pt-4 border-t border-slate-100 dark:border-slate-700/60 space-y-2">
-                <p className="text-[11px] font-bold text-[#64748B] dark:text-[#94A3B8] uppercase tracking-wider">
+                <p className="text-[10px] sm:text-[11px] font-bold text-[#64748B] dark:text-[#94A3B8] uppercase tracking-wider">
                   Core Coursework & Focus Areas
                 </p>
                 <p className="text-xs sm:text-sm text-[#334155] dark:text-[#94A3B8] leading-relaxed font-medium text-justify">
@@ -219,11 +219,11 @@ export default function About() {
             </div>
 
             {/* Base / Mobility Card */}
-            <div className="p-5 sm:p-6 rounded-3xl bg-white/95 dark:bg-[#1C2541]/90 backdrop-blur-xl border border-slate-200/80 dark:border-slate-700/60 flex items-center gap-4 shadow-sm">
-              <div className="p-3.5 rounded-2xl bg-sky-500/10 text-[#0284C7] dark:text-[#38BDF8] shrink-0"><MapPin className="w-6 h-6" /></div>
+            <div className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-white/95 dark:bg-[#1C2541]/90 backdrop-blur-xl border border-slate-200/80 dark:border-slate-700/60 flex items-center gap-4 shadow-sm">
+              <div className="p-3 rounded-xl sm:rounded-2xl bg-sky-500/10 text-[#0284C7] dark:text-[#38BDF8] shrink-0"><MapPin className="w-5 h-5 sm:w-6 sm:h-6" /></div>
               <div>
                 <div className="text-[10px] font-mono text-[#64748B] dark:text-[#94A3B8] uppercase tracking-wider font-semibold">Base / Mobility Location</div>
-                <div className="text-sm sm:text-base font-bold text-[#1E293B] dark:text-[#F8FAFC]">Magelang & Yogyakarta (Ready To Relocation)</div>
+                <div className="text-xs sm:text-base font-bold text-[#1E293B] dark:text-[#F8FAFC]">Magelang & Yogyakarta (Ready To Relocation)</div>
               </div>
             </div>
 
@@ -231,20 +231,20 @@ export default function About() {
             <motion.div 
               whileHover={{ scale: 1.01 }}
               transition={{ duration: 0.2 }}
-              className="relative rounded-3xl bg-gradient-to-r from-emerald-500/10 via-sky-500/5 to-white dark:from-emerald-500/15 dark:via-slate-900 dark:to-[#1C2541] border-2 border-emerald-500/40 dark:border-emerald-500/40 p-6 sm:p-7 shadow-lg overflow-hidden group"
+              className="relative rounded-2xl sm:rounded-3xl bg-gradient-to-r from-emerald-500/10 via-sky-500/5 to-white dark:from-emerald-500/15 dark:via-slate-900 dark:to-[#1C2541] border-2 border-emerald-500/40 dark:border-emerald-500/40 p-5 sm:p-7 shadow-lg overflow-hidden group"
             >
               <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none"></div>
 
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 relative z-10">
-                <div className="flex items-start gap-4">
-                  <div className="p-3.5 rounded-2xl bg-[#16A34A] text-white shrink-0 shadow-md group-hover:rotate-6 transition-transform">
-                    <ShieldCheck className="w-7 h-7" />
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 sm:gap-6 relative z-10">
+                <div className="flex items-start gap-3 sm:gap-4">
+                  <div className="p-3 sm:p-3.5 rounded-xl sm:rounded-2xl bg-[#16A34A] text-white shrink-0 shadow-md group-hover:rotate-6 transition-transform">
+                    <ShieldCheck className="w-6 h-6 sm:w-7 sm:h-7" />
                   </div>
-                  <div className="space-y-1.5">
+                  <div className="space-y-1">
                     <span className="inline-block px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-[#16A34A] dark:text-[#4ADE80] font-mono text-[10px] font-bold tracking-widest uppercase border border-emerald-500/30">
                       Verified National Credential
                     </span>
-                    <h3 className="text-base sm:text-lg font-black text-[#1E293B] dark:text-[#F8FAFC] uppercase tracking-tight leading-snug">
+                    <h3 className="text-sm sm:text-lg font-black text-[#1E293B] dark:text-[#F8FAFC] uppercase tracking-tight leading-snug">
                       Level 6 Environmental Health Practitioner Certification
                     </h3>
                     <p className="text-xs sm:text-sm text-[#475569] dark:text-[#94A3B8] leading-relaxed font-medium">
@@ -256,7 +256,7 @@ export default function About() {
                 <div className="shrink-0 w-full sm:w-auto">
                   <button
                     onClick={() => setIsModalOpen(true)}
-                    className="flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-[#0284C7] hover:bg-[#0369a1] text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md cursor-pointer w-full sm:w-auto"
+                    className="flex items-center justify-center gap-2 px-5 py-3 sm:px-6 sm:py-3.5 rounded-full bg-[#0284C7] hover:bg-[#0369a1] text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md cursor-pointer w-full sm:w-auto"
                   >
                     Preview Certificate <ExternalLink className="w-4 h-4" />
                   </button>
@@ -282,15 +282,15 @@ export default function About() {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className={`relative bg-white dark:bg-[#1C2541] border border-slate-200 dark:border-slate-700 rounded-2xl p-6 shadow-2xl transition-all duration-300 flex flex-col ${
+              className={`relative bg-white dark:bg-[#1C2541] border border-slate-200 dark:border-slate-700 rounded-2xl p-4 sm:p-6 shadow-2xl transition-all duration-300 flex flex-col ${
                 isFullScreen ? 'w-screen h-screen max-w-none max-h-none rounded-none p-4' : 'max-w-4xl w-full'
               }`}
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-700 shrink-0">
+              <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-slate-100 dark:border-slate-700 shrink-0">
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-[#16A34A] dark:text-[#4ADE80]" />
-                  <h4 className="font-bold text-[#1E293B] dark:text-[#F8FAFC] text-xs sm:text-sm uppercase tracking-wider">
+                  <h4 className="font-bold text-[#1E293B] dark:text-[#F8FAFC] text-[11px] sm:text-sm uppercase tracking-wider truncate max-w-[220px] sm:max-w-none">
                     Level 6 Environmental Health Practitioner Certificate (Verified)
                   </h4>
                 </div>
@@ -298,7 +298,7 @@ export default function About() {
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => setIsFullScreen(!isFullScreen)}
-                    className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-[#334155] dark:text-[#E2E8F0] hover:text-[#0284C7] transition-colors cursor-pointer flex items-center gap-1.5 text-xs font-bold"
+                    className="p-1.5 sm:p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-[#334155] dark:text-[#E2E8F0] hover:text-[#0284C7] transition-colors cursor-pointer flex items-center gap-1.5 text-xs font-bold"
                     title={isFullScreen ? "Exit Fullscreen" : "Full Screen"}
                   >
                     {isFullScreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
@@ -307,7 +307,7 @@ export default function About() {
 
                   <button
                     onClick={() => { setIsModalOpen(false); setIsFullScreen(false); }}
-                    className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-[#1E293B] dark:hover:text-white transition-colors cursor-pointer"
+                    className="p-1.5 sm:p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-[#1E293B] dark:hover:text-white transition-colors cursor-pointer"
                   >
                     <X className="w-5 h-5" />
                   </button>
@@ -340,7 +340,7 @@ export default function About() {
                 </div>
               </div>
 
-              <div className="flex items-center justify-between pt-2 text-[11px] text-[#64748B] dark:text-[#94A3B8] font-mono shrink-0">
+              <div className="flex items-center justify-between pt-2 text-[10px] sm:text-[11px] text-[#64748B] dark:text-[#94A3B8] font-mono shrink-0">
                 <span>Status: Official Credential Preview</span>
                 <span>Secure Document Viewer</span>
               </div>

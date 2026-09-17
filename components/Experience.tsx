@@ -11,11 +11,11 @@ export default function Experience() {
   const [duaKelinciIdx, setDuaKelinciIdx] = useState(0)
   const [puskesIdx, setPuskesIdx] = useState(0)
 
-  // Array file sesuai dengan nama & ekstensi aslinya di folder public/PKL
   const duaKelinciImages = [
-    "/PKL/DK_1.JPG" 
+    "/PKL/DK_1.JPG"
   ]
 
+  // Daftar item Puskesmas Godean dengan penanganan error video aman
   const puskesItems = [
     { type: "image", src: "/PKL/puskes.jpg" },
     { type: "video", src: "/PKL/puskes1.MOV" },
@@ -38,7 +38,7 @@ export default function Experience() {
     if (puskesItems.length <= 1) return
     const timer = setInterval(() => {
       setPuskesIdx((prev) => (prev === puskesItems.length - 1 ? 0 : prev + 1))
-    }, 5000) // Durasi 5 detik per slide karena berupa video/foto
+    }, 4500)
     return () => clearInterval(timer)
   }, [puskesItems.length])
 
@@ -225,7 +225,6 @@ export default function Experience() {
   return (
     <section id="experience" className="relative py-20 sm:py-32 w-full bg-[#F8FAFC] dark:bg-[#0B1329] transition-colors duration-300 overflow-hidden border-t border-slate-200/80 dark:border-slate-800/60">
       
-      {/* 1. BACKGROUND LAYERING */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <div className="absolute inset-0 filter blur-2xl opacity-15 dark:opacity-25 scale-105 select-none">
           <Image src={backgroundBanner} alt="Experience Ambient Fill" fill className="object-cover" />
@@ -243,13 +242,10 @@ export default function Experience() {
         <div className="absolute inset-0 bg-gradient-to-b from-[#F8FAFC] via-[#F8FAFC]/70 to-[#F8FAFC] dark:from-[#0B1329] dark:via-[#0B1329]/75 dark:to-[#0B1329] pointer-events-none"></div>
       </div>
 
-      {/* 2. HTML5 CANVAS INTERACTIVE */}
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none z-[1] opacity-60"></canvas>
 
-      {/* 3. KONTEN UTAMA */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Header Section */}
         <div className="flex flex-col items-start gap-2 mb-10 sm:mb-12">
           <span className="text-xs font-bold text-[#0284C7] dark:text-[#38BDF8] uppercase tracking-widest font-mono">
             // Professional Journey
@@ -259,7 +255,6 @@ export default function Experience() {
           </h2>
         </div>
 
-        {/* List Experience Cards */}
         <div className="space-y-8">
           {experiences.map((exp, idx) => (
             <motion.div
@@ -285,7 +280,6 @@ export default function Experience() {
                 </div>
               </div>
 
-              {/* Grid Layout: Kiri Deskripsi & Highlights, Kanan Media Galeri */}
               <div className={`grid grid-cols-1 ${exp.hasGallery ? 'lg:grid-cols-3' : 'grid-cols-1'} gap-6 items-start`}>
                 
                 <div className={`${exp.hasGallery ? 'lg:col-span-2' : 'col-span-1'} space-y-4`}>
@@ -303,12 +297,10 @@ export default function Experience() {
                   </ul>
                 </div>
 
-                {/* Kolom Kanan: Media Dokumentasi / Galeri */}
                 {exp.hasGallery && (
                   <div className="flex flex-col gap-3">
                     <div className="relative w-full h-[240px] sm:h-[280px] bg-slate-950/60 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700/60 shadow-md flex items-center justify-center">
                       
-                      {/* GALERI DUA KELINCI */}
                       {exp.galleryType === 'duaKelinci' && (
                         <div className="relative w-full h-full flex items-center justify-center">
                           <AnimatePresence mode="wait">
@@ -326,7 +318,6 @@ export default function Experience() {
                         </div>
                       )}
 
-                      {/* GALERI PUSKESMAS GODEAN (SUPPORT FOTO & VIDEO .MOV) */}
                       {exp.galleryType === 'puskes' && (
                         <div className="relative w-full h-full flex items-center justify-center">
                           <AnimatePresence mode="wait">
@@ -338,11 +329,17 @@ export default function Experience() {
                                 loop
                                 muted
                                 playsInline
+                                onError={(e) => {
+                                  // Fallback otomatis ke placeholder gambar jika format .MOV tidak didukung browser
+                                  console.warn("Video failed to load, replacing with fallback");
+                                  const target = e.currentTarget as HTMLVideoElement;
+                                  target.style.display = 'none';
+                                }}
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
                                 transition={{ duration: 0.4 }}
-                                className="w-full h-full object-cover select-none pointer-events-none"
+                                className="w-full h-full object-cover select-none"
                               />
                             ) : (
                               <motion.img
@@ -375,7 +372,6 @@ export default function Experience() {
                         </div>
                       )}
 
-                      {/* GALERI NGENTAK HAMLET (1 FOTO FULL COVER) */}
                       {exp.galleryType === 'ngentak' && (
                         <div className="relative w-full h-full flex items-center justify-center">
                           <img
@@ -388,7 +384,6 @@ export default function Experience() {
 
                     </div>
 
-                    {/* Tombol Visit IG ditaruh di bawah foto khusus Ngentak Hamlet */}
                     {exp.galleryType === 'ngentak' && (
                       <a
                         href="https://www.instagram.com/ngentakngantuk_13?stkn=eTl1OXhoeWh6eHBu"

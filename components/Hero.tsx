@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import { 
   X, Printer, ShieldCheck, Leaf, HeartPulse, MapPin, 
-  Microscope, HardHat, Globe2, Wind, ChevronDown, ListOrdered
+  Microscope, HardHat, Globe2, Wind, ChevronDown
 } from 'lucide-react'
 
 export default function Hero() {
@@ -97,7 +97,7 @@ export default function Hero() {
 
         ctx.beginPath()
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2)
-        ctx.fillStyle = 'rgba(2, 132, 199, 0.5)' 
+        ctx.fillStyle = 'rgba(2, 132, 199, 0.4)' 
         ctx.fill()
 
         for (let j = i + 1; j < particles.length; j++) {
@@ -110,7 +110,7 @@ export default function Hero() {
             ctx.beginPath()
             ctx.moveTo(p.x, p.y)
             ctx.lineTo(p2.x, p2.y)
-            ctx.strokeStyle = `rgba(22, 163, 74, ${0.2 * (1 - dist / 110)})`
+            ctx.strokeStyle = `rgba(22, 163, 74, ${0.15 * (1 - dist / 110)})`
             ctx.lineWidth = 1
             ctx.stroke()
           }
@@ -123,7 +123,7 @@ export default function Hero() {
           ctx.beginPath()
           ctx.moveTo(p.x, p.y)
           ctx.lineTo(mouseX, mouseY)
-          ctx.strokeStyle = `rgba(56, 189, 248, ${0.35 * (1 - mdist / 180)})`
+          ctx.strokeStyle = `rgba(56, 189, 248, ${0.3 * (1 - mdist / 180)})`
           ctx.lineWidth = 1
           ctx.stroke()
         }
@@ -160,28 +160,26 @@ export default function Hero() {
   }, [])
 
   const floatingIcons = [
-    { Icon: ShieldCheck, color: "text-sky-500/20", size: 56, startX: "5%", startY: "15%", duration: 25 },
-    { Icon: HardHat, color: "text-emerald-500/20", size: 48, startX: "85%", startY: "80%", duration: 22 },
-    { Icon: Leaf, color: "text-emerald-500/20", size: 72, startX: "88%", startY: "15%", duration: 30 },
-    { Icon: Wind, color: "text-sky-400/20", size: 40, startX: "15%", startY: "45%", duration: 24 },
-    { Icon: HeartPulse, color: "text-emerald-400/20", size: 48, startX: "80%", startY: "60%", duration: 22 },
-    { Icon: Microscope, color: "text-sky-300/20", size: 54, startX: "25%", startY: "85%", duration: 26 },
-    { Icon: MapPin, color: "text-emerald-600/20", size: 80, startX: "12%", startY: "75%", duration: 28 },
-    { Icon: Globe2, color: "text-sky-500/20", size: 60, startX: "55%", startY: "70%", duration: 27 },
+    { Icon: ShieldCheck, color: "text-sky-500/15", size: 56, startX: "5%", startY: "15%", duration: 25 },
+    { Icon: HardHat, color: "text-emerald-500/15", size: 48, startX: "85%", startY: "80%", duration: 22 },
+    { Icon: Leaf, color: "text-emerald-500/15", size: 72, startX: "88%", startY: "15%", duration: 30 },
+    { Icon: Wind, color: "text-sky-400/15", size: 40, startX: "15%", startY: "45%", duration: 24 },
+    { Icon: HeartPulse, color: "text-emerald-400/15", size: 48, startX: "80%", startY: "60%", duration: 22 },
+    { Icon: Microscope, color: "text-sky-300/15", size: 54, startX: "25%", startY: "85%", duration: 26 },
+    { Icon: MapPin, color: "text-emerald-600/15", size: 80, startX: "12%", startY: "75%", duration: 28 },
+    { Icon: Globe2, color: "text-sky-500/15", size: 60, startX: "55%", startY: "70%", duration: 27 },
   ]
 
-  const portfolioIndex = [
-    { num: '01', title: 'Selected Work', href: '#projects' },
-    { num: '02', title: 'About & Profile', href: '#about' },
-    { num: '03', title: 'Experience', href: '#experience' },
-    { num: '04', title: 'Skills', href: '#skills' },
-    { num: '05', title: 'Contact', href: '#contact' },
+  const toolStack = [
+    { name: 'ArcGIS', img: '/arcgis_logo.png' },
+    { name: 'SPSS', img: '/spss_logo.png' },
+    { name: 'MS Office', img: '/office_logo.jpg' },
   ]
 
   return (
-    <section className="relative w-full min-h-[100svh] flex flex-col items-center justify-center overflow-hidden bg-[#FFFFFF] dark:bg-[#0B1329] transition-colors duration-300 pt-28 pb-16">
+    <section className="relative w-full min-h-[100svh] flex flex-col items-center justify-center overflow-hidden bg-[#FFFFFF] dark:bg-[#0B1329] transition-colors duration-300 pt-20 pb-16">
       
-      {/* 1. BACKGROUND DENGAN LIGHT & DARK MODE PALETTE */}
+      {/* 1. BACKGROUND */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <AnimatePresence mode="popLayout">
           <motion.div
@@ -192,7 +190,7 @@ export default function Hero() {
             transition={{ duration: 1.5, ease: "easeInOut" }}
             className="absolute inset-0 flex items-center justify-center"
           >
-            <div className="absolute inset-0 filter blur-sm opacity-10 dark:opacity-20 scale-105 select-none">
+            <div className="absolute inset-0 filter blur-sm opacity-10 dark:opacity-[0.15] scale-105 select-none">
               <Image src={backgrounds[bgIndex]} alt="Ambient Fill" fill className="object-cover" />
             </div>
 
@@ -206,7 +204,7 @@ export default function Hero() {
                   src={backgrounds[bgIndex]}
                   alt="Jibakudin Nur Field Canvas"
                   fill
-                  className="object-contain opacity-25 dark:opacity-35 select-none"
+                  className="object-contain opacity-25 dark:opacity-30 select-none"
                   priority
                 />
               </motion.div>
@@ -214,11 +212,11 @@ export default function Hero() {
           </motion.div>
         </AnimatePresence>
 
-        <div className="absolute inset-0 bg-gradient-to-b from-[#FFFFFF]/90 via-[#F8FAFC]/80 to-[#FFFFFF] dark:from-[#0B1329]/90 dark:via-[#1C2541]/80 dark:to-[#0B1329] pointer-events-none"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-[#FFFFFF]/90 via-[#F8FAFC]/80 to-[#FFFFFF] dark:from-[#0B1329]/95 dark:via-[#1C2541]/85 dark:to-[#0B1329] pointer-events-none"></div>
       </div>
 
       {/* 2. CANVAS & FLOATING ICONS */}
-      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none z-[1] opacity-40 dark:opacity-60"></canvas>
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none z-[1] opacity-50"></canvas>
       
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-[2]">
         {floatingIcons.map((item, index) => (
@@ -237,14 +235,14 @@ export default function Hero() {
       {/* 3. KONTEN UTAMA */}
       <div className="relative z-[10] w-full max-w-3xl mx-auto px-4 sm:px-6 flex flex-col items-center text-center">
         
-        {/* Open to Opportunities (Tanpa Padding Kotak Berlebihan) */}
+        {/* Open to Opportunities */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="mb-4"
+          className="mb-6"
         >
-          <span className="inline-flex items-center gap-2 text-xs font-bold tracking-widest text-[#16A34A] dark:text-[#4ADE80] uppercase border-b-2 border-[#16A34A]/40 dark:border-[#4ADE80]/40 pb-1">
+          <span className="inline-flex items-center gap-2 text-xs font-bold tracking-widest text-[#16A34A] dark:text-[#4ADE80] uppercase pb-1 border-b-2 border-[#16A34A]/30 dark:border-[#4ADE80]/30">
             <span className="w-2 h-2 rounded-full bg-[#16A34A] dark:bg-[#4ADE80] animate-pulse"></span> 
             Open to Opportunities
           </span>
@@ -255,7 +253,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="space-y-3 mb-4"
+          className="space-y-4 mb-6"
         >
           <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-[#0F172A] dark:text-[#F8FAFC] leading-tight">
             JIBAKUDIN NUR
@@ -270,105 +268,54 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="max-w-2xl mb-6"
+          className="max-w-2xl mb-10"
         >
           <p className="text-sm sm:text-base text-[#475569] dark:text-[#94A3B8] leading-relaxed font-medium">
             Bachelor Applied (D4) in Environmental Sanitation specialized in systematic field risk assessment, spatial epidemiological analysis, and industrial HSE systems—dedicated to executing high-impact workplace safety and public health initiatives.
           </p>
         </motion.div>
 
-        {/* Tech Stack / Skills (Menggunakan Logo Asli dari Folder Public: ArcGIS, SPSS, Office) */}
+        {/* Tech Stack / Skills (Logo App Icon Trick) */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="flex flex-wrap justify-center gap-y-2 gap-x-4 text-xs font-bold text-[#0F172A] dark:text-[#F8FAFC] uppercase mb-8"
+          className="flex flex-wrap justify-center gap-3 text-[11px] font-bold text-[#0F172A] dark:text-[#F8FAFC] uppercase mb-12"
         >
-          <span className="flex items-center gap-2 bg-[#F8FAFC] dark:bg-[#1C2541] border border-slate-200 dark:border-slate-700 px-3 py-1.5 rounded-lg shadow-xs">
-            <div className="relative w-4 h-4">
-              <Image src="/arcgis_logo.png" alt="ArcGIS" fill className="object-contain" />
-            </div>
-            ArcGIS
-          </span>
-
-          <span className="flex items-center gap-2 bg-[#F8FAFC] dark:bg-[#1C2541] border border-slate-200 dark:border-slate-700 px-3 py-1.5 rounded-lg shadow-xs">
-            <div className="relative w-4 h-4">
-              <Image src="/spss_logo.png" alt="SPSS" fill className="object-contain" />
-            </div>
-            SPSS
-          </span>
-
-          <span className="flex items-center gap-2 bg-[#F8FAFC] dark:bg-[#1C2541] border border-slate-200 dark:border-slate-700 px-3 py-1.5 rounded-lg shadow-xs">
-            <div className="relative w-4 h-4">
-              <Image src="/office_logo.jpg" alt="MS Office" fill className="object-contain rounded-xs" />
-            </div>
-            MS Office
-          </span>
+          {toolStack.map((tool, idx) => (
+            <span key={idx} className="flex items-center gap-2.5 bg-white/60 dark:bg-[#1C2541]/60 backdrop-blur-md border border-slate-200/80 dark:border-slate-700/80 px-3.5 py-1.5 rounded-full shadow-sm">
+              {/* Lingkaran putih membingkai logo agar terlihat seperti icon aplikasi rapi */}
+              <div className="relative w-5 h-5 bg-white rounded-full flex items-center justify-center p-0.5 shadow-sm border border-slate-100 dark:border-none">
+                <Image src={tool.img} alt={tool.name} fill className="object-contain p-0.5" />
+              </div>
+              <span className="tracking-wide">{tool.name}</span>
+            </span>
+          ))}
         </motion.div>
 
-        {/* Buttons (SUMMARY & PORTOFOLIO) */}
+        {/* Buttons (SUMMARY & VIEW PORTOFOLIO) */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="flex flex-col sm:flex-row justify-center gap-3 w-full max-w-sm mx-auto mb-8"
+          className="flex flex-col sm:flex-row justify-center gap-4 w-full max-w-sm mx-auto"
         >
           <button
             onClick={() => setIsSummaryModalOpen(true)}
-            className="flex-1 flex items-center justify-center px-6 py-3 rounded-xl bg-[#0284C7] hover:bg-[#0369a1] text-[#FFFFFF] font-bold text-xs uppercase tracking-wider transition-all shadow-md cursor-pointer"
+            className="flex-1 flex items-center justify-center px-6 py-3.5 rounded-xl bg-[#0284C7] hover:bg-[#0369a1] text-[#FFFFFF] font-bold text-xs uppercase tracking-wider transition-all cursor-pointer shadow-[0_0_15px_rgba(2,132,199,0.3)] hover:shadow-[0_0_20px_rgba(2,132,199,0.5)] border border-[#0284C7]"
           >
             SUMMARY
           </button>
 
           <a
             href="#projects"
-            className="flex-1 flex items-center justify-center px-6 py-3 rounded-xl bg-[#F8FAFC] dark:bg-[#1C2541] border border-slate-300 dark:border-slate-700 text-[#0F172A] dark:text-[#F8FAFC] hover:border-[#0284C7] font-bold text-xs uppercase tracking-wider transition-all shadow-xs cursor-pointer"
+            className="flex-1 flex items-center justify-center px-6 py-3.5 rounded-xl bg-transparent border-2 border-slate-300 dark:border-slate-700 text-[#0F172A] dark:text-[#F8FAFC] hover:border-[#0284C7] dark:hover:border-[#38BDF8] font-bold text-xs uppercase tracking-wider transition-all cursor-pointer"
           >
-            PORTOFOLIO
+            VIEW PORTOFOLIO
           </a>
         </motion.div>
 
-        {/* DAFTAR ISI PORTFOLIO */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="w-full max-w-xl bg-[#F8FAFC] dark:bg-[#1C2541] border border-slate-200 dark:border-slate-700/80 rounded-xl p-3.5 shadow-xs"
-        >
-          <div className="flex items-center justify-between pb-2 mb-2 border-b border-slate-200 dark:border-slate-700 text-[11px] font-bold text-[#0F172A] dark:text-[#F8FAFC] uppercase tracking-widest px-1">
-            <span className="flex items-center gap-1.5">
-              <ListOrdered className="w-3.5 h-3.5 text-[#0284C7] dark:text-[#38BDF8]" /> Daftar Isi
-            </span>
-            <span className="text-[9px] font-mono text-[#475569] dark:text-[#94A3B8]">HRD Guide</span>
-          </div>
-          
-          <div className="grid grid-cols-2 sm:grid-cols-5 gap-1.5">
-            {portfolioIndex.map((item, idx) => (
-              <a
-                key={idx}
-                href={item.href}
-                className="flex flex-col items-center sm:items-start p-1.5 rounded-lg bg-white dark:bg-[#0B1329] hover:bg-sky-50 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-700/60 transition-all group"
-              >
-                <span className="text-[9px] font-mono text-[#0284C7] dark:text-[#38BDF8] font-bold">{item.num}</span>
-                <span className="text-[11px] font-bold text-[#0F172A] dark:text-[#F8FAFC] group-hover:text-[#0284C7] dark:group-hover:text-[#38BDF8] transition-colors text-center sm:text-left mt-0.5">
-                  {item.title}
-                </span>
-              </a>
-            ))}
-          </div>
-        </motion.div>
-
       </div>
-
-      {/* Scroll Indicator */}
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2, duration: 1 }}
-        className="absolute bottom-3 z-[10] flex flex-col items-center gap-1 text-[#475569] dark:text-[#94A3B8] animate-bounce pointer-events-none"
-      >
-        <ChevronDown className="w-4 h-4 opacity-80" />
-      </motion.div>
 
       {/* --- MODAL EXECUTIVE SUMMARY --- */}
       <AnimatePresence>

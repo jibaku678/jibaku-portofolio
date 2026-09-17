@@ -97,7 +97,7 @@ export default function Hero() {
 
         ctx.beginPath()
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2)
-        ctx.fillStyle = 'rgba(2, 132, 199, 0.4)' 
+        ctx.fillStyle = 'rgba(2, 132, 199, 0.4)' // Sky Blue
         ctx.fill()
 
         for (let j = i + 1; j < particles.length; j++) {
@@ -110,7 +110,7 @@ export default function Hero() {
             ctx.beginPath()
             ctx.moveTo(p.x, p.y)
             ctx.lineTo(p2.x, p2.y)
-            ctx.strokeStyle = `rgba(22, 163, 74, ${0.15 * (1 - dist / 110)})`
+            ctx.strokeStyle = `rgba(22, 163, 74, ${0.15 * (1 - dist / 110)})` // Emerald Green
             ctx.lineWidth = 1
             ctx.stroke()
           }
@@ -177,9 +177,9 @@ export default function Hero() {
   ]
 
   return (
-    <section className="relative w-full min-h-[100svh] flex flex-col items-center justify-center overflow-hidden bg-[#FFFFFF] dark:bg-[#0B1329] transition-colors duration-300 pt-20 pb-16">
+    <section className="relative w-full min-h-[100svh] flex flex-col items-center justify-center overflow-hidden bg-[#FFFFFF] dark:bg-[#0B1329] transition-colors duration-300 pt-28 pb-16">
       
-      {/* 1. BACKGROUND */}
+      {/* 1. BACKGROUND IMAGE & GRADIENT MASK */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <AnimatePresence mode="popLayout">
           <motion.div
@@ -190,10 +190,12 @@ export default function Hero() {
             transition={{ duration: 1.5, ease: "easeInOut" }}
             className="absolute inset-0 flex items-center justify-center"
           >
-            <div className="absolute inset-0 filter blur-sm opacity-10 dark:opacity-[0.15] scale-105 select-none">
+            {/* Ambient Blur */}
+            <div className="absolute inset-0 filter blur-xl opacity-20 dark:opacity-30 scale-110 select-none">
               <Image src={backgrounds[bgIndex]} alt="Ambient Fill" fill className="object-cover" />
             </div>
 
+            {/* Main Image (Opasitas dinaikkan agar lebih tajam, namun disesuaikan agar elegan) */}
             <div className="absolute inset-0 w-full h-full flex items-center justify-center p-2 sm:p-6">
               <motion.div
                 animate={{ scale: [1, 1.02, 1] }}
@@ -204,7 +206,7 @@ export default function Hero() {
                   src={backgrounds[bgIndex]}
                   alt="Jibakudin Nur Field Canvas"
                   fill
-                  className="object-contain opacity-25 dark:opacity-30 select-none"
+                  className="object-contain opacity-40 dark:opacity-50 select-none"
                   priority
                 />
               </motion.div>
@@ -212,7 +214,8 @@ export default function Hero() {
           </motion.div>
         </AnimatePresence>
 
-        <div className="absolute inset-0 bg-gradient-to-b from-[#FFFFFF]/90 via-[#F8FAFC]/80 to-[#FFFFFF] dark:from-[#0B1329]/95 dark:via-[#1C2541]/85 dark:to-[#0B1329] pointer-events-none"></div>
+        {/* Masking Gradient agar teks di tengah tetap terbaca jelas meski opasitas foto dinaikkan */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#FFFFFF]/85 via-[#F8FAFC]/75 to-[#FFFFFF] dark:from-[#0B1329]/90 dark:via-[#1C2541]/80 dark:to-[#0B1329] pointer-events-none"></div>
       </div>
 
       {/* 2. CANVAS & FLOATING ICONS */}
@@ -235,14 +238,14 @@ export default function Hero() {
       {/* 3. KONTEN UTAMA */}
       <div className="relative z-[10] w-full max-w-3xl mx-auto px-4 sm:px-6 flex flex-col items-center text-center">
         
-        {/* Open to Opportunities */}
+        {/* Open to Opportunities (Spasi lebih lega) */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="mb-6"
+          className="mb-8"
         >
-          <span className="inline-flex items-center gap-2 text-xs font-bold tracking-widest text-[#16A34A] dark:text-[#4ADE80] uppercase pb-1 border-b-2 border-[#16A34A]/30 dark:border-[#4ADE80]/30">
+          <span className="inline-flex items-center gap-2 text-xs font-bold tracking-widest text-[#16A34A] dark:text-[#4ADE80] uppercase pb-1.5 border-b-[1.5px] border-[#16A34A]/30 dark:border-[#4ADE80]/30">
             <span className="w-2 h-2 rounded-full bg-[#16A34A] dark:bg-[#4ADE80] animate-pulse"></span> 
             Open to Opportunities
           </span>
@@ -253,39 +256,39 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="space-y-4 mb-6"
+          className="space-y-5 mb-8"
         >
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-[#0F172A] dark:text-[#F8FAFC] leading-tight">
+          <h1 className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight text-[#0F172A] dark:text-[#F8FAFC] leading-tight">
             JIBAKUDIN NUR
           </h1>
-          <h2 className="text-xs sm:text-sm font-bold text-[#0284C7] dark:text-[#38BDF8] flex items-center justify-center gap-2 uppercase tracking-widest">
+          <h2 className="text-[11px] sm:text-sm font-bold text-[#0284C7] dark:text-[#38BDF8] flex items-center justify-center gap-2 uppercase tracking-widest">
             Environmental Health • HSE • Public Health Research
           </h2>
         </motion.div>
 
-        {/* Paragraph */}
+        {/* Paragraph (Spasi paragraf lebih rileks / breathable) */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="max-w-2xl mb-10"
+          className="max-w-2xl mb-12"
         >
           <p className="text-sm sm:text-base text-[#475569] dark:text-[#94A3B8] leading-relaxed font-medium">
             Bachelor Applied (D4) in Environmental Sanitation specialized in systematic field risk assessment, spatial epidemiological analysis, and industrial HSE systems—dedicated to executing high-impact workplace safety and public health initiatives.
           </p>
         </motion.div>
 
-        {/* Tech Stack / Skills (Logo App Icon Trick) */}
+        {/* Tech Stack / Skills (App Icon Container Trick, margin disesuaikan) */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="flex flex-wrap justify-center gap-3 text-[11px] font-bold text-[#0F172A] dark:text-[#F8FAFC] uppercase mb-12"
+          className="flex flex-wrap justify-center gap-4 text-[11px] font-bold text-[#0F172A] dark:text-[#F8FAFC] uppercase mb-12"
         >
           {toolStack.map((tool, idx) => (
-            <span key={idx} className="flex items-center gap-2.5 bg-white/60 dark:bg-[#1C2541]/60 backdrop-blur-md border border-slate-200/80 dark:border-slate-700/80 px-3.5 py-1.5 rounded-full shadow-sm">
-              {/* Lingkaran putih membingkai logo agar terlihat seperti icon aplikasi rapi */}
-              <div className="relative w-5 h-5 bg-white rounded-full flex items-center justify-center p-0.5 shadow-sm border border-slate-100 dark:border-none">
+            <span key={idx} className="flex items-center gap-2.5 bg-white/80 dark:bg-[#1C2541]/80 backdrop-blur-md border border-slate-200/80 dark:border-slate-700/80 px-4 py-2 rounded-full shadow-sm hover:shadow-md transition-shadow">
+              {/* Lingkaran putih membingkai logo persis seperti icon iOS/Android */}
+              <div className="relative w-6 h-6 bg-white rounded-full flex items-center justify-center p-1 shadow-sm border border-slate-100 dark:border-none">
                 <Image src={tool.img} alt={tool.name} fill className="object-contain p-0.5" />
               </div>
               <span className="tracking-wide">{tool.name}</span>
@@ -293,29 +296,39 @@ export default function Hero() {
           ))}
         </motion.div>
 
-        {/* Buttons (SUMMARY & VIEW PORTOFOLIO) */}
+        {/* Buttons (Diperhalus menjadi Kapsul penuh, lebar seimbang, dan proporsional) */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="flex flex-col sm:flex-row justify-center gap-4 w-full max-w-sm mx-auto"
+          className="flex flex-col sm:flex-row justify-center gap-4 w-full max-w-md mx-auto"
         >
           <button
             onClick={() => setIsSummaryModalOpen(true)}
-            className="flex-1 flex items-center justify-center px-6 py-3.5 rounded-xl bg-[#0284C7] hover:bg-[#0369a1] text-[#FFFFFF] font-bold text-xs uppercase tracking-wider transition-all cursor-pointer shadow-[0_0_15px_rgba(2,132,199,0.3)] hover:shadow-[0_0_20px_rgba(2,132,199,0.5)] border border-[#0284C7]"
+            className="flex-1 flex items-center justify-center px-8 py-3.5 rounded-full bg-[#0284C7] hover:bg-[#0369a1] text-[#FFFFFF] font-bold text-xs uppercase tracking-wider transition-all cursor-pointer shadow-[0_0_15px_rgba(2,132,199,0.3)] hover:shadow-[0_0_20px_rgba(2,132,199,0.5)] border border-[#0284C7]"
           >
             SUMMARY
           </button>
 
           <a
             href="#projects"
-            className="flex-1 flex items-center justify-center px-6 py-3.5 rounded-xl bg-transparent border-2 border-slate-300 dark:border-slate-700 text-[#0F172A] dark:text-[#F8FAFC] hover:border-[#0284C7] dark:hover:border-[#38BDF8] font-bold text-xs uppercase tracking-wider transition-all cursor-pointer"
+            className="flex-1 flex items-center justify-center px-8 py-3.5 rounded-full bg-white/50 dark:bg-[#1C2541]/50 backdrop-blur-sm border-2 border-slate-300 dark:border-slate-700 text-[#0F172A] dark:text-[#F8FAFC] hover:border-[#0284C7] dark:hover:border-[#38BDF8] hover:text-[#0284C7] dark:hover:text-[#38BDF8] font-bold text-xs uppercase tracking-wider transition-all cursor-pointer"
           >
             VIEW PORTOFOLIO
           </a>
         </motion.div>
 
       </div>
+
+      {/* Scroll Indicator */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.2, duration: 1 }}
+        className="absolute bottom-6 z-[10] flex flex-col items-center gap-1 text-[#475569] dark:text-[#94A3B8] animate-bounce pointer-events-none"
+      >
+        <ChevronDown className="w-5 h-5 opacity-80" />
+      </motion.div>
 
       {/* --- MODAL EXECUTIVE SUMMARY --- */}
       <AnimatePresence>

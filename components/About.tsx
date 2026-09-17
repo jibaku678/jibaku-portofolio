@@ -151,7 +151,7 @@ export default function About() {
           </h2>
         </div>
 
-        {/* Grid Utama: Flexibel untuk Mobile & Desktop */}
+        {/* Grid Utama */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
           
           {/* Kolom Kiri: Foto & Deskripsi Singkat */}
@@ -184,18 +184,19 @@ export default function About() {
             className="lg:col-span-7 space-y-5 sm:space-y-6"
           >
             
-            {/* Pendidikan & Coursework Card (Logo Tanpa Kotak Background Kaku) */}
+            {/* Pendidikan & Coursework Card (Logo Presisi Terkunci) */}
             <div className="flex flex-col gap-5 sm:gap-6 p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-white/95 dark:bg-[#1C2541]/90 backdrop-blur-xl border border-slate-200/80 dark:border-slate-700/60 shadow-sm">
+              
+              {/* Header Pendidikan dengan Logo Terkunci Presisi */}
               <div className="flex items-start gap-4">
-                {/* Logo Poltekkes Polos Tanpa Kotak Container */}
-                <div className="w-12 h-12 sm:w-14 sm:h-14 shrink-0 relative flex items-center justify-center mt-0.5">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 shrink-0 flex items-center justify-center">
                   <img 
                     src="/logo.polkesyo.png" 
                     alt="Poltekkes Kemenkes Yogyakarta Logo" 
                     className="w-full h-full object-contain"
                   />
                 </div>
-                <div>
+                <div className="flex-1 min-w-0">
                   <div className="flex flex-wrap items-center gap-2 mb-1">
                     <span className="text-[10px] font-mono text-[#0284C7] dark:text-[#38BDF8] uppercase tracking-widest font-bold">Education Background</span>
                     <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-[#334155] dark:text-[#E2E8F0]">2022 – 2026</span>

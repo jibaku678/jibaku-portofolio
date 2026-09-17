@@ -1,18 +1,16 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import Image from 'next/image'
 import { Calendar, CheckCircle2, ChevronLeft, ChevronRight, Instagram, ExternalLink } from 'lucide-react'
 
 export default function Experience() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
-  const backgroundBanner = '/newbanner1.png'
 
   const [kelinciIdx, setKelinciIdx] = useState(0)
   const [puskesIdx, setPuskesIdx] = useState(0)
   const [bethesdaIdx, setBethesdaIdx] = useState(0)
 
-  // 1. PT Dua Kelinci (Mencakup kelinci 1-8, kelinci2.JPG, kelinci2.png)
+  // 1. PT Dua Kelinci Gallery Files
   const kelinciImages = [
     "/PKL/kelinci (1).jpeg",
     "/PKL/kelinci (2).jpeg",
@@ -26,18 +24,18 @@ export default function Experience() {
     "/PKL/kelinci2.png"
   ]
 
-  // 2. Puskesmas Godean (puskes.jpeg + puskes1.MOV s.d puskes6.MOV)
+  // 2. Puskesmas Godean Gallery Files (Format MP4 baru)
   const puskesItems = [
     { type: "image", src: "/PKL/puskes.jpeg" },
-    { type: "video", src: "/PKL/puskes1.MOV" },
-    { type: "video", src: "/PKL/puskes2.MOV" },
-    { type: "video", src: "/PKL/puskes3.MOV" },
-    { type: "video", src: "/PKL/puskes4.MOV" },
-    { type: "video", src: "/PKL/puskes5.MOV" },
-    { type: "video", src: "/PKL/puskes6.MOV" },
+    { type: "video", src: "/PKL/puskes1.mp4" },
+    { type: "video", src: "/PKL/puskes2.mp4" },
+    { type: "video", src: "/PKL/puskes3.mp4" },
+    { type: "video", src: "/PKL/puskes4.mp4" },
+    { type: "video", src: "/PKL/puskes5.mp4" },
+    { type: "video", src: "/PKL/puskes6.mp4" },
   ]
 
-  // 3. Bethesda Hospital (betesda 1 s.d 12 + betesda1, betesda2, betesda3)
+  // 3. Bethesda Hospital Gallery Files
   const bethesdaImages = [
     "/PKL/betesda (1).jpeg",
     "/PKL/betesda (2).jpeg",
@@ -83,15 +81,15 @@ export default function Experience() {
 
     window.addEventListener('resize', handleResize)
 
-    const particlesCount = 45
+    const particlesCount = 40
     const particles: { x: number; y: number; vx: number; vy: number; radius: number }[] = []
 
     for (let i = 0; i < particlesCount; i++) {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: (Math.random() - 0.5) * 0.5,
+        vx: (Math.random() - 0.5) * 0.4,
+        vy: (Math.random() - 0.5) * 0.4,
         radius: Math.random() * 1.5 + 0.5,
       })
     }
@@ -110,7 +108,7 @@ export default function Experience() {
     const render = () => {
       ctx.clearRect(0, 0, width, height)
       const isDark = document.documentElement.classList.contains('dark')
-      const baseAlpha = isDark ? 0.3 : 0.12 
+      const baseAlpha = isDark ? 0.35 : 0.15 
 
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i]
@@ -248,14 +246,10 @@ export default function Experience() {
   return (
     <section id="experience" className="relative py-20 sm:py-32 w-full bg-[#F8FAFC] dark:bg-[#0B1329] transition-colors duration-300 overflow-hidden border-t border-slate-200/80 dark:border-slate-800/60">
       
+      {/* 1. LIGHTWEIGHT BLUR GRADIENT & CANVAS BACKGROUND (Tanpa banner foto berat) */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        <div className="absolute inset-0 filter blur-2xl opacity-15 dark:opacity-25 scale-105 select-none">
-          <Image src={backgroundBanner} alt="Experience Ambient Fill" fill className="object-cover" />
-        </div>
-        <div className="absolute inset-0 w-full h-full flex items-center justify-center [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_80%)]">
-          <Image src={backgroundBanner} alt="Experience Field Backdrop" fill className="object-cover opacity-25 dark:opacity-35 select-none" />
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-[#F8FAFC] via-[#F8FAFC]/70 to-[#F8FAFC] dark:from-[#0B1329] dark:via-[#0B1329]/75 dark:to-[#0B1329] pointer-events-none"></div>
+        <div className="absolute -top-40 -left-40 w-96 h-96 bg-sky-400/10 dark:bg-sky-600/10 rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-emerald-400/10 dark:bg-emerald-600/10 rounded-full blur-3xl"></div>
       </div>
 
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none z-[1] opacity-60"></canvas>
@@ -314,7 +308,6 @@ export default function Experience() {
                 </div>
 
                 <div className="flex flex-col gap-3">
-                  {/* Bingkai foto menggunakan object-contain agar foto/video tampil utuh tanpa terpotong */}
                   <div className="relative w-full h-[260px] sm:h-[300px] bg-slate-950/90 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700/60 shadow-md flex items-center justify-center p-2">
                     
                     {/* KELINCI GALLERY */}
@@ -340,7 +333,7 @@ export default function Experience() {
                       </div>
                     )}
 
-                    {/* PUSKESMAS GALLERY */}
+                    {/* PUSKESMAS GALLERY (MP4 SUPPORTED) */}
                     {exp.galleryType === 'puskes' && (
                       <div className="relative w-full h-full flex items-center justify-center">
                         <AnimatePresence mode="wait">

@@ -1,14 +1,54 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
-import { Calendar, CheckCircle2 } from 'lucide-react'
+import { Calendar, CheckCircle2, ChevronLeft, ChevronRight, Instagram, ExternalLink } from 'lucide-react'
 
 export default function Experience() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const backgroundBanner = '/newbanner1.png'
 
-  // --- HTML5 CANVAS INTERACTIVE (Konsisten dengan section lainnya) ---
+  // State untuk autoslide masing-masing card PKL yang punya galeri multiple
+  const [duaKelinciIdx, setDuaKelinciIdx] = useState(0)
+  const [puskesIdx, setPuskesIdx] = useState(0)
+
+  // Data gambar dokumentasi
+  const duaKelinciImages = [
+    "/PKL/DK_1.JPG" // Sesuaikan jika ada DK_2, dll. (Cek ekstensi apakah .jpg/.JPG/.jpeg)
+  ]
+
+  const puskesImages = [
+    "/PKL/puskes.jpg",
+    "/PKL/puskes1.mp4", // Jika berupa video, nanti bisa ditangani atau diasumsikan gambar/video
+    "/PKL/puskes2.mp4",
+    "/PKL/puskes3.mp4",
+    "/PKL/puskes4.mp4",
+    "/PKL/puskes5.mp4",
+    "/PKL/puskes6.mp4"
+  ]
+
+  // Catatan: Karena beberapa file puskes adalah .mp4 (video), kita buat helper render media aman (gambar atau video autoplay loop)
+  // Atau jika file-file tersebut berupa gambar, bisa langsung img tag. Mari kita buat komponen render media cerdas di bawah.
+
+  // Autoslide effect untuk PT Dua Kelinci (jika > 1 foto)
+  useEffect(() => {
+    if (duaKelinciImages.length <= 1) return
+    const timer = setInterval(() => {
+      setDuaKelinciIdx((prev) => (prev === duaKelinciImages.length - 1 ? 0 : prev + 1))
+    }, 4000)
+    return () => clearInterval(timer)
+  }, [duaKelinciImages.length])
+
+  // Autoslide effect untuk Puskesmas Godean
+  useEffect(() => {
+    if (puskesImages.length <= 1) return
+    const timer = setInterval(() => {
+      setPuskesIdx((prev) => (prev === puskesImages.length - 1 ? 0 : prev + 1))
+    }, 4000)
+    return () => clearInterval(timer)
+  }, [puskesImages.length])
+
+  // --- HTML5 CANVAS INTERACTIVE ---
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
@@ -117,6 +157,8 @@ export default function Experience() {
       role: "Industrial Field Practice | Environmental Health & K3",
       location: "PT Dua Kelinci, Pati",
       description: "Supported industrial environmental health and OHS operational activities.",
+      hasGallery: true,
+      galleryType: "duaKelinci",
       highlights: [
         "Supported K3/HSE activities through hazard identification and risk assessment using HIRADC and JSA, work permits, safety patrols, and safe work practices.",
         "Studied fire emergency preparedness through evacuation route planning and placement of fire alarms, hydrants, and fire extinguishers, including hands-on APAR and hydrant practice.",
@@ -132,6 +174,8 @@ export default function Experience() {
       role: "Community Health Center Field Practice | Environmental Health",
       location: "Godean II Community Health Center, Sleman, Yogyakarta",
       description: "Conducted field activities in a primary healthcare setting focusing on sanitation and disease epidemiology.",
+      hasGallery: true,
+      galleryType: "puskes",
       highlights: [
         "Conducted healthy-house inspections and assessed environmental sanitation conditions in the community.",
         "Participated in epidemiological investigations of environmentally based diseases and field data collection.",
@@ -146,6 +190,7 @@ export default function Experience() {
       role: "Hospital Field Practice | Environmental Health Installation",
       location: "Bethesda Hospital, Yogyakarta",
       description: "Completed clinical rotations across hospital environmental management units.",
+      hasGallery: false,
       highlights: [
         "Participated in the Environmental Health Installation through rotation across several hospital environmental management units.",
         "Gained exposure to medical B3 and non-B3 solid waste management, sanitation and pest control, and clean and drinking water management.",
@@ -158,6 +203,7 @@ export default function Experience() {
       role: "Institutional Field Practice | Environmental Health",
       location: "Magelang District Health Office, Magelang",
       description: "Applied environmental sanitation principles within a government institutional setting.",
+      hasGallery: false,
       highlights: [
         "Gained exposure to environmental health management within a government institution supporting community health.",
         "Participated in activities related to environmental health management, health risk management, coordination, administration, and activity reporting.",
@@ -169,6 +215,8 @@ export default function Experience() {
       role: "Community Field Practice | Community Empowerment",
       location: "Ngentak Hamlet, Argorejo, Sedayu, Bantul, Yogyakarta",
       description: "Executed community-level environmental health interventions and local empowerment initiatives.",
+      hasGallery: true,
+      galleryType: "ngentak",
       highlights: [
         "Identified environmental health problems with community members and developed empowerment activities based on local needs.",
         "Delivered food hygiene and sanitation education for food handlers/UMKM and environmental health education activities.",
@@ -183,7 +231,7 @@ export default function Experience() {
   return (
     <section id="experience" className="relative py-20 sm:py-32 w-full bg-[#F8FAFC] dark:bg-[#0B1329] transition-colors duration-300 overflow-hidden border-t border-slate-200/80 dark:border-slate-800/60">
       
-      {/* 1. BACKGROUND LAYERING (Konsisten dengan Hero, About, & Skills) */}
+      {/* 1. BACKGROUND LAYERING */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <div className="absolute inset-0 filter blur-2xl opacity-15 dark:opacity-25 scale-105 select-none">
           <Image src={backgroundBanner} alt="Experience Ambient Fill" fill className="object-cover" />
@@ -218,7 +266,7 @@ export default function Experience() {
         </div>
 
         {/* List Experience Cards */}
-        <div className="space-y-6">
+        <div className="space-y-8">
           {experiences.map((exp, idx) => (
             <motion.div
               key={idx}
@@ -243,18 +291,140 @@ export default function Experience() {
                 </div>
               </div>
 
-              <p className="text-sm text-[#334155] dark:text-[#94A3B8] mb-4 font-medium">
-                {exp.description}
-              </p>
+              {/* Grid Layout: Kiri Deskripsi & Highlights, Kanan Autoslide Dokumentasi */}
+              <div className={`grid grid-cols-1 ${exp.hasGallery ? 'lg:grid-cols-3' : 'grid-cols-1'} gap-6 items-start`}>
+                
+                <div className={`${exp.hasGallery ? 'lg:col-span-2' : 'col-span-1'} space-y-4`}>
+                  <p className="text-sm text-[#334155] dark:text-[#94A3B8] font-medium leading-relaxed">
+                    {exp.description}
+                  </p>
 
-              <ul className="space-y-2.5">
-                {exp.highlights.map((item, hIdx) => (
-                  <li key={hIdx} className="flex items-start gap-2.5 text-xs sm:text-sm text-[#334155] dark:text-slate-300">
-                    <CheckCircle2 className="w-4 h-4 text-[#16A34A] dark:text-[#4ADE80] shrink-0 mt-0.5" />
-                    <span className="leading-relaxed font-medium">{item}</span>
-                  </li>
-                ))}
-              </ul>
+                  <ul className="space-y-2.5">
+                    {exp.highlights.map((item, hIdx) => (
+                      <li key={hIdx} className="flex items-start gap-2.5 text-xs sm:text-sm text-[#334155] dark:text-slate-300">
+                        <CheckCircle2 className="w-4 h-4 text-[#16A34A] dark:text-[#4ADE80] shrink-0 mt-0.5" />
+                        <span className="leading-relaxed font-medium">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* Khusus Ngentak Hamlet, tambahkan link Instagram */}
+                  {exp.galleryType === 'ngentak' && (
+                    <div className="pt-3">
+                      <a
+                        href="https://www.instagram.com/ngentakngantuk_13?stkn=eTl1OXhoeWh6eHBu"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 hover:opacity-90 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md"
+                      >
+                        <Instagram className="w-4 h-4" /> Visit Ngentak Hamlet IG <ExternalLink className="w-3.5 h-3.5" />
+                      </a>
+                    </div>
+                  )}
+                </div>
+
+                {/* Bagian Autoslide Dokumentasi Langsung Muncul Tanpa Tombol View */}
+                {exp.hasGallery && (
+                  <div className="relative w-full h-[240px] sm:h-[280px] bg-slate-950/60 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700/60 shadow-md flex items-center justify-center">
+                    
+                    {/* GALERI DUA KELINCI */}
+                    {exp.galleryType === 'duaKelinci' && (
+                      <div className="relative w-full h-full flex items-center justify-center">
+                        <AnimatePresence mode="wait">
+                          <motion.img
+                            key={duaKelinciIdx}
+                            src={duaKelinciImages[duaKelinciIdx]}
+                            alt="PT Dua Kelinci Documentation"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.4 }}
+                            className="max-h-full max-w-full object-contain select-none"
+                          />
+                        </AnimatePresence>
+                        {duaKelinciImages.length > 1 && (
+                          <>
+                            <button 
+                              onClick={() => setDuaKelinciIdx(prev => prev === 0 ? duaKelinciImages.length - 1 : prev - 1)}
+                              className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/60 text-white hover:bg-black transition-all"
+                            >
+                              <ChevronLeft className="w-4 h-4" />
+                            </button>
+                            <button 
+                              onClick={() => setDuaKelinciIdx(prev => prev === duaKelinciImages.length - 1 ? 0 : prev + 1)}
+                              className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/60 text-white hover:bg-black transition-all"
+                            >
+                              <ChevronRight className="w-4 h-4" />
+                            </button>
+                          </>
+                        )}
+                      </div>
+                    )}
+
+                    {/* GALERI PUSKESMAS GODEAN */}
+                    {exp.galleryType === 'puskes' && (
+                      <div className="relative w-full h-full flex items-center justify-center">
+                        <AnimatePresence mode="wait">
+                          {puskesImages[puskesIdx].endsWith('.mp4') ? (
+                            <motion.video
+                              key={puskesIdx}
+                              src={puskesImages[puskesIdx]}
+                              autoPlay
+                              loop
+                              muted
+                              playsInline
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              exit={{ opacity: 0 }}
+                              transition={{ duration: 0.4 }}
+                              className="max-h-full max-w-full object-contain select-none"
+                            />
+                          ) : (
+                            <motion.img
+                              key={puskesIdx}
+                              src={puskesImages[puskesIdx]}
+                              alt="Puskesmas Godean Documentation"
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              exit={{ opacity: 0 }}
+                              transition={{ duration: 0.4 }}
+                              className="max-h-full max-w-full object-contain select-none"
+                            />
+                          )}
+                        </AnimatePresence>
+                        <button 
+                          onClick={() => setPuskesIdx(prev => prev === 0 ? puskesImages.length - 1 : prev - 1)}
+                          className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/60 text-white hover:bg-black transition-all cursor-pointer"
+                        >
+                          <ChevronLeft className="w-4 h-4" />
+                        </button>
+                        <button 
+                          onClick={() => setPuskesIdx(prev => prev === puskesImages.length - 1 ? 0 : prev + 1)}
+                          className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/60 text-white hover:bg-black transition-all cursor-pointer"
+                        >
+                          <ChevronRight className="w-4 h-4" />
+                        </button>
+                        <div className="absolute bottom-2 px-2.5 py-0.5 bg-black/70 rounded-full text-[10px] text-white font-mono">
+                          {puskesIdx + 1} / {puskesImages.length}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* GALERI NGENTAK HAMLET (1 FOTO) */}
+                    {exp.galleryType === 'ngentak' && (
+                      <div className="relative w-full h-full flex items-center justify-center">
+                        <img
+                          src="/PKL/komunitas.jpeg"
+                          alt="Ngentak Hamlet Community Documentation"
+                          className="max-h-full max-w-full object-contain select-none"
+                        />
+                      </div>
+                    )}
+
+                  </div>
+                )}
+
+              </div>
             </motion.div>
           ))}
         </div>

@@ -8,7 +8,7 @@ export default function About() {
   const [isFullScreen, setIsFullScreen] = useState(false)
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
 
-  // --- HTML5 CANVAS INTERACTIVE (Sangat Ringan & Smooth) ---
+  // --- HTML5 CANVAS INTERACTIVE (Disamakan persis dengan Hero tapi lebih halus) ---
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
@@ -27,24 +27,35 @@ export default function About() {
 
     window.addEventListener('resize', handleResize)
 
-    const particlesCount = 30
+    const particlesCount = 50
     const particles: { x: number; y: number; vx: number; vy: number; radius: number }[] = []
 
     for (let i = 0; i < particlesCount; i++) {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.4,
-        vy: (Math.random() - 0.5) * 0.4,
-        radius: Math.random() * 1.2 + 0.4,
+        vx: (Math.random() - 0.5) * 0.6,
+        vy: (Math.random() - 0.5) * 0.6,
+        radius: Math.random() * 1.5 + 0.5,
       })
     }
+
+    let mouseX = -1000
+    let mouseY = -1000
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect()
+      mouseX = e.clientX - rect.left
+      mouseY = e.clientY - rect.top
+    }
+
+    window.addEventListener('mousemove', handleMouseMove)
 
     const render = () => {
       ctx.clearRect(0, 0, width, height)
 
       const isDark = document.documentElement.classList.contains('dark')
-      const baseAlpha = isDark ? 0.25 : 0.1 
+      const baseAlpha = isDark ? 0.35 : 0.15 
 
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i]
@@ -65,14 +76,26 @@ export default function About() {
           const dy = p.y - p2.y
           const dist = Math.sqrt(dx * dx + dy * dy)
 
-          if (dist < 100) {
+          if (dist < 110) {
             ctx.beginPath()
             ctx.moveTo(p.x, p.y)
             ctx.lineTo(p2.x, p2.y)
-            ctx.strokeStyle = `rgba(22, 163, 74, ${0.08 * (1 - dist / 100) * (isDark ? 1 : 0.4)})`
-            ctx.lineWidth = 0.6
+            ctx.strokeStyle = `rgba(22, 163, 74, ${0.18 * (1 - dist / 110) * (isDark ? 1 : 0.5)})`
+            ctx.lineWidth = 1
             ctx.stroke()
           }
+        }
+
+        const mdx = p.x - mouseX
+        const mdy = p.y - mouseY
+        const mdist = Math.sqrt(mdx * mdx + mdy * mdy)
+        if (mdist < 160) {
+          ctx.beginPath()
+          ctx.moveTo(p.x, p.y)
+          ctx.lineTo(mouseX, mouseY)
+          ctx.strokeStyle = `rgba(56, 189, 248, ${0.3 * (1 - mdist / 160)})`
+          ctx.lineWidth = 1
+          ctx.stroke()
         }
       }
 
@@ -83,6 +106,7 @@ export default function About() {
 
     return () => {
       window.removeEventListener('resize', handleResize)
+      window.removeEventListener('mousemove', handleMouseMove)
       cancelAnimationFrame(animationFrameId)
     }
   }, [])
@@ -90,15 +114,12 @@ export default function About() {
   return (
     <section id="about" className="relative py-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-slate-200/80 dark:border-slate-800/60 overflow-hidden bg-[#F8FAFC] dark:bg-[#0B1329] transition-colors duration-300">
       
-      {/* Background Canvas */}
-      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none z-[0] opacity-50"></canvas>
+      {/* Background Tekstur Grid Halus & Soft Blur */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#0284c708_1px,transparent_1px),linear-gradient(to_bottom,#0284c708_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none"></div>
+      <div className="absolute inset-0 filter blur-2xl opacity-30 dark:opacity-20 bg-gradient-to-tr from-sky-500/10 via-transparent to-emerald-500/10 pointer-events-none"></div>
 
-      {/* Ambient Glow Halus */}
-      <motion.div 
-        animate={{ scale: [1, 1.1, 1], opacity: [0.1, 0.2, 0.1] }}
-        transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-sky-500/10 dark:bg-sky-500/5 rounded-full blur-[120px] pointer-events-none"
-      />
+      {/* HTML5 Canvas Interaktif (Sama seperti Hero) */}
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none z-[0] opacity-70"></canvas>
 
       <div className="relative z-10">
         <div className="flex flex-col items-start gap-2 mb-12">
@@ -118,7 +139,7 @@ export default function About() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="lg:col-span-5 bg-white dark:bg-[#1C2541] border border-slate-200/80 dark:border-slate-700/60 rounded-3xl p-6 sm:p-8 shadow-sm flex flex-col items-center text-center justify-between space-y-6"
+            className="lg:col-span-5 bg-white/95 dark:bg-[#1C2541]/90 backdrop-blur-xl border border-slate-200/80 dark:border-slate-700/60 rounded-3xl p-6 sm:p-8 shadow-sm flex flex-col items-center text-center justify-between space-y-6"
           >
             <div className="rounded-2xl overflow-hidden shadow-md border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 p-2 w-48 sm:w-56 shrink-0">
               <img
@@ -143,7 +164,7 @@ export default function About() {
           >
             
             {/* Pendidikan & Coursework Card */}
-            <div className="flex flex-col gap-6 p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#1C2541] border border-slate-200/80 dark:border-slate-700/60 shadow-sm flex-1">
+            <div className="flex flex-col gap-6 p-6 sm:p-8 rounded-3xl bg-white/95 dark:bg-[#1C2541]/90 backdrop-blur-xl border border-slate-200/80 dark:border-slate-700/60 shadow-sm flex-1">
               <div className="flex items-start sm:items-center gap-4">
                 <div className="w-16 h-16 rounded-2xl bg-slate-50 dark:bg-slate-900 flex items-center justify-center shrink-0 border border-slate-200 dark:border-slate-700 overflow-hidden p-2 shadow-inner">
                   <img 
@@ -186,8 +207,8 @@ export default function About() {
               </div>
             </div>
 
-            {/* Base / Mobility Card (Teks diubah ke Ready To Relocation) */}
-            <div className="p-5 sm:p-6 rounded-3xl bg-white dark:bg-[#1C2541] border border-slate-200/80 dark:border-slate-700/60 flex items-center gap-4 shadow-sm">
+            {/* Base / Mobility Card */}
+            <div className="p-5 sm:p-6 rounded-3xl bg-white/95 dark:bg-[#1C2541]/90 backdrop-blur-xl border border-slate-200/80 dark:border-slate-700/60 flex items-center gap-4 shadow-sm">
               <div className="p-3.5 rounded-2xl bg-sky-500/10 text-[#0284C7] dark:text-[#38BDF8] shrink-0"><MapPin className="w-6 h-6" /></div>
               <div>
                 <div className="text-[10px] font-mono text-[#64748B] dark:text-[#94A3B8] uppercase tracking-wider font-semibold">Base / Mobility Location</div>
